@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Setup Your Plan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        #app {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            max-width: 480px;
+            width: 90%;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-weight: 700;
+            font-size: 2rem;
+            text-align: center;
+            color: #4a148c;
+        }
+
+        .step {
+            display: none;
+            flex-direction: column;
+            animation: fadeInSlide 0.5s ease forwards;
+        }
+
+            .step.active {
+                display: flex;
+            }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        label {
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        input[type="time"],
+        select,
+        textarea {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1.8px solid #ddd;
+            font-size: 1rem;
+            margin-bottom: 18px;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+            input[type="number"]:focus,
+            input[type="text"]:focus,
+            input[type="time"]:focus,
+            select:focus,
+            textarea:focus {
+                border-color: #4a148c;
+                outline: none;
+            }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option-button {
+            background: #f3e5f5;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 16px 14px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            user-select: none;
+            transition: all 0.3s ease;
+            color: #6a1b9a;
+        }
+
+            .option-button.selected {
+                background: #4a148c;
+                color: white;
+                border-color: #38006b;
+            }
+
+            .option-button:hover:not(.selected) {
+                background: #e1bee7;
+            }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            user-select: none;
+            background: #fafafa;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1.5px solid #ccc;
+            flex: 1 1 140px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+            .checkbox-label:hover {
+                background: #f3e5f5;
+            }
+
+            .checkbox-label input[type="checkbox"] {
+                cursor: pointer;
+            }
+
+                .checkbox-label input[type="checkbox"]:checked + span {
+                    font-weight: 700;
+                    color: #4a148c;
+                }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        button {
+            background-color: #4a148c;
+            border: none;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+            button:disabled {
+                background-color: #9e9e9e;
+                cursor: not-allowed;
+            }
+
+            button:hover:not(:disabled) {
+                background-color: #38006b;
+            }
+
+        .step-footer {
+            margin-top: auto;
+        }
+
+        .subtitle {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #777;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .disliked-foods-input {
+            resize: vertical;
+            min-height: 60px;
+        }
+        /* Radio style for gender select */
+        .gender-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .gender-option {
+            flex: 1 1 100px;
+            padding: 14px 0;
+            border-radius: 12px;
+            border: 2px solid #ddd;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            color: #6a1b9a;
+            transition: all 0.3s ease;
+        }
+
+            .gender-option.selected {
+                background: #4a148c;
+                color: white;
+                border-color: #38006b;
+            }
+
+            .gender-option:hover:not(.selected) {
+                background: #e1bee7;
+            }
+        /* Radio style for results speed */
+        .results-speed-options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .results-speed-option {
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1.8px solid #ddd;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            color: #6a1b9a;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+            .results-speed-option.selected {
+                background: #4a148c;
+                color: white;
+                border-color: #38006b;
+            }
+
+            .results-speed-option:hover:not(.selected) {
+                background: #e1bee7;
+            }
+
+        /* Input number arrows hidden for better UI */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" role="main" aria-live="polite">
+        <h1>Setup Your Plan</h1>
+
+        <!-- Step 1 -->
+        <section class="step active" data-step="1" aria-label="What is your main goal?">
+            <div class="subtitle">What is your main goal?</div>
+            <div class="options-grid" role="list" aria-describedby="goalHelp">
+                <div tabindex="0" role="listitem" class="option-button" data-value="Lose Weight" aria-pressed="false">Lose Weight</div>
+                <div tabindex="0" role="listitem" class="option-button" data-value="Gain Muscle" aria-pressed="false">Gain Muscle</div>
+                <div tabindex="0" role="listitem" class="option-button" data-value="Stay Healthy" aria-pressed="false">Stay Healthy</div>
+            </div>
+            <div class="step-footer buttons">
+                <div></div><!-- placeholder for alignment for Back -->
+                <button id="nextBtn1" disabled aria-disabled="true">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section class="step" data-step="2" aria-label="Your Body Information">
+            <div class="subtitle">Your Body Information</div>
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" name="height" min="30" max="300" placeholder="e.g. 175" aria-required="true" />
+
+            <label for="currentWeight">Current Weight (kg)</label>
+            <input type="number" id="currentWeight" name="currentWeight" min="20" max="600" placeholder="e.g. 70" aria-required="true" />
+
+            <label for="targetWeight">Target Weight (kg)</label>
+            <input type="number" id="targetWeight" name="targetWeight" min="20" max="600" placeholder="e.g. 65" aria-required="true" />
+
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="10" max="120" placeholder="e.g. 30" aria-required="true" />
+
+            <div id="genderGroup" class="gender-options" role="radiogroup" aria-required="true" aria-label="Select Gender">
+                <div tabindex="0" role="radio" aria-checked="false" class="gender-option" data-value="Male">Male</div>
+                <div tabindex="0" role="radio" aria-checked="false" class="gender-option" data-value="Female">Female</div>
+                <div tabindex="0" role="radio" aria-checked="false" class="gender-option" data-value="Other">Other</div>
+            </div>
+
+            <div class="step-footer buttons">
+                <button id="backBtn2">Back</button>
+                <button id="nextBtn2" disabled aria-disabled="true">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section class="step" data-step="3" aria-label="How fast do you want results?">
+            <div class="subtitle">How fast do you want results?</div>
+            <div class="results-speed-options" role="list" aria-describedby="resultsSpeedHelp">
+                <div tabindex="0" role="listitem" class="results-speed-option" data-value="Mild (safe &amp; sustainable)" aria-pressed="false">Mild (safe &amp; sustainable)</div>
+                <div tabindex="0" role="listitem" class="results-speed-option" data-value="Moderate (recommended)" aria-pressed="false">Moderate (recommended)</div>
+                <div tabindex="0" role="listitem" class="results-speed-option" data-value="Aggressive (fastest, less sustainable)" aria-pressed="false">Aggressive (fastest, less sustainable)</div>
+            </div>
+            <div class="step-footer buttons">
+                <button id="backBtn3">Back</button>
+                <button id="nextBtn3" disabled aria-disabled="true">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section class="step" data-step="4" aria-label="Food Preferences">
+            <div class="subtitle">Food Preferences</div>
+
+            <div class="checkbox-group" role="group" aria-labelledby="allergiesLabel">
+                <label id="allergiesLabel" class="checkbox-label">
+                    <input type="checkbox" name="foodPref" value="Dairy Allergy" />
+                    <span>Dairy Allergy</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="foodPref" value="Gluten Allergy" />
+                    <span>Gluten Allergy</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="foodPref" value="Nut Allergy" />
+                    <span>Nut Allergy</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="foodPref" value="Vegan" />
+                    <span>Vegan</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="foodPref" value="Vegetarian" />
+                    <span>Vegetarian</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="foodPref" value="Keto" />
+                    <span>Keto</span>
+                </label>
+            </div>
+
+            <label for="dislikedFoods">Disliked foods (comma-separated)</label>
+            <textarea id="dislikedFoods" name="dislikedFoods" rows="3" placeholder="e.g. broccoli, mushrooms"></textarea>
+
+            <div class="step-footer buttons">
+                <button id="backBtn4">Back</button>
+                <button id="nextBtn4">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 5 -->
+        <section class="step" data-step="5" aria-label="Eating Habits">
+            <div class="subtitle">Eating Habits</div>
+
+            <label for="mealsPerDay">Meals per Day</label>
+            <input type="number" id="mealsPerDay" name="mealsPerDay" min="1" max="12" placeholder="e.g. 3" aria-required="true" />
+
+            <div id="eatBreakfastGroup" class="gender-options" role="radiogroup" aria-label="Do you eat breakfast?" aria-required="true" style="margin-bottom:24px;">
+                <div tabindex="0" role="radio" aria-checked="false" class="gender-option" data-value="Yes">Yes</div>
+                <div tabindex="0" role="radio" aria-checked="false" class="gender-option" data-value="No">No</div>
+            </div>
+
+            <label for="eatingTimes">Typical eating times (e.g. 9AM, 1PM, 6PM)</label>
+            <input type="text" id="eatingTimes" name="eatingTimes" placeholder="e.g. 9AM, 1PM, 6PM" aria-required="true" />
+
+            <div class="step-footer buttons">
+                <button id="backBtn5">Back</button>
+                <button id="nextBtn5" disabled aria-disabled="true">Next</button>
+            </div>
+        </section>
+
+        <!-- Step 6 -->
+        <section class="step" data-step="6" aria-label="Completion">
+            <div class="subtitle">You're all set!<br />Now generating your smart, personalized meal plan...</div>
+            <div class="step-footer buttons" style="justify-content:center;">
+                <button id="finishBtn">Continue</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        (() => {
+            // State to hold user inputs
+            const state = {
+                goal: null,
+                bodyInfo: {
+                    height: '',
+                    currentWeight: '',
+                    targetWeight: '',
+                    age: '',
+                    gender: null,
+                },
+                resultsSpeed: null,
+                foodPreferences: [],
+                dislikedFoods: '',
+                eatingHabits: {
+                    mealsPerDay: '',
+                    eatBreakfast: null,
+                    eatingTimes: '',
+                }
+            };
+
+            // Utility to remove selection classes & aria-pressed/checked from a group of elements
+            function clearSelected(elements, ariaType = 'aria-pressed') {
+                elements.forEach(el => {
+                    el.classList.remove('selected');
+                    el.setAttribute(ariaType, ariaType === 'aria-checked' ? 'false' : 'false');
+                });
+            }
+
+            // Step 1: Goal selection
+            const goalOptions = document.querySelectorAll('[data-step="1"] .option-button');
+            const nextBtn1 = document.getElementById('nextBtn1');
+
+            goalOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    clearSelected(goalOptions);
+                    option.classList.add('selected');
+                    option.setAttribute('aria-pressed', 'true');
+                    state.goal = option.dataset.value;
+                    nextBtn1.disabled = false;
+                    nextBtn1.setAttribute('aria-disabled', 'false');
+                });
+
+                option.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+
+            nextBtn1.addEventListener('click', () => {
+                goToStep(2);
+            });
+
+            // Step 2: Body Info inputs & Gender select
+            const step2 = document.querySelector('[data-step="2"]');
+            const inputsStep2 = step2.querySelectorAll('input[type=number]');
+            const genderOptions = step2.querySelectorAll('.gender-option');
+            const nextBtn2 = document.getElementById('nextBtn2');
+            const backBtn2 = document.getElementById('backBtn2');
+
+            function validateStep2() {
+                let valid =
+                    inputsStep2[0].value.trim() !== '' &&
+                    inputsStep2[1].value.trim() !== '' &&
+                    inputsStep2[2].value.trim() !== '' &&
+                    inputsStep2[3].value.trim() !== '' &&
+                    state.bodyInfo.gender !== null;
+                nextBtn2.disabled = !valid;
+                nextBtn2.setAttribute('aria-disabled', (!valid).toString());
+                return valid;
+            }
+
+            inputsStep2.forEach(input => {
+                input.addEventListener('input', e => {
+                    state.bodyInfo[e.target.name] = e.target.value;
+                    validateStep2();
+                });
+            });
+
+            genderOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    clearSelected(genderOptions, 'aria-checked');
+                    option.classList.add('selected');
+                    option.setAttribute('aria-checked', 'true');
+                    state.bodyInfo.gender = option.dataset.value;
+                    validateStep2();
+                });
+                option.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+
+            nextBtn2.addEventListener('click', () => {
+                if (!validateStep2()) return;
+                goToStep(3);
+            });
+            backBtn2.addEventListener('click', () => goToStep(1));
+
+            // Step 3: Results speed
+            const step3 = document.querySelector('[data-step="3"]');
+            const resultsSpeedOptions = step3.querySelectorAll('.results-speed-option');
+            const nextBtn3 = document.getElementById('nextBtn3');
+            const backBtn3 = document.getElementById('backBtn3');
+
+            resultsSpeedOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    clearSelected(resultsSpeedOptions);
+                    option.classList.add('selected');
+                    option.setAttribute('aria-pressed', 'true');
+                    state.resultsSpeed = option.dataset.value;
+                    nextBtn3.disabled = false;
+                    nextBtn3.setAttribute('aria-disabled', 'false');
+                });
+                option.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+
+            nextBtn3.addEventListener('click', () => {
+                if (!state.resultsSpeed) return;
+                goToStep(4);
+            });
+            backBtn3.addEventListener('click', () => goToStep(2));
+
+            // Step 4: Food Preferences
+            const step4 = document.querySelector('[data-step="4"]');
+            const foodPrefCheckboxes = step4.querySelectorAll('input[type=checkbox][name="foodPref"]');
+            const dislikedFoodsInput = step4.querySelector('#dislikedFoods');
+            const nextBtn4 = document.getElementById('nextBtn4');
+            const backBtn4 = document.getElementById('backBtn4');
+
+            // No required validation on step 4, so next always enabled
+            nextBtn4.disabled = false;
+            nextBtn4.setAttribute('aria-disabled', 'false');
+
+            foodPrefCheckboxes.forEach(chk => {
+                chk.addEventListener('change', () => {
+                    const selected = [];
+                    foodPrefCheckboxes.forEach(c => {
+                        if (c.checked) selected.push(c.value);
+                    });
+                    state.foodPreferences = selected;
+                });
+            });
+            dislikedFoodsInput.addEventListener('input', e => {
+                state.dislikedFoods = e.target.value;
+            });
+
+            nextBtn4.addEventListener('click', () => {
+                goToStep(5);
+            });
+            backBtn4.addEventListener('click', () => goToStep(3));
+
+            // Step 5: Eating Habits
+            const step5 = document.querySelector('[data-step="5"]');
+            const mealsPerDayInput = step5.querySelector('#mealsPerDay');
+            const eatBreakfastOptions = step5.querySelectorAll('#eatBreakfastGroup .gender-option');
+            const eatingTimesInput = step5.querySelector('#eatingTimes');
+            const nextBtn5 = document.getElementById('nextBtn5');
+            const backBtn5 = document.getElementById('backBtn5');
+
+            function validateStep5() {
+                let valid =
+                    mealsPerDayInput.value.trim() !== '' &&
+                    state.eatingHabits.eatBreakfast !== null &&
+                    eatingTimesInput.value.trim() !== '';
+                nextBtn5.disabled = !valid;
+                nextBtn5.setAttribute('aria-disabled', (!valid).toString());
+                return valid;
+            }
+
+            mealsPerDayInput.addEventListener('input', e => {
+                state.eatingHabits.mealsPerDay = e.target.value;
+                validateStep5();
+            });
+
+            eatingTimesInput.addEventListener('input', e => {
+                state.eatingHabits.eatingTimes = e.target.value;
+                validateStep5();
+            });
+
+            eatBreakfastOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    clearSelected(eatBreakfastOptions, 'aria-checked');
+                    option.classList.add('selected');
+                    option.setAttribute('aria-checked', 'true');
+                    state.eatingHabits.eatBreakfast = option.dataset.value;
+                    validateStep5();
+                });
+
+                option.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+
+            nextBtn5.addEventListener('click', () => {
+                if (!validateStep5()) return;
+                goToStep(6);
+                // Simulate meal plan generation delay
+                // Could later add real logic or display data summary here.
+            });
+            backBtn5.addEventListener('click', () => goToStep(4));
+
+            // Step 6
+            const finishBtn = document.getElementById('finishBtn');
+            finishBtn.addEventListener('click', () => {
+                alert('Your personalized meal plan is ready! (This is a placeholder alert.)');
+                // Here you could redirect or perform other actions
+            });
+
+            // Navigation helper
+            function goToStep(stepNumber) {
+                const allSteps = document.querySelectorAll('.step');
+                allSteps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.querySelector(`.step[data-step="${stepNumber}"]`).classList.add('active');
+                // For accessibility: move focus to the first focusable element in the step
+                const activeStep = document.querySelector(`.step[data-step="${stepNumber}"]`);
+                const focusable = activeStep.querySelector('button, [tabindex="0"], input, select, textarea');
+                if (focusable) {
+                    focusable.focus();
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
+

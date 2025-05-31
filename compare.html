@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Comparison</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: url('/PNGs/pic2.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: black;
+            
+        }
+
+        .selector, .comparison {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            color: black;
+            
+        }
+
+        select {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .attribute-block {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+            .attribute-block strong {
+                font-size: 18px;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+        .score-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 10px;
+        }
+
+        .bar-container {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .score-block {
+            margin-top: 10px;
+        }
+
+        .warning {
+            color: #ff4444;
+            text-align: center;
+            font-weight: bold;
+            backdrop-filter: blur(4px);
+            padding: 15px;
+            border-radius: 12px;
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Compare Products</h1>
+
+    <div class="selector">
+        <h2>Choose Category</h2>
+        <select id="category" onchange="updateProducts()">
+            <option value="meat">Meat, Fish, Eggs</option>
+        </select>
+
+        <h2>Select Products to Compare</h2>
+        <select id="product1"></select>
+        <select id="product2"></select>
+    </div>
+
+    <div class="comparison" id="comparisonTable"></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        const data = {
+            meat: {
+                "Chicken Breast": {
+                    "Caloric Content": ["165 kcal", 9],
+                    "Energy Value": ["31g protein / 3.6g fat", 9],
+                    "Amino Acid Profile": ["Complete", 10],
+                    "Cholesterol Level": ["85 mg", 6],
+                    "Fat Composition": ["Low in saturated fats", 9],
+                    "Processing Method": ["Fresh", 10],
+                    "Allergens": ["None", 10]
+                },
+                "Salmon": {
+                    "Caloric Content": ["208 kcal", 8],
+                    "Energy Value": ["20g protein / 13g fat", 8],
+                    "Amino Acid Profile": ["Complete", 10],
+                    "Cholesterol Level": ["55 mg", 7],
+                    "Fat Composition": ["High in omega-3", 10],
+                    "Processing Method": ["Fresh or smoked", 8],
+                    "Allergens": ["Fish", 6]
+                }
+            }
+        };
+
+        function updateProducts() {
+            const category = document.getElementById("category").value;
+            const productSelect1 = document.getElementById("product1");
+            const productSelect2 = document.getElementById("product2");
+
+            const products = Object.keys(data[category]);
+            productSelect1.innerHTML = "";
+            productSelect2.innerHTML = "";
+
+            products.forEach((product) => {
+                const option1 = document.createElement("option");
+                const option2 = document.createElement("option");
+                option1.value = option2.value = product;
+                option1.textContent = option2.textContent = product;
+                productSelect1.appendChild(option1);
+                productSelect2.appendChild(option2);
+            });
+
+            productSelect1.selectedIndex = 0;
+            productSelect2.selectedIndex = 1;
+            showComparison();
+        }
+
+        document.getElementById("product1").addEventListener("change", showComparison);
+        document.getElementById("product2").addEventListener("change", showComparison);
+        document.getElementById("category").addEventListener("change", showComparison);
+
+        function getDoubleBarHTML(score1, score2) {
+            const width1 = `${score1 * 10}%`;
+            const width2 = `${score2 * 10}%`;
+            const color1 = score1 > 7 ? "#4caf50" : score1 > 4 ? "#ffc107" : "#f44336";
+            const color2 = score2 > 7 ? "#4caf50" : score2 > 4 ? "#ffc107" : "#f44336";
+
+            return `
+    <div class="score-block">
+      <div class="score-wrapper">
+        <div class="bar-container">
+          <div class="bar" style="width:${width1}; background-color:${color1};"></div>
+        </div>
+        <span>${score1}/10</span>
+      </div>
+      <div class="score-wrapper">
+        <div class="bar-container">
+          <div class="bar" style="width:${width2}; background-color:${color2};"></div>
+        </div>
+        <span>${score2}/10</span>
+      </div>
+    </div>
+  `;
+        }
+
+
+        function showComparison() {
+            const category = document.getElementById("category").value;
+            const p1 = document.getElementById("product1").value;
+            const p2 = document.getElementById("product2").value;
+
+            if (!p1 || !p2 || p1 === p2) {
+                document.getElementById("comparisonTable").innerHTML = '<p class="warning">Select two different products</p>';
+                return;
+            }
+
+            const data1 = data[category][p1];
+            const data2 = data[category][p2];
+
+            let html = ``;
+
+            for (let key in data1) {
+                const [val1, score1] = data1[key];
+                const [val2, score2] = data2[key];
+
+                html += `
+              <div class="attribute-block" data-aos="fade-up">
+                <strong>${key}</strong>
+                <div><b>${p1}:</b> ${val1}</div>
+                <div><b>${p2}:</b> ${val2}</div>
+                ${getDoubleBarHTML(score1, score2)}
+              </div>`;
+            }
+
+            document.getElementById("comparisonTable").innerHTML = html;
+            AOS.refresh();
+        }
+
+        updateProducts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWBVFG5DVZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PWBVFG5DVZ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Nutrition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            background-image: url('\PNGs/pic2.png'); /* Замените на URL вашего изображения */
+            background-size: cover; /* Изображение будет растянуто, чтобы покрыть весь экран */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0);
+            color: black;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            height: 10%;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            background: #ffffff;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 20px;
+            border: 0px solid black;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-height: 807px) {
+            section {
+                padding: 17px;
+            }
+        }
+
+        @media (max-height: 782px) {
+            section {
+                padding: 15px;
+            }
+        }
+
+        @media (max-height: 765px) {
+            section {
+                padding: 13px;
+            }
+        }
+
+        @media (max-height: 751px) {
+            section {
+                padding: 11px;
+            }
+        }
+
+        .cl1 {
+            color: forestgreen; /* ������ ���� ����� */
+        }
+
+        .cl2 {
+            color: orange; /* ������ ���� ����� */
+        }
+
+        .cl3 {
+            color: red; /* ������ ���� ����� */
+        }
+
+        h1 {
+            font-size: 25px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1 style="font-size: 50px">Categories</h1>
+    </header>
+
+    <main>
+        <section data-aos="fade-right" onclick="window.location.href='highprotein.html'">
+            <h1>High Protein</h1>
+        </section>
+        <section data-aos="fade-up" onclick="window.location.href='veganprotein.html'">
+            <h1>Vegan Protein</h1>
+        </section>
+        <section data-aos="fade-right" onclick="window.location.href='highomega3.html'">
+            <h1>High Omega 3</h1>
+        </section>
+        <section data-aos="fade-up" onclick="window.location.href='lowcarb.html'">
+            <h1>Low Carb</h1>
+        </section>
+        <section data-aos="fade-right" onclick="window.location.href='highfiber.html'">
+            <h1>High-Fiber</h1>
+        </section>
+        <section data-aos="fade-up" onclick="window.location.href='quickneasy.html'">
+            <h1>Quick & Easy</h1>
+        </section>
+        <section data-aos="fade-right" onclick="window.location.href='budgetfriendly.html'">
+            <h1>Budget-Friendly</h1>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <script>
+        // Функция для добавления страницы в историю
+        function addToHistory(page) {
+            let history = JSON.parse(localStorage.getItem('pageHistory')) || [];
+
+            // Проверяем, если страница уже есть в истории, удаляем её
+            history = history.filter(item => item !== page);
+
+            // Добавляем новую страницу в начало массива
+            history.unshift(page);
+
+            // Ограничиваем количество записей в истории (например, 10)
+            if (history.length > 10) {
+                history.pop();
+            }
+
+            localStorage.setItem('pageHistory', JSON.stringify(history));
+        }
+
+        // Функция для отображения истории
+        function displayHistory() {
+            const history = JSON.parse(localStorage.getItem('pageHistory')) || [];
+            const historyContainer = document.getElementById('history');
+
+            historyContainer.innerHTML = '<h3>История посещений:</h3>';
+
+            if (history.length === 0) {
+                historyContainer.innerHTML += '<p>История пуста.</p>';
+            } else {
+                const list = document.createElement('ul');
+                history.forEach(page => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = page;
+                    list.appendChild(listItem);
+                });
+                historyContainer.appendChild(list);
+            }
+        }
+
+        // Добавляем текущую страницу в историю и отображаем её при загрузке
+        window.onload = function () {
+            addToHistory(window.location.href);
+            displayHistory();
+        };
+    </script>
+</body>
+</html>

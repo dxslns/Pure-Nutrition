@@ -1,0 +1,1859 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWBVFG5DVZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PWBVFG5DVZ');
+    </script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>Pure Nutrition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: auto;
+            background-image: url('\PNGs/pic2.png'); /* Замените на URL вашего изображения */
+            background-size: cover; /* Изображение будет растянуто, чтобы покрыть весь экран */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0);
+            margin-top: 0%;
+            margin-bottom: 15%;
+            color: black;
+            width: 80%;
+            height: 3%;
+            text-align: center;
+            padding: 20px 0;
+            border: px solid black;
+            border-radius: 30px;
+        }
+
+        main {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .search-container {
+            margin: 20px 20px;
+        }
+
+        input[type="text"] {
+            margin-top: -10px;
+            font-size: 20px;
+            padding: 10px;
+            width: 340px;
+            height: 40px;
+            border: 0px solid #000000;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none; /* Убирает обводку */
+        }
+
+        button {
+            padding: 20px 25px;
+            border: none;
+            background-color: #000000;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 15px;
+        }
+
+            button:hover {
+                background-color: #444444;
+            }
+
+        .banners {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .banner {
+            background-color: black;
+            color: white;
+            border: 2px solid #000000;
+            padding: 15px;
+            margin: 10px 0;
+            width: 340px;
+            height: 0%;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-height: 810px) {
+            .banner {
+                padding: 10px;
+            }
+        }
+
+        @media (max-height: 777px) {
+            .banner {
+                padding: 6px;
+            }
+        }
+
+        @media (max-height: 753px) {
+            .banner {
+                padding: 1px;
+            }
+        }
+
+        .banner:hover {
+            background-color: dimgray;
+        }
+
+        .banner2 {
+            background-color: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            color: black;
+            border: 5px solid #000000;
+            padding: 15px;
+            margin: 10px 0;
+            width: 340px;
+            height: 0%;
+            border-radius: 20px;
+        }
+
+        @media (max-height: 810px) {
+            .banner2 {
+                padding: 10px;
+            }
+        }
+
+        @media (max-height: 777px) {
+            .banner2 {
+                padding: 6px;
+            }
+        }
+
+        @media (max-height: 753px) {
+            .banner2 {
+                padding: 1px;
+            }
+        }
+
+        .banner2:hover {
+            background-color: dimgray;
+        }
+
+        .article {
+            display: none; /* Скрываем статьи по умолчанию */
+        }
+
+            .article.visible {
+                display: block; /* Показываем статьи, если они имеют класс 'visible' */
+            }
+
+        footer {
+            background: black; /* Черный цвет */
+            color: #ffffff; /* Белый текст */
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            top: 0px;
+            width: 100%;
+            height: 60px;
+        }
+
+
+        #container {
+            width: auto; /* Ширина контейнера */
+            height: 140px; /* Высота контейнера */
+            overflow: hidden; /* Скрыть переполнение */
+            position: relative; /* Для абсолютного позиционирования кнопок */
+            border: 0px solid #ccc; /* Граница контейнера */
+            background-color: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(px);
+            margin-left: %;
+            margin-bottom: 15px;
+            border-radius: 0px;
+            align-items: center;
+        }
+
+        .button1 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/beef.png');
+            background-size: 100%;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0px;
+            margin-right:;
+        }
+
+        .button2 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/chicken.png');
+            background-size: 95%;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0px;
+            margin-right:;
+        }
+
+        .button3 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/salmon.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button4 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/tomato.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button5 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/honey.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button6 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/potato.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button7 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/cucumber.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button8 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/carrot.png');
+            background-size: 104%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button9 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/onion.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button10 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/broccoli.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button11 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/spinach.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button12 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/zucchini.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button13 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/eggplant.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button14 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/beet.png');
+            background-size: 104%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button15 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/avocado.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button16 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/apple.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button17 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/banana.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button18 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/orange.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button19 {
+            width: 126px; /* Ширина кнопки */
+            height: 126px; /* Высота кнопки */
+            cursor: pointer; /* Курсор при наведении */
+            background-image: url('\PNGs/kiwi.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button20 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pear.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button21 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/grape.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button22 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/blueberry.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button23 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/strawberry.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button24 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/raspberry.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button25 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/watermelon.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button26 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/melon.png');
+            background-size: 104%;
+            background-position-x: -2px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button27 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pineapple.png');
+            background-size: 104%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button28 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/mango.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button29 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/lemon.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button30 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/almond.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button31 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/walnut.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button32 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/cashews.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button33 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/hazelnut.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button34 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/peanut.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button35 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pumpkin_seeds.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button36 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/chia_seeds.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button37 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/flax_seeds.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button38 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pine_nuts.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button39 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/buckwheat.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button40 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/rice.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button41 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/quinoa.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button42 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/bulgur.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button43 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pearl.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button44 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/corn_porridge.png');
+            background-size: 104%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button45 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/lentils.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button46 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/chickpea.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button47 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/beans.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button48 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/peas.png');
+            background-size: 104%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button49 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/edamame.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button50 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/milk.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button51 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/yogurt.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button52 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/cottage_cheese.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button53 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/cheese.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button54 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/cream.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button55 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/sour_cream.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button56 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/kefir.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button57 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pork.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button58 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/turkey.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button59 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/lamb.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button60 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/duck.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button61 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/tuna.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button62 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/herring.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button63 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/shrimps.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button64 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/squid.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button65 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/mussels.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button66 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/eggs.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button67 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/olive_oil.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button68 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/artichoke.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button69 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/linseed_oil.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button70 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/ghee_oil.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button71 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/water.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button72 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pepper.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button73 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/coffee.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button74 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/almond_milk.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button75 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/oat_milk.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button76 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pasta.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button77 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/asparagus.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button78 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/peach.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button79 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/dates.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button80 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/mushrooms.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button81 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/coconut.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button82 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/dragon_fruit.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button83 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pomegrante.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button84 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/artichoke.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button85 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/pistachio_nuts.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button86 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/oats.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button87 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/coconut_water.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button88 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/salt.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button89 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/sugar.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button90 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/tofu.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .button91 {
+            width: 126px;
+            height: 126px;
+            cursor: pointer;
+            background-image: url('\PNGs/butter.png');
+            background-size: 109%;
+            background-position-x: -5px;
+            background-position-y: -3px;
+            border-radius: 30px;
+            border: 3px solid black;
+            margin-left: 0;
+            margin-right:;
+            background-repeat: no-repeat;
+        }
+
+        .buttons {
+            display: flex; /* Flexbox для горизонтального расположения кнопок */
+            position: absolute; /* Абсолютное позиционирование для прокрутки */
+            transition: transform 0.5s ease; /* Плавный переход для прокрутки */
+        }
+    </style>
+
+</head>
+<body>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search..." onkeyup="searchFunction()">
+
+        </div>
+
+        <div id="content">
+            <button class="article" onclick="window.location.href='beef.html'">Beef</button>
+            <button class="article" onclick="window.location.href='chicken.html'">Chicken</button>
+            <button class="article" onclick="window.location.href='salmon.html'">Salmon</button>
+            <button class="article" onclick="window.location.href='tomato.html'">Tomato</button>
+            <button class="article" onclick="window.location.href='honey.html'">Honey</button>
+            <button class="article" onclick="window.location.href='potato.html'">Potato</button>
+            <button class="article" onclick="window.location.href='cucumber.html'">Cucumber</button>
+            <button class="article" onclick="window.location.href='carrot.html'">Carrot</button>
+            <button class="article" onclick="window.location.href='onion.html'">Onion</button>
+            <button class="article" onclick="window.location.href='broccoli.html'">Broccoli</button>
+            <button class="article" onclick="window.location.href='spinach.html'">Spinach</button>
+            <button class="article" onclick="window.location.href='zucchini.html'">Zucchini</button>
+            <button class="article" onclick="window.location.href='eggplant.html'">Eggplant</button>
+            <button class="article" onclick="window.location.href='beet.html'">Beet</button>
+            <button class="article" onclick="window.location.href='avocado.html'">Avocado</button>
+            <button class="article" onclick="window.location.href='apple.html'">Apple</button>
+            <button class="article" onclick="window.location.href='banana.html'">Banana</button>
+            <button class="article" onclick="window.location.href='orange.html'">Orange</button>
+            <button class="article" onclick="window.location.href='kiwi.html'">Kiwi</button> <!-- Номер 19 -->
+            <button class="article" onclick="window.location.href='pear.html'">Pear</button>
+            <button class="article" onclick="window.location.href='grape.html'">Grape</button>
+            <button class="article" onclick="window.location.href='blueberry.html'">Blueberry</button>
+            <button class="article" onclick="window.location.href='strawberry.html'">Strawberry</button>
+            <button class="article" onclick="window.location.href='raspberry.html'">Raspberry</button>
+            <button class="article" onclick="window.location.href='watermelon.html'">Watermelon</button>
+            <button class="article" onclick="window.location.href='melon.html'">Melon</button>
+            <button class="article" onclick="window.location.href='pineapple.html'">Pineapple</button>
+            <button class="article" onclick="window.location.href='mango.html'">Mango</button>
+            <button class="article" onclick="window.location.href='lemon.html'">Lemon</button>
+            <button class="article" onclick="window.location.href='almond.html'">Almond</button>
+            <button class="article" onclick="window.location.href='walnut.html'">Walnut</button>
+            <button class="article" onclick="window.location.href='cashews.html'">Cashews</button>
+            <button class="article" onclick="window.location.href='hazelnut.html'">Hazelnut</button>
+            <button class="article" onclick="window.location.href='peanut.html'">Peanut</button>
+            <button class="article" onclick="window.location.href='pumpkin_seeds.html'">Pumpkin seeds</button>
+            <button class="article" onclick="window.location.href='chia_seeds.html'">Chia seeds</button>
+            <button class="article" onclick="window.location.href='flax_seeds.html'">Flax seeds</button>
+            <button class="article" onclick="window.location.href='pine_nuts.html'">Pine nuts</button>
+            <button class="article" onclick="window.location.href='buckwheat.html'">Buckwheat</button>
+            <button class="article" onclick="window.location.href='rice.html'">Rice</button>
+            <button class="article" onclick="window.location.href='quinoa.html'">Quinoa</button>
+            <button class="article" onclick="window.location.href='bulgur.html'">Bulgur</button>
+            <button class="article" onclick="window.location.href='pearl.html'">Pearl</button>
+            <button class="article" onclick="window.location.href='corn_porridge.html'">Corn porridge</button>
+            <button class="article" onclick="window.location.href='lentils.html'">Lentils</button>
+            <button class="article" onclick="window.location.href='chickpea.html'">Chickpea</button>
+            <button class="article" onclick="window.location.href='beans.html'">Beans</button>
+            <button class="article" onclick="window.location.href='peas.html'">Peas</button>
+            <button class="article" onclick="window.location.href='edamame.html'">Edamame</button>
+            <button class="article" onclick="window.location.href='milk.html'">Milk</button>
+            <button class="article" onclick="window.location.href='yogurt.html'">Yogurt</button>
+            <button class="article" onclick="window.location.href='cottage_cheese.html'">Cottage cheese</button>
+            <button class="article" onclick="window.location.href='cheese.html'">Cheese</button>
+            <button class="article" onclick="window.location.href='cream.html'">Cream</button>
+            <button class="article" onclick="window.location.href='kefir.html'">Kefir</button>
+            <button class="article" onclick="window.location.href='pork.html'">Pork</button>
+            <button class="article" onclick="window.location.href='turkey.html'">Turkey</button>
+            <button class="article" onclick="window.location.href='lamb.html'">Lamb</button>
+            <button class="article" onclick="window.location.href='duck.html'">Duck</button>
+            <button class="article" onclick="window.location.href='tuna.html'">Tuna</button>
+            <button class="article" onclick="window.location.href='herring.html'">Herring</button>
+            <button class="article" onclick="window.location.href='shrimps.html'">Shrimps</button>
+            <button class="article" onclick="window.location.href='squid.html'">Squid</button>
+            <button class="article" onclick="window.location.href='mussels.html'">Mussels</button>
+            <button class="article" onclick="window.location.href='eggs.html'">Eggs</button>
+            <button class="article" onclick="window.location.href='olive_oil.html'">Olive oil</button>
+            <button class="article" onclick="window.location.href='coconut_oil.html'">Coconut oil</button>
+            <button class="article" onclick="window.location.href='linseed_oil.html'">Linseed oil</button>
+            <button class="article" onclick="window.location.href='ghee_oil.html'">Ghee oil</button>
+            <button class="article" onclick="window.location.href='water.html'">Water</button>
+            <button class="article" onclick="window.location.href='tea.html'">Tea</button>
+            <button class="article" onclick="window.location.href='coffee.html'">Coffee</button>
+            <button class="article" onclick="window.location.href='almond_milk.html'">Almond milk</button>
+            <button class="article" onclick="window.location.href='oat_milk.html'">Oat milk</button>
+            <button class="article" onclick="window.location.href='pomegrante.html'">Pomegrante</button>
+            <button class="article" onclick="window.location.href='artichoke.html'">Artichoke</button>
+            <button class="article" onclick="window.location.href='pistachio_nuts.html'">Pistachio nuts</button>
+            <button class="article" onclick="window.location.href='oats.html'">Oats</button>
+            <button class="article" onclick="window.location.href='coconut_water.html'">Coconut water</button>
+            <button class="article" onclick="window.location.href='salt.html'">Salt</button>
+            <button class="article" onclick="window.location.href='sugar.html'">Sugar</button>
+            <button class="article" onclick="window.location.href='tofu.html'">Tofu</button>
+            <button class="article" onclick="window.location.href='butter.html'">Butter</button>
+            <button class="article" onclick="window.location.href='mushrooms.html'">Mushrooms</button>
+            <button class="article" onclick="window.location.href='coconut.html'">Coconut</button>
+            <button class="article" onclick="window.location.href='dragon_fruit.html'">Dragon fruit</button>
+            <button class="article" onclick="window.location.href='peach.html'">Peach</button>
+            <button class="article" onclick="window.location.href='dates.html'">Dates</button>
+            <button class="article" onclick="window.location.href='asparagus.html'">Asparagus</button>
+            <button class="article" onclick="window.location.href='pasta.html'">Pasta</button>
+            <button class="article" onclick="window.location.href='pepper.html'">Pepper</button>
+
+            <!-- Добавьте больше статей по мере необходимости -->
+        </div>
+
+        <div id="container">
+            <div class="buttons" id="buttons">
+                <!-- Кнопки будут добавлены с помощью JavaScript -->
+            </div>
+        </div>
+
+        <script>
+            function showArticles() {
+                const articles = document.getElementsByClassName('article');
+                for (let i = 0; i < articles.length; i++) {
+                    articles[i].classList.add('visible'); // Добавляем класс 'visible' для показа статей
+                }
+            }
+
+            function searchFunction() {
+                const input = document.getElementById('search');
+                const filter = input.value.toLowerCase();
+                const articles = document.getElementsByClassName('article');
+
+                if (filter === "") {
+                    // Если поле ввода пустое, скрываем все статьи
+                    for (let i = 0; i < articles.length; i++) {
+                        articles[i].classList.remove('visible'); // Убираем класс 'visible'
+                    }
+                    return; // Выходим из функции
+                }
+
+                for (let i = 0; i < articles.length; i++) {
+                    const article = articles[i];
+                    if (article.innerText.toLowerCase().includes(filter)) {
+                        article.classList.add('visible'); // Показываем элемент
+                    } else {
+                        article.classList.remove('visible'); // Скрываем элемент
+                    }
+                }
+            }
+
+            // Очищаем поле поиска при переходе на другую страницу
+            window.addEventListener('beforeunload', function () {
+                const input = document.getElementById('search');
+                input.value = ''; // Очищаем значение поля ввода
+            });
+        </script>
+
+        <div class="banners">
+            <div class="banner2" data-aos="fade-left" onclick="window.location.href='catalog.html'"><h1>Catalog</h1></div>
+            <div class="banner" data-aos="fade-right" onclick="window.location.href='categories.html'"><h1>Categories</h1></div>
+            <div class="banner2" data-aos="fade-left" onclick="window.location.href='compare.html'"><h1>Explore</h1></div>
+            <div class="banner" data-aos="fade-right" onclick="window.location.href='space.html'"><h1>Your Space</h1></div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pure Nutrition</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <script>
+        // Массив объектов кнопок с их классами и ссылками
+        const buttons = [
+            { class: "button1", href: "beef.html" },
+            { class: "button2", href: "chicken.html" },
+            { class: "button3", href: "salmon.html" },
+            { class: "button4", href: "tomato.html" },
+            { class: "button5", href: "honey.html" },
+            { class: "button6", href: "potato.html" },
+            { class: "button7", href: "cucumber.html" },
+            { class: "button8", href: "carrot.html" },
+            { class: "button9", href: "onion.html" },
+            { class: "button10", href: "broccoli.html" },
+            { class: "button11", href: "spinach.html" },
+            { class: "button12", href: "zucchini.html" },
+            { class: "button13", href: "eggplant.html" },
+            { class: "button14", href: "beet.html" },
+            { class: "button15", href: "avocado.html" },
+            { class: "button16", href: "apple.html" },
+            { class: "button17", href: "banana.html" },
+            { class: "button18", href: "orange.html" },
+            { class: "button19", href: "kiwi.html" },
+            { class: "button20", href: "pear.html" },
+            { class: "button21", href: "grape.html" },
+            { class: "button22", href: "blueberry.html" },
+            { class: "button23", href: "strawberry.html" },
+            { class: "button24", href: "raspberry.html" },
+            { class: "button25", href: "watermelon.html" },
+            { class: "button26", href: "melon.html" },
+            { class: "button27", href: "pineapple.html" },
+            { class: "button28", href: "mango.html" },
+            { class: "button29", href: "lemon.html" },
+            { class: "button30", href: "almond.html" },
+            { class: "button31", href: "walnut.html" },
+            { class: "button32", href: "cashews.html" },
+            { class: "button33", href: "hazelnut.html" },
+            { class: "button34", href: "peanut.html" },
+            { class: "button35", href: "pumpkin_seeds.html" },
+            { class: "button36", href: "chia_seeds.html" },
+            { class: "button37", href: "flax_seeds.html" },
+            { class: "button38", href: "pine_nuts.html" },
+            { class: "button39", href: "buckwheat.html" },
+            { class: "button40", href: "rice.html" },
+            { class: "button41", href: "quinoa.html" },
+            { class: "button42", href: "bulgur.html" },
+            { class: "button43", href: "pearl.html" },
+            { class: "button44", href: "corn_porridge.html" },
+            { class: "button45", href: "lentils.html" },
+            { class: "button46", href: "chickpea.html" },
+            { class: "button47", href: "beans.html" },
+            { class: "button48", href: "peas.html" },
+            { class: "button49", href: "edamame.html" },
+            { class: "button50", href: "milk.html" },
+            { class: "button51", href: "yogurt.html" },
+            { class: "button52", href: "cottage_cheese.html" },
+            { class: "button53", href: "cheese.html" },
+            { class: "button54", href: "cream.html" },
+            { class: "button55", href: "sour_cream.html" },
+            { class: "button56", href: "kefir.html" },
+            { class: "button57", href: "pork.html" },
+            { class: "button58", href: "turkey.html" },
+            { class: "button59", href: "lamb.html" },
+            { class: "button60", href: "duck.html" },
+            { class: "button61", href: "tuna.html" },
+            { class: "button62", href: "herring.html" },
+            { class: "button63", href: "shrimps.html" },
+            { class: "button64", href: "squid.html" },
+            { class: "button65", href: "mussels.html" },
+            { class: "button66", href: "eggs.html" },
+            { class: "button67", href: "olive_oil.html" },
+            { class: "button68", href: "artichoke.html" },
+            { class: "button69", href: "linseed_oil.html" },
+            { class: "button70", href: "ghee_oil.html" },
+            { class: "button71", href: "water.html" },
+            { class: "button72", href: "pepper.html" },
+            { class: "button73", href: "coffee.html" },
+            { class: "button74", href: "almond_milk.html" },
+            { class: "button75", href: "oat_milk.html" },
+            { class: "button76", href: "pasta.html" },
+            { class: "button77", href: "asparagus.html" },
+            { class: "button78", href: "peach.html" },
+            { class: "button79", href: "dates.html" },
+            { class: "button80", href: "mushrooms.html" },
+            { class: "button81", href: "coconut.html" },
+            { class: "button82", href: "dragon_fruit.html" },
+            { class: "button83", href: "pomegrante.html" },
+            { class: "button84", href: "artichoke.html" },
+            { class: "button85", href: "pistachio_nuts.html" },
+            { class: "button86", href: "oats.html" },
+            { class: "button87", href: "coconut_water.html" },
+            { class: "button88", href: "salt.html" },
+            { class: "button89", href: "sugar.html" },
+            { class: "button90", href: "tofu.html" },
+            { class: "button91", href: "butter.html" },
+
+        ];
+
+        // Функция для перемешивания массива в случайном порядке (алгоритм Фишера-Йетса)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Перемешиваем кнопки
+        const shuffledButtons = shuffleArray(buttons);
+
+        // Получаем контейнер для кнопок
+        const buttonsContainer = document.getElementById('buttons');
+
+        // Создаем и добавляем кнопки в DOM в случайном порядке
+        shuffledButtons.forEach(button => {
+            const btnElement = document.createElement('button');
+            btnElement.className = button.class;
+            btnElement.onclick = () => { window.location.href = button.href; };
+            buttonsContainer.appendChild(btnElement);
+        });
+    </script>
+
+</body>
+</html>

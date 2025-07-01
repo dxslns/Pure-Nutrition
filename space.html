@@ -1,0 +1,1178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWBVFG5DVZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PWBVFG5DVZ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Space</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000;
+            --secondary-color: #000;
+            --accent-color: #000;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color:;
+            padding: 20px;
+            background-image: url('\PNGs/pic2.png'); /* Замените на URL вашего изображения */
+            background-size: cover; /* Изображение будет растянуто, чтобы покрыть весь экран */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* Zone 1 - Height/Weight/BMI */
+        .zone-1 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+            .input-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+            }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+        }
+
+            .input-row input {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: var(--border-radius) 0 0 var(--border-radius);
+                font-size: 1rem;
+            }
+
+            .input-row select {
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-left: none;
+                border-radius: 0 var(--border-radius) var(--border-radius) 0;
+                background-color: #f8f9fa;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+
+        .bmi-display {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-width: 120px;
+        }
+
+        .bmi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .bmi-category {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        /* Zone 2 - Goals and Calculations */
+        .zone-2 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .goal-selection, .workout-selection, .results {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .goal-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .goal-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid black;
+            border-radius: var(--border-radius);
+            background-color: #e9ecef;
+            color: var(--dark-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+            .goal-btn.active {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .goal-btn:hover {
+                background-color: #d1d7dc;
+            }
+
+            .goal-btn.active:hover {
+                background-color: var(--secondary-color);
+            }
+
+        .speed-options {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+            .speed-options.active {
+                display: flex;
+                gap: 10px;
+            }
+
+        .speed-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: #e9ecef;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+            .speed-btn.active {
+                background-color: var(--accent-color);
+                color: white;
+            }
+
+        .workout-input {
+            margin-top: 20px;
+        }
+
+            .workout-input label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+            }
+
+            .workout-input input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: var(--border-radius);
+                font-size: 1rem;
+            }
+
+        .results {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+
+        .result-item {
+            margin-bottom: 15px;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .macros-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .macro-item {
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid black;
+        }
+
+        .macro-label {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .macro-value {
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        /* Zone 3 - Calendar */
+        .calendar {
+            width: 100%;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+            .calendar-nav-btn:hover {
+                background-color: var(--secondary-color);
+            }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 500;
+            padding: 10px;
+            color: var(--secondary-color);
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid black;
+        }
+
+            .calendar-day:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        .calendar-day-number {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .day-mood {
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .day-checkbox {
+            display: flex;
+            align-items: center;
+            margin: 3px 0;
+            font-size: 0.8rem;
+        }
+
+            .day-checkbox input {
+                margin-right: 5px;
+            }
+
+        .day-note {
+            width: 100%;
+            font-size: 0.7rem;
+            padding: 3px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            resize: none;
+            height: 40px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+        }
+
+        .mood-slider-container {
+            margin: 20px 0;
+        }
+
+        .mood-slider {
+            width: 100%;
+        }
+
+        .mood-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .modal-checkboxes {
+            margin: 20px 0;
+        }
+
+        .modal-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+            .modal-checkbox input {
+                margin-right: 10px;
+            }
+
+        .modal-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            resize: vertical;
+            min-height: 100px;
+            margin-top: 10px;
+        }
+
+        .save-day-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+            .save-day-btn:hover {
+                background-color: var(--secondary-color);
+            }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .zone-1, .zone-2 {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .input-group, .bmi-display, .goal-selection, .workout-selection, .results {
+                width: 100%;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+            }
+
+            .calendar-day-number {
+                font-size: 0.8rem;
+            }
+
+            .day-note {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-day-header {
+                font-size: 0.7rem;
+                padding: 5px;
+            }
+
+            .calendar-day {
+                padding: 2px;
+            }
+
+            .calendar-day-number {
+                font-size: 0.7rem;
+            }
+
+            .day-mood {
+                display: none;
+            }
+
+            .day-checkbox {
+                font-size: 0.6rem;
+            }
+        }
+
+
+
+
+        .day-indicators {
+            display: flex;
+            justify-content: center;
+            gap: -1px;
+            margin-top: -5px;
+        }
+
+            .day-indicators span {
+                font-size: 0.8em;
+                width: 16px;
+                height: 16px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background-color: rgba(74, 111, 165, 0.1);
+            }
+
+        .indicator-calories {
+            color: var(--success-color);
+        }
+
+        .indicator-macros {
+            color: var(--success-color);
+        }
+
+        /* На десктопах можно показывать больше информации */
+        @media (min-width: 768px) {
+            .day-indicators {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+                .day-indicators span {
+                    width: auto;
+                    height: auto;
+                    background: none;
+                    font-size: 0.7em;
+                    justify-content: flex-start;
+                    padding-left: 2px;
+                }
+
+            .indicator-calories::before {
+                content: 'Calories: ';
+            }
+
+            .indicator-macros::before {
+                content: 'Macros: ';
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Space</h1>
+
+        <!-- Zone 1: Height/Weight/BMI -->
+        <div class="section">
+            <h2 class="section-title">Body Metrics</h2>
+            <div class="zone-1">
+                <div class="input-group">
+                    <label for="height">Current Height</label>
+                    <div class="input-row">
+                        <input type="number" id="height" placeholder="Height">
+                        <select id="height-unit">
+                            <option value="cm">cm</option>
+                            <option value="ft">ft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="weight">Current Weight</label>
+                    <div class="input-row">
+                        <input type="number" id="weight" placeholder="Weight">
+                        <select id="weight-unit">
+                            <option value="kg">kg</option>
+                            <option value="lbs">lbs</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bmi-display">
+                    <div class="bmi-value" id="bmi-value">--</div>
+                    <div class="bmi-category" id="bmi-category">BMI</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="goal-weight">Goal Weight</label>
+                    <div class="input-row">
+                        <input type="number" id="goal-weight" placeholder="Goal weight">
+                        <select id="goal-weight-unit">
+                            <option value="kg">kg</option>
+                            <option value="lbs">lbs</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone 2: Goals and Calculations -->
+        <div class="section">
+            <h2 class="section-title">Goals & Nutrition</h2>
+            <div class="zone-2">
+                <div class="goal-selection">
+                    <label>Your Goal</label>
+                    <div class="goal-options">
+                        <button class="goal-btn" data-goal="gain">Gain</button>
+                        <button class="goal-btn" data-goal="loose">Lose</button>
+                        <button class="goal-btn active" data-goal="maintain">Maintain</button>
+                    </div>
+
+                    <div class="speed-options">
+                        <button class="speed-btn" data-speed="fast">Fast</button>
+                        <button class="speed-btn active" data-speed="recommended">Recommended</button>
+                        <button class="speed-btn" data-speed="slow">Slow</button>
+                    </div>
+
+                    <div class="workout-input">
+                        <label for="workouts-per-week">Workouts per Week</label>
+                        <input type="number" id="workouts-per-week" min="0" max="7" value="3">
+                    </div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <div class="result-label">Daily Calories</div>
+                        <div class="result-value" id="daily-calories">--</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Macros (grams)</div>
+                        <div class="macros-grid">
+                            <div class="macro-item">
+                                <div class="macro-label">Protein</div>
+                                <div class="macro-value" id="protein-value">--</div>
+                            </div>
+                            <div class="macro-item">
+                                <div class="macro-label">Carbs</div>
+                                <div class="macro-value" id="carbs-value">--</div>
+                            </div>
+                            <div class="macro-item">
+                                <div class="macro-label">Fats</div>
+                                <div class="macro-value" id="fats-value">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone 3: Calendar -->
+        <div class="section">
+            <h2 class="section-title">Daily Tracking</h2>
+            <div class="calendar">
+                <div class="calendar-header">
+                    <div class="calendar-title" id="current-month-year">June 2023</div>
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-btn" id="prev-month">Previous</button>
+                        <button class="calendar-nav-btn" id="next-month">Next</button>
+                    </div>
+                </div>
+
+                <div class="calendar-grid" id="calendar-days-header">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+                </div>
+
+                <div class="calendar-grid" id="calendar-days">
+                    <!-- Calendar days will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day Details Modal -->
+    <div class="modal" id="day-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-day-title">Day Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="mood-slider-container">
+                <label>How was your day? (1-10)</label>
+                <input type="range" min="1" max="10" value="5" class="mood-slider" id="mood-slider">
+                <div class="mood-labels">
+                    <span>1 (Bad)</span>
+                    <span>10 (Great)</span>
+                </div>
+                <div id="mood-value-display">5</div>
+            </div>
+            <div class="modal-checkboxes">
+                <div class="modal-checkbox">
+                    <input type="checkbox" id="calories-checkbox">
+                    <label for="calories-checkbox">Met calorie goal</label>
+                </div>
+                <div class="modal-checkbox">
+                    <input type="checkbox" id="macros-checkbox">
+                    <label for="macros-checkbox">Met macros goal</label>
+                </div>
+            </div>
+            <div>
+                <label for="day-notes">Notes</label>
+                <textarea class="modal-textarea" id="day-notes" placeholder="Write your notes for the day..."></textarea>
+            </div>
+            <button class="save-day-btn" id="save-day-btn">Save Day</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Current date
+            let currentDate = new Date();
+            let currentYear = currentDate.getFullYear();
+            let currentMonth = currentDate.getMonth();
+            let selectedDay = null;
+
+            // DOM Elements
+            const heightInput = document.getElementById('height');
+            const heightUnit = document.getElementById('height-unit');
+            const weightInput = document.getElementById('weight');
+            const weightUnit = document.getElementById('weight-unit');
+            const goalWeightInput = document.getElementById('goal-weight');
+            const goalWeightUnit = document.getElementById('goal-weight-unit');
+            const bmiValue = document.getElementById('bmi-value');
+            const bmiCategory = document.getElementById('bmi-category');
+            const goalButtons = document.querySelectorAll('.goal-btn');
+            const speedOptions = document.querySelector('.speed-options');
+            const speedButtons = document.querySelectorAll('.speed-btn');
+            const workoutsInput = document.getElementById('workouts-per-week');
+            const dailyCalories = document.getElementById('daily-calories');
+            const proteinValue = document.getElementById('protein-value');
+            const carbsValue = document.getElementById('carbs-value');
+            const fatsValue = document.getElementById('fats-value');
+            const currentMonthYear = document.getElementById('current-month-year');
+            const calendarDays = document.getElementById('calendar-days');
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+            const dayModal = document.getElementById('day-modal');
+            const modalDayTitle = document.getElementById('modal-day-title');
+            const moodSlider = document.getElementById('mood-slider');
+            const moodValueDisplay = document.getElementById('mood-value-display');
+            const caloriesCheckbox = document.getElementById('calories-checkbox');
+            const macrosCheckbox = document.getElementById('macros-checkbox');
+            const dayNotes = document.getElementById('day-notes');
+            const saveDayBtn = document.getElementById('save-day-btn');
+            const closeModal = document.querySelector('.close-modal');
+
+            // Load saved data from localStorage
+            loadData();
+
+            // Event Listeners
+            heightInput.addEventListener('input', calculateBMI);
+            heightUnit.addEventListener('change', calculateBMI);
+            weightInput.addEventListener('input', calculateBMI);
+            weightUnit.addEventListener('change', calculateBMI);
+            goalWeightInput.addEventListener('input', calculateNutrition);
+            goalWeightUnit.addEventListener('change', calculateNutrition);
+            workoutsInput.addEventListener('input', calculateNutrition);
+
+            goalButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    goalButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Show/hide speed options based on goal
+                    if (this.dataset.goal === 'gain' || this.dataset.goal === 'loose') {
+                        speedOptions.classList.add('active');
+                    } else {
+                        speedOptions.classList.remove('active');
+                    }
+
+                    calculateNutrition();
+                    saveData();
+                });
+            });
+
+            speedButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    speedButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    calculateNutrition();
+                    saveData();
+                });
+            });
+
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar();
+            });
+
+            closeModal.addEventListener('click', () => {
+                dayModal.style.display = 'none';
+            });
+
+            moodSlider.addEventListener('input', () => {
+                moodValueDisplay.textContent = moodSlider.value;
+            });
+
+            saveDayBtn.addEventListener('click', saveDayData);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === dayModal) {
+                    dayModal.style.display = 'none';
+                }
+            });
+
+            // Initialize
+            calculateBMI();
+            calculateNutrition();
+            renderCalendar();
+
+            // Functions
+            function calculateBMI() {
+                const height = parseFloat(heightInput.value);
+                const weight = parseFloat(weightInput.value);
+
+                if (!height || !weight) {
+                    bmiValue.textContent = '--';
+                    bmiCategory.textContent = 'BMI';
+                    return;
+                }
+
+                // Convert to metric if needed
+                let heightInMeters;
+                if (heightUnit.value === 'cm') {
+                    heightInMeters = height / 100;
+                } else {
+                    // ft to meters (assuming input is in feet)
+                    heightInMeters = height * 0.3048;
+                }
+
+                let weightInKg;
+                if (weightUnit.value === 'kg') {
+                    weightInKg = weight;
+                } else {
+                    // lbs to kg
+                    weightInKg = weight * 0.453592;
+                }
+
+                const bmi = weightInKg / (heightInMeters * heightInMeters);
+                bmiValue.textContent = bmi.toFixed(1);
+
+                // Determine BMI category
+                if (bmi < 18.5) {
+                    bmiCategory.textContent = 'Underweight';
+                    bmiCategory.style.color = '#ffc107'; // yellow
+                } else if (bmi >= 18.5 && bmi < 25) {
+                    bmiCategory.textContent = 'Normal';
+                    bmiCategory.style.color = '#28a745'; // green
+                } else if (bmi >= 25 && bmi < 30) {
+                    bmiCategory.textContent = 'Overweight';
+                    bmiCategory.style.color = '#fd7e14'; // orange
+                } else {
+                    bmiCategory.textContent = 'Obese';
+                    bmiCategory.style.color = '#dc3545'; // red
+                }
+
+                calculateNutrition();
+                saveData();
+            }
+
+            function calculateNutrition() {
+                const weight = parseFloat(weightInput.value);
+                const goalWeight = parseFloat(goalWeightInput.value);
+                const workouts = parseInt(workoutsInput.value) || 0;
+
+                if (!weight) return;
+
+                // Convert weight to kg if needed
+                let weightInKg;
+                if (weightUnit.value === 'kg') {
+                    weightInKg = weight;
+                } else {
+                    weightInKg = weight * 0.453592;
+                }
+
+                // Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
+                // For simplicity, we'll assume male (5), female would be -161
+                const bmr = (10 * weightInKg) + (6.25 * (parseFloat(heightInput.value) / (heightUnit.value === 'cm' ? 1 : 2.54))) - (5 * 30) + 5;
+
+                // Adjust for activity level
+                let activityFactor;
+                if (workouts === 0) {
+                    activityFactor = 1.2; // Sedentary
+                } else if (workouts <= 2) {
+                    activityFactor = 1.375; // Lightly active
+                } else if (workouts <= 5) {
+                    activityFactor = 1.55; // Moderately active
+                } else {
+                    activityFactor = 1.725; // Very active
+                }
+
+                let maintenanceCalories = bmr * activityFactor;
+
+                // Adjust calories based on goal
+                const selectedGoal = document.querySelector('.goal-btn.active').dataset.goal;
+                const selectedSpeed = document.querySelector('.speed-btn.active')?.dataset.speed || 'recommended';
+
+                let calorieAdjustment = 0;
+                if (selectedGoal === 'gain') {
+                    if (selectedSpeed === 'fast') calorieAdjustment = 500;
+                    else if (selectedSpeed === 'recommended') calorieAdjustment = 250;
+                    else calorieAdjustment = 100;
+                    maintenanceCalories += calorieAdjustment;
+                } else if (selectedGoal === 'loose') {
+                    if (selectedSpeed === 'fast') calorieAdjustment = -500;
+                    else if (selectedSpeed === 'recommended') calorieAdjustment = -250;
+                    else calorieAdjustment = -100;
+                    maintenanceCalories += calorieAdjustment;
+                }
+
+                // Calculate macros (40% carbs, 30% protein, 30% fat)
+                const proteinG = Math.round((maintenanceCalories * 0.3) / 4);
+                const carbsG = Math.round((maintenanceCalories * 0.4) / 4);
+                const fatsG = Math.round((maintenanceCalories * 0.3) / 9);
+
+                // Update UI
+                dailyCalories.textContent = Math.round(maintenanceCalories);
+                proteinValue.textContent = proteinG;
+                carbsValue.textContent = carbsG;
+                fatsValue.textContent = fatsG;
+
+                saveData();
+            }
+
+            function renderCalendar() {
+                // Set month and year title
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                currentMonthYear.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+                // Get first day of month and total days in month
+                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                // Clear previous calendar days
+                calendarDays.innerHTML = '';
+
+                // Add empty cells for days before the first day of the month
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day empty';
+                    calendarDays.appendChild(emptyDay);
+                }
+
+                // Add cells for each day of the month
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.dataset.day = day;
+                    dayElement.dataset.month = currentMonth;
+                    dayElement.dataset.year = currentYear;
+
+                    // Check if this is today
+                    const today = new Date();
+                    if (currentYear === today.getFullYear() && currentMonth === today.getMonth() && day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+
+                    // Add day number
+                    const dayNumber = document.createElement('div');
+                    dayNumber.className = 'calendar-day-number';
+                    dayNumber.textContent = day;
+                    dayElement.appendChild(dayNumber);
+
+                    // Load saved data for this day if exists
+                    const dateKey = `${currentYear}-${currentMonth}-${day}`;
+                    const dayData = getDayData(dateKey);
+
+                    if (dayData) {
+                        // Add mood indicator
+                        if (dayData.mood) {
+                            const moodIndicator = document.createElement('input');
+                            moodIndicator.type = 'range';
+                            moodIndicator.className = 'day-mood';
+                            moodIndicator.min = '1';
+                            moodIndicator.max = '10';
+                            moodIndicator.value = dayData.mood;
+                            moodIndicator.disabled = true;
+                            dayElement.appendChild(moodIndicator);
+                        }
+
+                        // Замените код индикаторов на:
+                        if (dayData.caloriesMet || dayData.macrosMet) {
+                            const indicators = document.createElement('div');
+                            indicators.className = 'day-indicators';
+
+                            if (dayData.caloriesMet) {
+                                indicators.innerHTML += '<span class="indicator-calories" title="Calories goal met">✓</span>';
+                            }
+                            if (dayData.macrosMet) {
+                                indicators.innerHTML += '<span class="indicator-macros" title="Macros goal met">✧</span>';
+                            }
+
+                            dayElement.appendChild(indicators);
+                        }
+
+                        // Add note preview if exists
+                        if (dayData.notes) {
+                            const notePreview = document.createElement('textarea');
+                            notePreview.className = 'day-note';
+                            notePreview.value = dayData.notes;
+                            notePreview.disabled = true;
+                            dayElement.appendChild(notePreview);
+                        }
+                    }
+
+                    // Add click event
+                    dayElement.addEventListener('click', () => openDayModal(day, currentMonth, currentYear));
+
+                    calendarDays.appendChild(dayElement);
+                }
+            }
+
+            function openDayModal(day, month, year) {
+                selectedDay = { day, month, year };
+                const dateKey = `${year}-${month}-${day}`;
+                const dayData = getDayData(dateKey);
+
+                // Set modal title
+                const date = new Date(year, month, day);
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                modalDayTitle.textContent = date.toLocaleDateString('en-US', options);
+
+                // Set values from saved data or defaults
+                if (dayData) {
+                    moodSlider.value = dayData.mood || 5;
+                    caloriesCheckbox.checked = dayData.caloriesMet || false;
+                    macrosCheckbox.checked = dayData.macrosMet || false;
+                    dayNotes.value = dayData.notes || '';
+                } else {
+                    moodSlider.value = 5;
+                    caloriesCheckbox.checked = false;
+                    macrosCheckbox.checked = false;
+                    dayNotes.value = '';
+                }
+
+                moodValueDisplay.textContent = moodSlider.value;
+                dayModal.style.display = 'flex';
+            }
+
+            function saveDayData() {
+                if (!selectedDay) return;
+
+                const dateKey = `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`;
+                const dayData = {
+                    mood: parseInt(moodSlider.value),
+                    caloriesMet: caloriesCheckbox.checked,
+                    macrosMet: macrosCheckbox.checked,
+                    notes: dayNotes.value
+                };
+
+                // Save to localStorage
+                const allDaysData = JSON.parse(localStorage.getItem('daysData')) || {};
+                allDaysData[dateKey] = dayData;
+                localStorage.setItem('daysData', JSON.stringify(allDaysData));
+
+                // Close modal and refresh calendar
+                dayModal.style.display = 'none';
+                renderCalendar();
+            }
+
+            function getDayData(dateKey) {
+                const allDaysData = JSON.parse(localStorage.getItem('daysData')) || {};
+                return allDaysData[dateKey];
+            }
+
+            function saveData() {
+                const data = {
+                    height: heightInput.value,
+                    heightUnit: heightUnit.value,
+                    weight: weightInput.value,
+                    weightUnit: weightUnit.value,
+                    goalWeight: goalWeightInput.value,
+                    goalWeightUnit: goalWeightUnit.value,
+                    goal: document.querySelector('.goal-btn.active').dataset.goal,
+                    speed: document.querySelector('.speed-btn.active')?.dataset.speed || 'recommended',
+                    workouts: workoutsInput.value,
+                    calories: dailyCalories.textContent,
+                    protein: proteinValue.textContent,
+                    carbs: carbsValue.textContent,
+                    fats: fatsValue.textContent,
+                    bmi: bmiValue.textContent,
+                    bmiCategory: bmiCategory.textContent
+                };
+
+                localStorage.setItem('healthData', JSON.stringify(data));
+            }
+
+            function loadData() {
+                const savedData = JSON.parse(localStorage.getItem('healthData'));
+                if (!savedData) return;
+
+                // Load basic data
+                heightInput.value = savedData.height || '';
+                heightUnit.value = savedData.heightUnit || 'cm';
+                weightInput.value = savedData.weight || '';
+                weightUnit.value = savedData.weightUnit || 'kg';
+                goalWeightInput.value = savedData.goalWeight || '';
+                goalWeightUnit.value = savedData.goalWeightUnit || 'kg';
+                workoutsInput.value = savedData.workouts || '3';
+
+                // Load goal and speed
+                if (savedData.goal) {
+                    document.querySelectorAll('.goal-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.dataset.goal === savedData.goal) {
+                            btn.classList.add('active');
+                        }
+                    });
+
+                    if (savedData.goal === 'gain' || savedData.goal === 'loose') {
+                        speedOptions.classList.add('active');
+                        if (savedData.speed) {
+                            document.querySelectorAll('.speed-btn').forEach(btn => {
+                                btn.classList.remove('active');
+                                if (btn.dataset.speed === savedData.speed) {
+                                    btn.classList.add('active');
+                                }
+                            });
+                        }
+                    }
+                }
+
+                // Update calculated values
+                bmiValue.textContent = savedData.bmi || '--';
+                bmiCategory.textContent = savedData.bmiCategory || 'BMI';
+                dailyCalories.textContent = savedData.calories || '--';
+                proteinValue.textContent = savedData.protein || '--';
+                carbsValue.textContent = savedData.carbs || '--';
+                fatsValue.textContent = savedData.fats || '--';
+            }
+        });
+    </script>
+</body>
+</html>

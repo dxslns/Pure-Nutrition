@@ -1725,6 +1725,59 @@
         </div>
     </main>
 
+    <div id="google_translate_element" style="display: none;"></div>
+<button onclick="switchLang()">🌐 EN / RU</button>
+
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'ru',
+      includedLanguages: 'en,ru',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+
+  function switchLang() {
+    const currentLang = localStorage.getItem('lang') || 'ru';
+    const newLang = currentLang === 'ru' ? 'en' : 'ru';
+    localStorage.setItem('lang', newLang);
+    waitAndTranslate(newLang);
+  }
+
+  function waitAndTranslate(lang) {
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const iframe = document.querySelector('iframe.goog-te-menu-frame');
+      if (iframe) {
+        const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const langBtn = Array.from(innerDoc.querySelectorAll('.goog-te-menu2-item span.text'))
+          .find(span => span.textContent.toLowerCase().includes(lang));
+        if (langBtn) {
+          langBtn.click();
+          clearInterval(interval);
+        }
+      }
+      attempts++;
+      if (attempts > 10) {
+        clearInterval(interval);
+        alert("Переводчик не загрузился. Попробуй через пару секунд.");
+      }
+    }, 500);
+  }
+
+  // Автоперевод по сохранённому языку
+  window.addEventListener('load', () => {
+    const lang = localStorage.getItem('lang');
+    if (lang && lang !== 'ru') {
+      waitAndTranslate(lang);
+    }
+  });
+</script>
+
+<!-- ⚠️ ОБЯЗАТЕЛЬНО HTTPS -->
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
     <footer>
         <p>&copy; 2025 Pure Nutrition</p>
     </footer>

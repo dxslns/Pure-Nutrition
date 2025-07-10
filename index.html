@@ -87,14 +87,15 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 55%; /* Чуть больше 50% */
             background: rgba(0, 149, 255, 0.4);
-            clip-path: inset(50% 0 0 0); /* Показывать только нижнюю половину */
             z-index: 1;
             pointer-events: none;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
             transition: transform 0.2s ease;
-            border-radius: inherit;
         }
+
 
 
 
@@ -373,18 +374,17 @@
         window.addEventListener('deviceorientation', function (event) {
             const beta = event.beta || 0;   // вперед/назад
             const gamma = event.gamma || 0; // влево/вправо
-
+    
             const wave = document.querySelector('.button2 .wave');
-
+    
             // Ограничим наклон: max ±30°
-            const clampedBeta = Math.max(Math.min(beta, 30), -30);
-            const clampedGamma = Math.max(Math.min(gamma, 30), -30);
-
+            const clampedBeta = Math.max(Math.min(beta, 50), -50);
+            const clampedGamma = Math.max(Math.min(gamma, 50), -50);
+    
             // Поворот по X и Y
             wave.style.transform = `rotateX(${clampedBeta / 2}deg) rotateY(${clampedGamma / 2}deg)`;
         });
     </script>
-
 
 </body>
 </html>

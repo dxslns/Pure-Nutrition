@@ -87,12 +87,12 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 50%; /* <-- только половина */
+            height: 55%; /* <-- только половина */
             background: rgba(0, 149, 255, 0.4);
             z-index: 1;
             pointer-events: none;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
             transition: transform 0.2s ease;
         }
 
@@ -375,8 +375,8 @@
             const wave = document.querySelector('.button2 .wave');
     
             // Ограничим наклон: max ±30°
-            const clampedBeta = Math.max(Math.min(beta, 50), -50);
-            const clampedGamma = Math.max(Math.min(gamma, 50), -50);
+            const clampedBeta = Math.max(Math.min(beta, 30), -30);
+            const clampedGamma = Math.max(Math.min(gamma, 30), -30);
     
             // Поворот по X и Y
             wave.style.transform = `rotateX(${clampedBeta / 2}deg) rotateY(${clampedGamma / 2}deg)`;

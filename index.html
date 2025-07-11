@@ -377,8 +377,8 @@
             const wave = document.querySelector('.button2 .wave');
 
             // Ограничим наклон: max ±30°
-            const clampedBeta = Math.max(Math.min(beta, 37), -37);
-            const clampedGamma = Math.max(Math.min(gamma, 37), -37);
+            const clampedBeta = Math.max(Math.min(beta, 36), -36);
+            const clampedGamma = Math.max(Math.min(gamma, 36), -36);
 
             // Поворот по X и Y
             wave.style.transform = `rotateX(${clampedBeta / 2}deg) rotateY(${clampedGamma / 2}deg)`;

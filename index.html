@@ -93,7 +93,7 @@
             pointer-events: none;
             border-bottom-left-radius: 25px;
             border-bottom-right-radius: 25px;
-            transition: transform 0.2s ease;
+            transition: transform 0.4s ease;
         }
 
         .button3 {
@@ -375,8 +375,8 @@
             const wave = document.querySelector('.button2 .wave');
     
             // Ограничим наклон: max ±30°
-            const clampedBeta = Math.max(Math.min(beta, 30), -30);
-            const clampedGamma = Math.max(Math.min(gamma, 30), -30);
+            const clampedBeta = Math.max(Math.min(beta, 40), -40);
+            const clampedGamma = Math.max(Math.min(gamma, 40), -40);
     
             // Поворот по X и Y
             wave.style.transform = `rotateX(${clampedBeta / 2}deg) rotateY(${clampedGamma / 2}deg)`;

@@ -7,178 +7,127 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-PWBVFG5DVZ');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pure Nutrition</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Categories | Pure Nutrition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
 
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: auto;
-            background-image: url('\PNGs/pic2.png'); /* Замените на URL вашего изображения */
-            background-size: cover; /* Изображение будет растянуто, чтобы покрыть весь экран */
-            background-position: center; /* Центрирует изображение */
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #212529;
+            padding: 2rem;
+            background-image: url('PNGs/pic2.png');
+            background-size: cover;
+            background-position: center;
             background-repeat: no-repeat;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: rgba(255, 255, 255, 0);
-            color: black;
-            width: 100%;
             text-align: center;
-            padding: 20px 0;
-            height: 10%;
+            margin-bottom: 2rem;
         }
 
-        main {
-            padding: 20px;
-        }
-
-        section {
-            background: #ffffff;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 20px;
-            border: 0px solid black;
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        @media (max-height: 807px) {
-            section {
-                padding: 17px;
+            header h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
             }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
-        @media (max-height: 782px) {
-            section {
-                padding: 15px;
+        .card {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            text-align: left; /* СДЕЛАЛИ ВЫРАВНИВАНИЕ ВЛЕВО */
+        }
+
+            .card img {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 1rem;
             }
-        }
 
-        @media (max-height: 765px) {
-            section {
-                padding: 13px;
+            .card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                text-align: left; /* Добавлено */
             }
-        }
 
-        @media (max-height: 751px) {
-            section {
-                padding: 11px;
+            .card p {
+                font-size: 0.9rem;
+                color: #495057;
+                text-align: left; /* Добавлено */
             }
-        }
 
-        .cl1 {
-            color: forestgreen; /* ������ ���� ����� */
-        }
-
-        .cl2 {
-            color: orange; /* ������ ���� ����� */
-        }
-
-        .cl3 {
-            color: red; /* ������ ���� ����� */
-        }
-
-        h1 {
-            font-size: 25px;
-        }
     </style>
-
 </head>
 <body>
 
     <header>
-        <h1 style="font-size: 50px">Categories</h1>
+        <h1>Categories</h1>
     </header>
 
-    <main>
-        <section data-aos="fade-right" onclick="window.location.href='highprotein.html'">
-            <h1>High Protein</h1>
-        </section>
-        <section data-aos="fade-up" onclick="window.location.href='veganprotein.html'">
-            <h1>Vegan Protein</h1>
-        </section>
-        <section data-aos="fade-right" onclick="window.location.href='highomega3.html'">
-            <h1>High Omega 3</h1>
-        </section>
-        <section data-aos="fade-up" onclick="window.location.href='lowcarb.html'">
-            <h1>Low Carb</h1>
-        </section>
-        <section data-aos="fade-right" onclick="window.location.href='highfiber.html'">
-            <h1>High-Fiber</h1>
-        </section>
-        <section data-aos="fade-up" onclick="window.location.href='quickneasy.html'">
-            <h1>Quick & Easy</h1>
-        </section>
-        <section data-aos="fade-right" onclick="window.location.href='budgetfriendly.html'">
-            <h1>Budget-Friendly</h1>
-        </section>
-
+    <main class="grid">
+        <div class="card" data-aos="fade-right" onclick="window.location.href='highprotein.html'">
+            <img src="PNGs/proteins.png" alt="High Protein" />
+            <h3>High Protein</h3>
+            <p>Foods rich in protein for muscle building, satiety, and body repair.</p>
+        </div>
+        <div class="card" data-aos="fade-up" onclick="window.location.href='veganprotein.html'">
+            <img src="PNGs/vegan.png" alt="Vegan Protein" />
+            <h3>Vegan Protein</h3>
+            <p>Plant-based sources of protein ideal for vegan and vegetarian diets.</p>
+        </div>
+        <div class="card" data-aos="fade-right" onclick="window.location.href='highomega3.html'">
+            <img src="PNGs/medical.png" alt="High Omega 3" />
+            <h3>High Omega 3</h3>
+            <p>Foods high in omega-3 fatty acids for heart and brain health.</p>
+        </div>
+        <div class="card" data-aos="fade-up" onclick="window.location.href='lowcarb.html'">
+            <img src="PNGs/vegetable.png" alt="Low Carb" />
+            <h3>Low Carb</h3>
+            <p>Low-carb options perfect for managing weight and blood sugar levels.</p>
+        </div>
+        <div class="card" data-aos="fade-right" onclick="window.location.href='highfiber.html'">
+            <img src="PNGs/high-fiber.png" alt="High Fiber" />
+            <h3>High-Fiber</h3>
+            <p>Support digestion and gut health with fiber-rich food choices.</p>
+        </div>
+        <div class="card" data-aos="fade-up" onclick="window.location.href='quickneasy.html'">
+            <img src="PNGs/123.png" alt="Quick & Easy" />
+            <h3>Quick & Easy</h3>
+            <p>Fast, nutritious meals for busy lifestyles and quick meal prep.</p>
+        </div>
+        <div class="card" data-aos="fade-right" onclick="window.location.href='budgetfriendly.html'">
+            <img src="PNGs/cost.png" alt="Budget-Friendly" />
+            <h3>Budget-Friendly</h3>
+            <p>Healthy eating that won’t break the bank — smart and affordable.</p>
+        </div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
     <script>
         AOS.init();
-    </script>
-
-    <script>
-        // Функция для добавления страницы в историю
-        function addToHistory(page) {
-            let history = JSON.parse(localStorage.getItem('pageHistory')) || [];
-
-            // Проверяем, если страница уже есть в истории, удаляем её
-            history = history.filter(item => item !== page);
-
-            // Добавляем новую страницу в начало массива
-            history.unshift(page);
-
-            // Ограничиваем количество записей в истории (например, 10)
-            if (history.length > 10) {
-                history.pop();
-            }
-
-            localStorage.setItem('pageHistory', JSON.stringify(history));
-        }
-
-        // Функция для отображения истории
-        function displayHistory() {
-            const history = JSON.parse(localStorage.getItem('pageHistory')) || [];
-            const historyContainer = document.getElementById('history');
-
-            historyContainer.innerHTML = '<h3>История посещений:</h3>';
-
-            if (history.length === 0) {
-                historyContainer.innerHTML += '<p>История пуста.</p>';
-            } else {
-                const list = document.createElement('ul');
-                history.forEach(page => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = page;
-                    list.appendChild(listItem);
-                });
-                historyContainer.appendChild(list);
-            }
-        }
-
-        // Добавляем текущую страницу в историю и отображаем её при загрузке
-        window.onload = function () {
-            addToHistory(window.location.href);
-            displayHistory();
-        };
     </script>
 </body>
 </html>

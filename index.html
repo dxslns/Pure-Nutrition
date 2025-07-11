@@ -77,7 +77,7 @@
             overflow: hidden;
         }
 
-        .button-text {
+        .button-textw {
             position: relative;
             z-index: 2;
         }
@@ -99,16 +99,32 @@
 
 
         .button3 {
-            font-size: 60px;
+            font-size: 80px;
             grid-column: span 2;
             border-radius: 100px;
             height: 150px;
             background-color: rgba(255, 255, 255, 0);
-            backdrop-filter: blur(px);
+            backdrop-filter: blur(4px); /* <-- не забудь добавить значение! */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            color: black;
             border: 10px solid #000000;
+            background-image: url('PNGs/explore_img.png');
+            background-size: cover;
+            background-position-y: -10px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
+        .button-text {
+            z-index: 2;
+            mix-blend-mode: difference;
+            color:; /* базовый, difference подменит */
+            pointer-events: none;
+        }
+
 
         .button4 {
             font-size: 50px;
@@ -216,10 +232,13 @@
         <div class="button1" data-aos="fade-right" onclick="window.location.href='catalog.html'">Cata<br>log</div>
         <div class="button2" data-aos="fade-left">
             <div class="wave"></div>
-            <span class="button-text">Water</span>
+            <span class="button-textw">Water</span>
         </div>
 
-        <div class="button3" data-aos="fade-right">Explore</div>
+        <div class="button3">
+            <span class="button-text">Explore</span>
+        </div>
+
         <div class="button4" data-aos="fade-left">Cate<br>go<br>ries</div>
         <div class="button5" data-aos="fade-right">Feedback</div>
         <div class="button6" data-aos="fade-left">Sleep</div>

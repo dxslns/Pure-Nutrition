@@ -395,19 +395,19 @@
         AOS.init();
     </script>
 
-      <script>
+     <script>
         window.addEventListener('deviceorientation', function (event) {
-            const beta = event.beta || 0;   // вперед/назад
+    
             const gamma = event.gamma || 0; // влево/вправо
     
             const wave = document.querySelector('.button2 .wave');
     
             // Ограничим наклон: max ±36°
-            const clampedBeta = Math.max(Math.min(beta, 36), -36);
+    
             const clampedGamma = Math.max(Math.min(gamma, 36), -36);
     
             // Поворот по X и инвертированный Y
-            wave.style.transform = `rotateX(${clampedBeta / 2}deg) rotateY(${(-clampedGamma) / 2}deg)`;
+            wave.style.transform = ` rotateY(${(-clampedGamma) / 2}deg)`;
         });
     </script>
     

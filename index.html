@@ -419,10 +419,9 @@
             return start + (end - start) * factor;
         }
 
-        // Слушаем наклон устройства
         window.addEventListener('deviceorientation', (event) => {
-            tiltXTarget = (event.gamma || 0) / 40; // влево-вправо
-            tiltYTarget = (event.beta || 0) / 40;  // вперёд-назад
+            tiltXTarget = -(event.gamma || 0) / 40; // влево/вправо (инверт)
+            tiltYTarget = -(event.beta || 0) / 40;  // вперёд/назад (инверт)
         });
 
         // Рисуем воду

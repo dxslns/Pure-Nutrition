@@ -64,38 +64,40 @@
         }
 
         .button2 {
-            font-size: 40px;
-            line-height: 50px;
+            position: relative;
+            width: 150px;
+            height: 150px;
             border-radius: 35px;
-            aspect-ratio: 1/1;
-            background-color: rgba(255, 255, 255, 0);
+            background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(4px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            color: black;
-            border: 10px solid #000000;
-            position: relative;
             overflow: hidden;
+            border: 10px solid black;
         }
 
         .button-textw {
             position: relative;
             z-index: 2;
+            font-size: 40px;
+            line-height: 50px;
+            color: black;
         }
 
-        .wave {
+        .drops-container {
             position: absolute;
-            bottom: -10px;
-            left: -100px;
-            width: 200%;
-            height: 55%; /* <-- только половина */
-            background: rgba(0, 149, 255, 0.4);
+            width: 100%;
+            height: 100%;
             z-index: 1;
             pointer-events: none;
-            border-bottom-left-radius: 25px;
-            border-bottom-right-radius: 25px;
-            transition: transform 0.2s ease;
         }
 
+        .drop {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(0, 149, 255, 0.5);
+            border-radius: 50%;
+        }
 
 
         .button3 {
@@ -109,7 +111,7 @@
             border: 10px solid #000000;
             background-image: url('PNGs/explore_img.png');
             background-size: cover;
-            background-position-y: -67px;
+            background-position-y: -66px;
             position: relative;
             z-index: 1;
             overflow: hidden;
@@ -237,10 +239,12 @@
 
     <div class="button-grid">
         <div class="button1" data-aos="fade-right" onclick="window.location.href='catalog.html'">Cata<br>log</div>
+
         <div class="button2" data-aos="fade-left">
-            <div class="wave"></div>
+            <div class="drops-container"></div>
             <span class="button-textw">Water</span>
         </div>
+
 
         <div class="button3" data-aos="fade-right" onclick="window.location.href='compare.html'">
             <span class="button-text">Explore</span>
@@ -395,21 +399,74 @@
         AOS.init();
     </script>
 
-     <script>
-        window.addEventListener('deviceorientation', function (event) {
-    
+    <script>
+        const container = document.querySelector('.drops-container');
+        const button = document.querySelector('.button2');
+        const drops = [];
+        const numDrops = 20;
+
+        // Создаём капли
+        for (let i = 0; i < numDrops; i++) {
+            const drop = document.createElement('div');
+            drop.classList.add('drop');
+            container.appendChild(drop);
+
+            drops.push({
+                el: drop,
+                x: Math.random() * button.clientWidth,
+                y: Math.random() * button.clientHeight,
+                vx: 0,
+                vy: 0
+            });
+        }
+
+        let gravityX = 0;
+        let gravityY = 0;
+
+        // Обновление гравитации по наклону
+        window.addEventListener('deviceorientation', (event) => {
             const gamma = event.gamma || 0; // влево/вправо
-    
-            const wave = document.querySelector('.button2 .wave');
-    
-            // Ограничим наклон: max ±36°
-    
-            const clampedGamma = Math.max(Math.min(gamma, 36), -36);
-    
-            // Поворот по X и инвертированный Y
-            wave.style.transform = ` rotateY(${(-clampedGamma) / 2}deg)`;
+            const beta = event.beta || 0;   // вперед/назад
+
+            gravityX = Math.max(Math.min(gamma, 30), -30) / 60; // от -0.5 до 0.5
+            gravityY = Math.max(Math.min(beta, 30), -30) / 60;
         });
+
+        // Анимация
+        function animate() {
+            for (const drop of drops) {
+                drop.vx += gravityX;
+                drop.vy += gravityY;
+
+                // Трение
+                drop.vx *= 0.95;
+                drop.vy *= 0.95;
+
+                drop.x += drop.vx;
+                drop.y += drop.vy;
+
+                // Отскоки от стенок
+                const maxX = button.clientWidth - 10;
+                const maxY = button.clientHeight - 10;
+
+                if (drop.x <= 0 || drop.x >= maxX) {
+                    drop.vx *= -0.7;
+                    drop.x = Math.max(0, Math.min(drop.x, maxX));
+                }
+                if (drop.y <= 0 || drop.y >= maxY) {
+                    drop.vy *= -0.7;
+                    drop.y = Math.max(0, Math.min(drop.y, maxY));
+                }
+
+                // Применяем позиции
+                drop.el.style.transform = `translate(${drop.x}px, ${drop.y}px)`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     </script>
-    
+
 </body>
 </html>

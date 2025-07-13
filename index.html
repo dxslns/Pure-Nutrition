@@ -357,103 +357,146 @@
 
 
     <script>
-        const container = document.querySelector('.drops-container');
-const button = document.querySelector('.button2');
-const drops = [];
-const numDrops = 100;
-
-const buttonWidth = button.clientWidth;
-const buttonHeight = button.clientHeight;
-
-// Создаём много разнообразных капель
-for (let i = 0; i < numDrops; i++) {
-    const drop = document.createElement('div');
-    drop.classList.add('drop');
-
-    const size = Math.random() * 6 + 4; // от 4 до 10 пикселей
-    drop.style.width = `${size}px`;
-    drop.style.height = `${size}px`;
-    drop.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
-
-    container.appendChild(drop);
-
-    drops.push({
-        el: drop,
-        x: Math.random() * buttonWidth,
-        y: Math.random() * buttonHeight,
-        vx: (Math.random() - 0.5) * 1,
-        vy: (Math.random() - 0.5) * 1,
-        size: size
-    });
-}
-
-let gravityX = 0;
-let gravityY = 0;
-
-// Обновляем гравитацию
-window.addEventListener('deviceorientation', (event) => {
-    const gamma = event.gamma || 0;
-    const beta = event.beta || 0;
-
-    gravityX = Math.max(Math.min(gamma, 30), -30) / 40;
-    gravityY = Math.max(Math.min(beta, 30), -30) / 40;
-});
-
-// Анимация
-function animate() {
-    for (let i = 0; i < drops.length; i++) {
-        const d = drops[i];
-
-        d.vx += gravityX;
-        d.vy += gravityY;
-
-        // трение
-        d.vx *= 0.95;
-        d.vy *= 0.95;
-
-        d.x += d.vx;
-        d.y += d.vy;
-
-        // отскоки
-        const maxX = buttonWidth - d.size;
-        const maxY = buttonHeight - d.size;
-
-        if (d.x <= 0 || d.x >= maxX) {
-            d.vx *= -0.7;
-            d.x = Math.max(0, Math.min(d.x, maxX));
-        }
-
-        if (d.y <= 0 || d.y >= maxY) {
-            d.vy *= -0.7;
-            d.y = Math.max(0, Math.min(d.y, maxY));
-        }
-
-        // отталкивание от других капель
-        for (let j = i + 1; j < drops.length; j++) {
-            const d2 = drops[j];
-            const dx = d2.x - d.x;
-            const dy = d2.y - d.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const minDist = (d.size + d2.size) * 0.5;
-
-            if (dist < minDist && dist > 0) {
-                const angle = Math.atan2(dy, dx);
-                const overlap = (minDist - dist) / 2;
-
-                d.x -= Math.cos(angle) * overlap;
-                d.y -= Math.sin(angle) * overlap;
-                d2.x += Math.cos(angle) * overlap;
-                d2.y += Math.sin(angle) * overlap;
+        function showArticles() {
+            const articles = document.getElementsByClassName('article');
+            for (let i = 0; i < articles.length; i++) {
+                articles[i].classList.add('visible'); // Добавляем класс 'visible' для показа статей
             }
         }
 
-        d.el.style.transform = `translate(${d.x}px, ${d.y}px)`;
-    }
+        function searchFunction() {
+            const input = document.getElementById('search');
+            const filter = input.value.toLowerCase();
+            const articles = document.getElementsByClassName('article');
 
-    requestAnimationFrame(animate);
-}
+            if (filter === "") {
+                // Если поле ввода пустое, скрываем все статьи
+                for (let i = 0; i < articles.length; i++) {
+                    articles[i].classList.remove('visible'); // Убираем класс 'visible'
+                }
+                return; // Выходим из функции
+            }
 
-animate();
+            for (let i = 0; i < articles.length; i++) {
+                const article = articles[i];
+                if (article.innerText.toLowerCase().includes(filter)) {
+                    article.classList.add('visible'); // Показываем элемент
+                } else {
+                    article.classList.remove('visible'); // Скрываем элемент
+                }
+            }
+        }
+
+        // Очищаем поле поиска при переходе на другую страницу
+        window.addEventListener('beforeunload', function () {
+            const input = document.getElementById('search');
+            input.value = ''; // Очищаем значение поля ввода
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <script>
+        const container = document.querySelector('.drops-container');
+        const button = document.querySelector('.button2');
+        const drops = [];
+        const numDrops = 100;
+
+        const buttonWidth = button.clientWidth;
+        const buttonHeight = button.clientHeight;
+
+        // Создаём много разнообразных капель
+        for (let i = 0; i < numDrops; i++) {
+            const drop = document.createElement('div');
+            drop.classList.add('drop');
+
+            const size = Math.random() * 6 + 4; // от 4 до 10 пикселей
+            drop.style.width = `${size}px`;
+            drop.style.height = `${size}px`;
+            drop.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+
+            container.appendChild(drop);
+
+            drops.push({
+                el: drop,
+                x: Math.random() * buttonWidth,
+                y: Math.random() * buttonHeight,
+                vx: (Math.random() - 0.5) * 1,
+                vy: (Math.random() - 0.5) * 1,
+                size: size
+            });
+        }
+
+        let gravityX = 0;
+        let gravityY = 0;
+
+        // Обновляем гравитацию
+        window.addEventListener('deviceorientation', (event) => {
+            const gamma = event.gamma || 0;
+            const beta = event.beta || 0;
+
+            gravityX = Math.max(Math.min(gamma, 30), -30) / 40;
+            gravityY = Math.max(Math.min(beta, 30), -30) / 40;
+        });
+
+        // Анимация
+        function animate() {
+            for (let i = 0; i < drops.length; i++) {
+                const d = drops[i];
+
+                d.vx += gravityX;
+                d.vy += gravityY;
+
+                // трение
+                d.vx *= 0.95;
+                d.vy *= 0.95;
+
+                d.x += d.vx;
+                d.y += d.vy;
+
+                // отскоки
+                const maxX = buttonWidth - d.size;
+                const maxY = buttonHeight - d.size;
+
+                if (d.x <= 0 || d.x >= maxX) {
+                    d.vx *= -0.7;
+                    d.x = Math.max(0, Math.min(d.x, maxX));
+                }
+
+                if (d.y <= 0 || d.y >= maxY) {
+                    d.vy *= -0.7;
+                    d.y = Math.max(0, Math.min(d.y, maxY));
+                }
+
+                // отталкивание от других капель
+                for (let j = i + 1; j < drops.length; j++) {
+                    const d2 = drops[j];
+                    const dx = d2.x - d.x;
+                    const dy = d2.y - d.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const minDist = (d.size + d2.size) * 0.5;
+
+                    if (dist < minDist && dist > 0) {
+                        const angle = Math.atan2(dy, dx);
+                        const overlap = (minDist - dist) / 2;
+
+                        d.x -= Math.cos(angle) * overlap;
+                        d.y -= Math.sin(angle) * overlap;
+                        d2.x += Math.cos(angle) * overlap;
+                        d2.y += Math.sin(angle) * overlap;
+                    }
+                }
+
+                d.el.style.transform = `translate(${d.x}px, ${d.y}px)`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
 
     </script>
 

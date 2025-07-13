@@ -353,103 +353,72 @@
 
 
     <script>
-        function showArticles() {
-            const articles = document.getElementsByClassName('article');
-            for (let i = 0; i < articles.length; i++) {
-                articles[i].classList.add('visible'); // Добавляем класс 'visible' для показа статей
-            }
-        }
-
-        function searchFunction() {
-            const input = document.getElementById('search');
-            const filter = input.value.toLowerCase();
-            const articles = document.getElementsByClassName('article');
-
-            if (filter === "") {
-                // Если поле ввода пустое, скрываем все статьи
-                for (let i = 0; i < articles.length; i++) {
-                    articles[i].classList.remove('visible'); // Убираем класс 'visible'
-                }
-                return; // Выходим из функции
-            }
-
-            for (let i = 0; i < articles.length; i++) {
-                const article = articles[i];
-                if (article.innerText.toLowerCase().includes(filter)) {
-                    article.classList.add('visible'); // Показываем элемент
-                } else {
-                    article.classList.remove('visible'); // Скрываем элемент
-                }
-            }
-        }
-
-        // Очищаем поле поиска при переходе на другую страницу
-        window.addEventListener('beforeunload', function () {
-            const input = document.getElementById('search');
-            input.value = ''; // Очищаем значение поля ввода
-        });
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
-    <script>
         const canvas = document.querySelector('.water-canvas');
-        const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
-        let width, height;
-        function resizeCanvas() {
-            width = canvas.offsetWidth;
-            height = canvas.offsetHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+let width, height;
+function resizeCanvas() {
+    width = canvas.offsetWidth;
+    height = canvas.offsetHeight;
+    canvas.width = width;
+    canvas.height = height;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-        // "Волна"
-        let waveOffset = 0;
-        let tiltX = 0;
-        let tiltY = 0;
+// Параметры воды
+let waveOffset = 0;
+let tiltXTarget = 0, tiltYTarget = 0;
+let tiltX = 0, tiltY = 0;
 
-        // Гравитация от наклона
-        window.addEventListener('deviceorientation', (event) => {
-            tiltX = (event.gamma || 0) / 30; // влево-вправо
-            tiltY = (event.beta || 0) / 30;  // вперёд-назад
-        });
+// Lerp-функция (сглаживание)
+function lerp(start, end, factor) {
+    return start + (end - start) * factor;
+}
 
-        function drawWater() {
-            ctx.clearRect(0, 0, width, height);
+// Слушаем наклон устройства
+window.addEventListener('deviceorientation', (event) => {
+    tiltXTarget = (event.gamma || 0) / 40; // влево-вправо
+    tiltYTarget = (event.beta || 0) / 40;  // вперёд-назад
+});
 
-            const waveHeight = 10;
-            const waveLength = 40;
-            const waterLevel = height * 0.6 + tiltY * 10; // чуть поднимается/опускается
-            const waveSpeed = 0.2;
+// Рисуем воду
+function drawWater() {
+    // Сглаживаем наклон
+    tiltX = lerp(tiltX, tiltXTarget, 0.05);
+    tiltY = lerp(tiltY, tiltYTarget, 0.05);
 
-            ctx.beginPath();
-            ctx.moveTo(0, height);
-            ctx.lineTo(0, waterLevel);
+    ctx.clearRect(0, 0, width, height);
 
-            // синусоида волны
-            for (let x = 0; x <= width; x++) {
-                const y = waterLevel + Math.sin((x + waveOffset) / waveLength) * waveHeight + tiltX * x / 5;
-                ctx.lineTo(x, y);
-            }
+    const waveHeight = 12 + Math.abs(tiltX * 5); // амплитуда волны
+    const waveLength = 40;
+    const waterLevel = height * 0.6 + tiltY * 15; // реагирует на наклон
+    const waveSpeed = 0.8;
 
-            ctx.lineTo(width, height);
-            ctx.closePath();
+    ctx.beginPath();
+    ctx.moveTo(0, height);
+    ctx.lineTo(0, waterLevel);
 
-            ctx.fillStyle = 'rgba(0, 149, 255, 0.4)';
-            ctx.fill();
+    for (let x = 0; x <= width; x++) {
+        const y = waterLevel +
+            Math.sin((x + waveOffset) / waveLength) * waveHeight +
+            tiltX * (x - width / 2) / 4; // лёгкий наклон всей массы
+        ctx.lineTo(x, y);
+    }
 
-            waveOffset += waveSpeed;
+    ctx.lineTo(width, height);
+    ctx.closePath();
 
-            requestAnimationFrame(drawWater);
-        }
+    ctx.fillStyle = 'rgba(0, 149, 255, 0.4)';
+    ctx.fill();
 
-        drawWater();
+    waveOffset += waveSpeed;
+
+    requestAnimationFrame(drawWater);
+}
+
+drawWater();
+
     </script>
 
 

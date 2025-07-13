@@ -357,115 +357,104 @@
 
 
     <script>
-        function showArticles() {
-            const articles = document.getElementsByClassName('article');
-            for (let i = 0; i < articles.length; i++) {
-                articles[i].classList.add('visible'); // Добавляем класс 'visible' для показа статей
-            }
-        }
-
-        function searchFunction() {
-            const input = document.getElementById('search');
-            const filter = input.value.toLowerCase();
-            const articles = document.getElementsByClassName('article');
-
-            if (filter === "") {
-                // Если поле ввода пустое, скрываем все статьи
-                for (let i = 0; i < articles.length; i++) {
-                    articles[i].classList.remove('visible'); // Убираем класс 'visible'
-                }
-                return; // Выходим из функции
-            }
-
-            for (let i = 0; i < articles.length; i++) {
-                const article = articles[i];
-                if (article.innerText.toLowerCase().includes(filter)) {
-                    article.classList.add('visible'); // Показываем элемент
-                } else {
-                    article.classList.remove('visible'); // Скрываем элемент
-                }
-            }
-        }
-
-        // Очищаем поле поиска при переходе на другую страницу
-        window.addEventListener('beforeunload', function () {
-            const input = document.getElementById('search');
-            input.value = ''; // Очищаем значение поля ввода
-        });
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
-    <script>
         const container = document.querySelector('.drops-container');
-        const button = document.querySelector('.button2');
-        const drops = [];
-        const numDrops = 20;
+const button = document.querySelector('.button2');
+const drops = [];
+const numDrops = 100;
 
-        // Создаём капли
-        for (let i = 0; i < numDrops; i++) {
-            const drop = document.createElement('div');
-            drop.classList.add('drop');
-            container.appendChild(drop);
+const buttonWidth = button.clientWidth;
+const buttonHeight = button.clientHeight;
 
-            drops.push({
-                el: drop,
-                x: Math.random() * button.clientWidth,
-                y: Math.random() * button.clientHeight,
-                vx: 0,
-                vy: 0
-            });
+// Создаём много разнообразных капель
+for (let i = 0; i < numDrops; i++) {
+    const drop = document.createElement('div');
+    drop.classList.add('drop');
+
+    const size = Math.random() * 6 + 4; // от 4 до 10 пикселей
+    drop.style.width = `${size}px`;
+    drop.style.height = `${size}px`;
+    drop.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+
+    container.appendChild(drop);
+
+    drops.push({
+        el: drop,
+        x: Math.random() * buttonWidth,
+        y: Math.random() * buttonHeight,
+        vx: (Math.random() - 0.5) * 1,
+        vy: (Math.random() - 0.5) * 1,
+        size: size
+    });
+}
+
+let gravityX = 0;
+let gravityY = 0;
+
+// Обновляем гравитацию
+window.addEventListener('deviceorientation', (event) => {
+    const gamma = event.gamma || 0;
+    const beta = event.beta || 0;
+
+    gravityX = Math.max(Math.min(gamma, 30), -30) / 40;
+    gravityY = Math.max(Math.min(beta, 30), -30) / 40;
+});
+
+// Анимация
+function animate() {
+    for (let i = 0; i < drops.length; i++) {
+        const d = drops[i];
+
+        d.vx += gravityX;
+        d.vy += gravityY;
+
+        // трение
+        d.vx *= 0.95;
+        d.vy *= 0.95;
+
+        d.x += d.vx;
+        d.y += d.vy;
+
+        // отскоки
+        const maxX = buttonWidth - d.size;
+        const maxY = buttonHeight - d.size;
+
+        if (d.x <= 0 || d.x >= maxX) {
+            d.vx *= -0.7;
+            d.x = Math.max(0, Math.min(d.x, maxX));
         }
 
-        let gravityX = 0;
-        let gravityY = 0;
+        if (d.y <= 0 || d.y >= maxY) {
+            d.vy *= -0.7;
+            d.y = Math.max(0, Math.min(d.y, maxY));
+        }
 
-        // Обновление гравитации по наклону
-        window.addEventListener('deviceorientation', (event) => {
-            const gamma = event.gamma || 0; // влево/вправо
-            const beta = event.beta || 0;   // вперед/назад
+        // отталкивание от других капель
+        for (let j = i + 1; j < drops.length; j++) {
+            const d2 = drops[j];
+            const dx = d2.x - d.x;
+            const dy = d2.y - d.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const minDist = (d.size + d2.size) * 0.5;
 
-            gravityX = Math.max(Math.min(gamma, 30), -30) / 60; // от -0.5 до 0.5
-            gravityY = Math.max(Math.min(beta, 30), -30) / 60;
-        });
+            if (dist < minDist && dist > 0) {
+                const angle = Math.atan2(dy, dx);
+                const overlap = (minDist - dist) / 2;
 
-        // Анимация
-        function animate() {
-            for (const drop of drops) {
-                drop.vx += gravityX;
-                drop.vy += gravityY;
-
-                // Трение
-                drop.vx *= 0.95;
-                drop.vy *= 0.95;
-
-                drop.x += drop.vx;
-                drop.y += drop.vy;
-
-                // Отскоки от стенок
-                const maxX = button.clientWidth - 10;
-                const maxY = button.clientHeight - 10;
-
-                if (drop.x <= 0 || drop.x >= maxX) {
-                    drop.vx *= -0.7;
-                    drop.x = Math.max(0, Math.min(drop.x, maxX));
-                }
-                if (drop.y <= 0 || drop.y >= maxY) {
-                    drop.vy *= -0.7;
-                    drop.y = Math.max(0, Math.min(drop.y, maxY));
-                }
-
-                // Применяем позиции
-                drop.el.style.transform = `translate(${drop.x}px, ${drop.y}px)`;
+                d.x -= Math.cos(angle) * overlap;
+                d.y -= Math.sin(angle) * overlap;
+                d2.x += Math.cos(angle) * overlap;
+                d2.y += Math.sin(angle) * overlap;
             }
-
-            requestAnimationFrame(animate);
         }
 
-        animate();
+        d.el.style.transform = `translate(${d.x}px, ${d.y}px)`;
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
     </script>
 
 </body>

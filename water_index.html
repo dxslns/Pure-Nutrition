@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ultra‑Realistic Water Tracker</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f3f4f6;
+            color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .tab-bar {
+            display: flex;
+            background: #fff;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+            .tab-button.active {
+                background: #e6f7fe;
+                color: #00a8cc;
+            }
+
+        .content {
+            flex: 1;
+            overflow: auto;
+            padding: 24px;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #glassCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .glass-img {
+            width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .glass-wrapper {
+            position: relative;
+            width: 200px;
+            height: 400px;
+            margin: 40px auto 20px;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 90px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background: #00a8cc;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            button:hover {
+                background: #008da3;
+            }
+
+        .today-log h3 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .log-entry {
+            font-size: 15px;
+            margin-bottom: 6px;
+            padding-left: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content" id="trackTab">
+        <h2>Track Water</h2>
+        <div class="glass-wrapper">
+            <canvas id="glassCanvas" width="200" height="400"></canvas>
+            <img class="glass-img" src="https://i.imgur.com/5oXnQxM.png" alt="Glass">
+        </div>
+
+        <div class="input-row">
+            <input id="waterAmountInput" type="number" placeholder="ml">
+            <button onclick="addWater()">Add</button>
+        </div>
+
+        <div class="today-log">
+            <h3>Today's Log</h3>
+            <div id="todayEntries"></div>
+        </div>
+    </div>
+
+    <div class="content" id="historyTab" style="display:none">
+        <h2>History</h2>
+        <div id="historyEntries"></div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab-button active" onclick="switchTab('track')">Track</div>
+        <div class="tab-button" onclick="switchTab('history')">History</div>
+    </div>
+
+    <audio id="pourSound" src="https://assets.mixkit.co/sfx/preview/mixkit-water-pour-1215.mp3"></audio>
+
+    <script>
+        const maxDaily = 3000;
+        let currentAmount = 0;
+
+        const canvas = document.getElementById('glassCanvas');
+        const ctx = canvas.getContext('2d');
+        const sound = document.getElementById('pourSound');
+        const todayEntriesEl = document.getElementById('todayEntries');
+        const historyEntriesEl = document.getElementById('historyEntries');
+        const getTodayKey = () => new Date().toISOString().slice(0, 10);
+
+        const bubbles = [];
+        function animate() {
+            ctx.clearRect(0, 0, 200, 400);
+            const fillHeight = Math.min(currentAmount / maxDaily, 1) * 300;
+            const topY = 400 - fillHeight;
+            // draw water
+            const waveHeight = 10;
+            const waveCount = 4;
+            ctx.beginPath();
+            for (let i = 0; i <= 200; i++) {
+                const y = topY + waveHeight * Math.sin((i / 200) * waveCount * Math.PI * 2 + Date.now() / 500);
+                ctx.lineTo(i, y);
+            }
+            ctx.lineTo(200, 400);
+            ctx.lineTo(0, 400);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0,188,212,0.6)';
+            ctx.fill();
+
+            // bubbles
+            bubbles.forEach((b, i) => {
+                b.y -= b.vy;
+                b.x += Math.sin(b.life / 10) * 0.2;
+                b.life++;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.size * Math.sin(b.life / 30), 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                ctx.fill();
+                if (b.y < topY) bubbles.splice(i, 1);
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function addWater() {
+            const val = parseInt(document.getElementById('waterAmountInput').value);
+            if (isNaN(val) || val <= 0) return;
+            currentAmount += val;
+            sound.currentTime = 0;
+            sound.play();
+            for (let i = 0; i < 10; i++) {
+                bubbles.push({
+                    x: 100 + Math.random() * 60 - 30,
+                    y: 400 - (currentAmount / maxDaily) * 300 + 20,
+                    vy: Math.random() * 1 + 0.5,
+                    size: Math.random() * 3 + 2,
+                    life: 0
+                });
+            }
+            logEntry(val);
+            document.getElementById('waterAmountInput').value = '';
+        }
+
+        function logEntry(val) {
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const ent = `${time} - ${val} ml`;
+            const key = getTodayKey();
+            const logs = JSON.parse(localStorage.getItem('waterLogs') || '{}');
+            logs[key] = logs[key] || [];
+            logs[key].push(ent);
+            localStorage.setItem('waterLogs', JSON.stringify(logs));
+            renderToday();
+        }
+
+        function renderToday() {
+            const logs = JSON.parse(localStorage.getItem('waterLogs') || '{}');
+            const today = logs[getTodayKey()] || [];
+            todayEntriesEl.innerHTML = today.map(e => `<div class="log-entry">${e}</div>`).join('');
+        }
+
+        function renderHistory() {
+            const logs = JSON.parse(localStorage.getItem('waterLogs') || '{}');
+            historyEntriesEl.innerHTML = '';
+            for (const d in logs) {
+                historyEntriesEl.innerHTML += `<h4>${d}</h4>${logs[d].map(e => `<div class="log-entry">${e}</div>`).join('')}<hr>`;
+            }
+        }
+
+        function switchTab(id) {
+            document.getElementById('trackTab').style.display = id === 'track' ? 'block' : 'none';
+            document.getElementById('historyTab').style.display = id === 'history' ? 'block' : 'none';
+            document.querySelectorAll('.tab-button').forEach((b, i) => b.classList.toggle('active', (i === 0 && id === 'track') || (i === 1 && id === 'history')));
+            if (id === 'history') renderHistory();
+            else renderToday();
+        }
+
+        renderToday();
+    </script>
+</body>
+</html>

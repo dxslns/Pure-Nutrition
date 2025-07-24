@@ -61,9 +61,10 @@
         }
 
         .section {
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             padding: 20px;
             margin-bottom: 30px;
         }
@@ -385,7 +386,7 @@
 
         .modal-content {
             background-color: white;
-            border-radius: var(--border-radius);
+            border-radius: 30px;
             box-shadow: var(--box-shadow);
             padding: 20px;
             width: 90%;
@@ -456,9 +457,9 @@
 
         .save-day-btn {
             width: 100%;
-            padding: 10px;
+            padding: 25px;
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: 20px;
             background-color: var(--primary-color);
             color: white;
             font-weight: 500;
@@ -495,7 +496,7 @@
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 4800px) {
             .calendar-day-header {
                 font-size: 0.7rem;
                 padding: 5px;
@@ -571,6 +572,137 @@
                 content: 'Macros: ';
             }
         }
+
+        #toast-container {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 320px;
+            pointer-events: none;
+        }
+        /* Само уведомление */
+        .toast {
+            background-color: #333;
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            font-size: 16px;
+            opacity: 0;
+            animation: slideDown 0.3s forwards, fadeOut 0.3s forwards 2.7s;
+            pointer-events: auto;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        label {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        input[type=range] {
+            width: 300px;
+            margin-bottom: 30px;
+        }
+
+        #valueDisplay {
+            font-weight: bold;
+            font-size: 24px;
+            margin-top: -45px;
+            width: 50%;
+        }
+
+        #saveBtn {
+            padding: 15px 25px;
+            border: none;
+            background-color: #000000;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-left: 130px;
+        }
+
+        #calories-checkbox, #macros-checkbox {
+            margin-top: -20px;
+        }
+
+        <style >
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 14px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        .history-text {
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .delete-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .confirm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        }
+
+        .confirm-box {
+            background: #fff;
+            padding: 24px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+            .confirm-box button {
+                margin: 10px;
+                padding: 8px 16px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+    </style>
     </style>
 </head>
 <body>
@@ -709,22 +841,108 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="mood-slider-container">
-                <label>How was your day? (1-10)</label>
+                <label>How did you feel today? (1-10)</label>
                 <input type="range" min="1" max="10" value="5" class="mood-slider" id="mood-slider">
                 <div class="mood-labels">
                     <span>1 (Bad)</span>
+                    <div id="mood-value-display"></div>
                     <span>10 (Great)</span>
                 </div>
-                <div id="mood-value-display">5</div>
             </div>
+
+            <label for="sleepRange">How much sleep did you get today?</label>
+            <input type="range" id="sleepRange" min="0" max="14" step="0.1" value="7" />
+            <div><button id="saveBtn">Save</button><div id="valueDisplay">7.0 hrs</div></div>
+            <div id="toast-container"></div>
+
+            <script>
+                const sleepRange = document.getElementById('sleepRange');
+                const valueDisplay = document.getElementById('valueDisplay');
+                const saveBtn = document.getElementById('saveBtn');
+                const container = document.getElementById('toast-container');
+
+                // Показываем значение при загрузке
+                window.addEventListener('DOMContentLoaded', () => {
+                    const savedValue = localStorage.getItem('sleepHours');
+                    if (savedValue !== null) {
+                        sleepRange.value = savedValue;
+                        valueDisplay.textContent = parseFloat(savedValue).toFixed(1) + ' hours';
+                    } else {
+                        valueDisplay.textContent = sleepRange.value + ' hours';
+                    }
+                });
+
+                // Обновляем значение при изменении
+                sleepRange.addEventListener('input', () => {
+                    const val = parseFloat(sleepRange.value);
+                    valueDisplay.textContent = val.toFixed(1) + ' hours';
+                });
+
+                // Сохраняем уведомление в истории
+                function saveNotification(message) {
+                    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+                    notifications.push({
+                        text: message,
+                        timestamp: new Date().toISOString()
+                    });
+                    localStorage.setItem('notifications', JSON.stringify(notifications));
+                }
+
+                // Показываем тост и сохраняем в историю
+                function showToast(message) {
+                    saveNotification(message);
+
+                    const toast = document.createElement('div');
+                    toast.classList.add('toast');
+                    toast.textContent = message;
+                    container.appendChild(toast);
+
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 3000);
+                }
+
+                // Кнопка сохранить
+                saveBtn.addEventListener('click', () => {
+                    const val = parseFloat(sleepRange.value);
+                    localStorage.setItem('sleepHours', val.toFixed(1));
+
+                    if (val < 7) {
+                        showToast('⚠️ Less than 7 hours – try to sleep more!');
+                    } else if (val <= 9) {
+                        showToast('✅ Great! You slept enough.');
+                    } else {
+                        showToast('⚠️ Over 9 hours – maybe too much rest.');
+                    }
+                });
+            </script>
+
+
+
+            <br>
             <div class="modal-checkboxes">
                 <div class="modal-checkbox">
                     <input type="checkbox" id="calories-checkbox">
-                    <label for="calories-checkbox">Met calorie goal</label>
+                    <label for="calories-checkbox">Met calories & macros goal</label>
                 </div>
                 <div class="modal-checkbox">
                     <input type="checkbox" id="macros-checkbox">
-                    <label for="macros-checkbox">Met macros goal</label>
+                    <label for="macros-checkbox">
+                        Met
+                        <a href="space.html" style="font-size:1rem;font-weight:bold;text-transform:uppercase;background:linear-gradient(#3333ff,#00ffcc);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;display:inline-block;">WATER</a>
+                        <style>
+                            @keyframes yourspaceAnim {
+                                0% {
+                                    background-position: 0%
+                                }
+
+                                100% {
+                                    background-position: 400%
+                                }
+                            }
+                        </style>
+                        goal
+                    </label>
                 </div>
             </div>
             <div>
@@ -1031,7 +1249,7 @@
                                 indicators.innerHTML += '<span class="indicator-calories" title="Calories goal met">✓</span>';
                             }
                             if (dayData.macrosMet) {
-                                indicators.innerHTML += '<span class="indicator-macros" title="Macros goal met">✧</span>';
+                                indicators.innerHTML += '<span class="indicator-macros" title="Macros goal met">✓</span>';
                             }
 
                             dayElement.appendChild(indicators);
@@ -1174,5 +1392,8 @@
             }
         });
     </script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 </body>
 </html>

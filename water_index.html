@@ -293,7 +293,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Гидро Трекер</h1>
+            <h1>Water tracker</h1>
             <button class="settings-btn">⚙️</button>
         </header>
 
@@ -302,7 +302,7 @@
             <div class="water-content">
                 <div class="progress-text">
                     <div class="current-amount">0 мл</div>
-                    <div class="target-amount">из 2000 мл</div>
+                    <div class="target-amount">из 5000 мл</div>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
@@ -356,7 +356,7 @@
             const amountInput = document.getElementById('amount');
 
             // Настройки
-            const targetAmount = 2000; // мл
+            const targetAmount = 5000; // мл
             let currentAmount = localStorage.getItem('waterCurrentAmount') ? 
                 parseInt(localStorage.getItem('waterCurrentAmount')) : 0;
             let history = localStorage.getItem('waterHistory') ? 

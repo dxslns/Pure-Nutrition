@@ -335,8 +335,8 @@
                 <input type="number" id="amount" placeholder="For example: 300">
             </div>
             <div class="modal-actions">
-                <button class="modal-btn cancel-btn">Cancel</button>
-                <button class="modal-btn save-btn">Add</button>
+                <button class="modal-btn cancel-btn" id="cancelAddWater">Cancel</button>
+                <button class="modal-btn save-btn" id="saveAddWater">Add</button>
             </div>
         </div>
     </div>
@@ -369,11 +369,11 @@
             const fab = document.querySelector('.fab');
             const addWaterModal = document.getElementById('addWaterModal');
             const settingsModal = document.getElementById('settingsModal');
-            const cancelBtn = document.querySelector('.cancel-btn');
-            const saveBtn = document.querySelector('.save-btn');
             const amountInput = document.getElementById('amount');
             const settingsBtn = document.querySelector('.settings-btn');
             const dailyGoalInput = document.getElementById('daily-goal');
+            const cancelAddWaterBtn = document.getElementById('cancelAddWater');
+            const saveAddWaterBtn = document.getElementById('saveAddWater');
             const cancelSettingsBtn = document.getElementById('cancelSettings');
             const saveSettingsBtn = document.getElementById('saveSettings');
 
@@ -409,7 +409,6 @@
                 if (amount <= 0) return;
                 
                 currentAmount += amount;
-                if (currentAmount > targetAmount) currentAmount = targetAmount;
                 
                 const now = new Date();
                 const timeString = now.toLocaleTimeString('ru-RU', { 
@@ -519,7 +518,7 @@
                 };
             }
 
-            // Обработчики событий
+            // Обработчики событий для кнопок добавления воды
             addButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const amount = parseInt(button.getAttribute('data-amount'));
@@ -527,16 +526,17 @@
                 });
             });
 
+            // Обработчики для модального окна добавления воды
             fab.addEventListener('click', () => {
                 addWaterModal.classList.add('active');
                 amountInput.focus();
             });
 
-            cancelBtn.addEventListener('click', () => {
+            cancelAddWaterBtn.addEventListener('click', () => {
                 addWaterModal.classList.remove('active');
             });
 
-            saveBtn.addEventListener('click', () => {
+            saveAddWaterBtn.addEventListener('click', () => {
                 const amount = parseInt(amountInput.value);
                 if (!isNaN(amount) && amount > 0) {
                     addWater(amount);
@@ -551,7 +551,7 @@
                 }
             });
 
-            // Обработчики для настроек
+            // Обработчики для модального окна настроек
             settingsBtn.addEventListener('click', () => {
                 dailyGoalInput.value = targetAmount;
                 settingsModal.classList.add('active');
@@ -564,7 +564,7 @@
 
             saveSettingsBtn.addEventListener('click', () => {
                 const newTarget = parseInt(dailyGoalInput.value);
-                if (!isNaN(newTarget) {
+                if (!isNaN(newTarget) && newTarget > 0) {
                     targetAmount = newTarget;
                     localStorage.setItem('waterTargetAmount', targetAmount);
                     updateUI();

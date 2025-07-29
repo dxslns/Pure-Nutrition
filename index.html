@@ -478,62 +478,69 @@
         let hasScrolled = false;
 
         function searchFunction() {
-            const input = document.getElementById('search');
-            const filter = input.value.toLowerCase();
-            const articles = document.getElementsByClassName('article');
+    const input = document.getElementById('search');
+    const filter = input.value.toLowerCase();
+    const articles = document.getElementsByClassName('article');
+    const contentDiv = document.getElementById('content');
+    let hasVisibleArticles = false;
 
-            // Скроллим вниз при первом вводе символа
-            if (!hasScrolled && filter.length === 1) {
-                hasScrolled = true;
+    // Проверяем, есть ли видимые статьи
+    for (let i = 0; i < articles.length; i++) {
+        if (articles[i].innerText.toLowerCase().includes(filter)) {
+            hasVisibleArticles = true;
+            break;
+        }
+    }
 
-                // Добавляем фиктивный отступ снизу
-                document.body.classList.add('scroll-padding');
-
-                // Скроллим через 50мс, чтобы отступ применился
-                setTimeout(() => {
-                    window.scrollBy({
-                        top: window.innerHeight * 0.6,
-                        behavior: 'smooth'
-                    });
-                }, 50);
+    // Скроллим только если есть видимые статьи и введен текст
+    if (!hasScrolled && filter.length > 0 && hasVisibleArticles) {
+        hasScrolled = true;
+        
+        // Используем setTimeout, чтобы дать время DOM обновиться
+        setTimeout(() => {
+            // Находим последнюю видимую статью
+            const visibleArticles = Array.from(articles).filter(article => 
+                article.classList.contains('visible')
+            );
+            
+            if (visibleArticles.length > 0) {
+                const lastVisibleArticle = visibleArticles[visibleArticles.length - 1];
+                
+                // Прокручиваем к последней видимой статье
+                lastVisibleArticle.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end'
+                });
             }
+        }, 50);
+    }
 
-            // При очистке инпута
-            if (filter === "") {
-                hasScrolled = false;
+    // При очистке инпута
+    if (filter === "") {
+        hasScrolled = false;
+        
+        // Скрываем статьи
+        for (let i = 0; i < articles.length; i++) {
+            articles[i].classList.remove('visible');
+        }
+        
+        // Прокручиваем обратно вверх
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        return;
+    }
 
-                // Плавно убираем отступ
-                const styleEl = document.createElement('style');
-                styleEl.innerHTML = `
-                body.scroll-padding::after {
-                    height: 0 !important;
-                }
-            `;
-                document.head.appendChild(styleEl);
-
-                // Удаляем класс после завершения перехода
-                setTimeout(() => {
-                    document.body.classList.remove('scroll-padding');
-                    document.head.removeChild(styleEl);
-                }, 600);
-
-                // Скрываем статьи
-                for (let i = 0; i < articles.length; i++) {
-                    articles[i].classList.remove('visible');
-                }
-
-                return;
-            }
-
-            // Фильтруем статьи
-            for (let i = 0; i < articles.length; i++) {
-                const article = articles[i];
-                if (article.innerText.toLowerCase().includes(filter)) {
-                    article.classList.add('visible');
-                } else {
-                    article.classList.remove('visible');
-                }
-            }
+    // Фильтруем статьи
+    for (let i = 0; i < articles.length; i++) {
+        const article = articles[i];
+        if (article.innerText.toLowerCase().includes(filter)) {
+            article.classList.add('visible');
+        } else {
+            article.classList.remove('visible');
+        }
+    }
         }
     </script>
 

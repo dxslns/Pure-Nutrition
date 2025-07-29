@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HydroTrack — трекер воды</title>
+    <title>Pure Nutrition — water tracker</title>
     <style>
         :root {
             --primary: #00a8ff;
@@ -301,23 +301,23 @@
             <div class="water-wave"></div>
             <div class="water-content">
                 <div class="progress-text">
-                    <div class="current-amount">0 мл</div>
-                    <div class="target-amount">из 5000 мл</div>
+                    <div class="current-amount">0 ml</div>
+                    <div class="target-amount">of 5000 ml</div>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
                 </div>
-                <div class="water-goal">Ты на 0% своей дневной цели!</div>
+                <div class="water-goal">You are on 0% your daily goal!</div>
                 <div class="quick-add">
-                    <button class="add-btn" data-amount="100">+100 мл</button>
-                    <button class="add-btn" data-amount="250">+250 мл</button>
-                    <button class="add-btn" data-amount="500">+500 мл</button>
-                    <button class="add-btn" data-amount="1000">+1 л</button>
+                    <button class="add-btn" data-amount="100">+100 ml</button>
+                    <button class="add-btn" data-amount="250">+250 ml</button>
+                    <button class="add-btn" data-amount="500">+500 ml</button>
+                    <button class="add-btn" data-amount="1000">+1 l</button>
                 </div>
             </div>
         </div>
 
-        <div class="history-title">Сегодня</div>
+        <div class="history-title">Today</div>
         <div class="history-list">
             <!-- История будет добавляться здесь -->
         </div>
@@ -327,14 +327,14 @@
 
     <div class="modal">
         <div class="modal-content">
-            <div class="modal-title">Добавить воду</div>
+            <div class="modal-title">Add water</div>
             <div class="input-group">
-                <label for="amount">Количество (мл)</label>
-                <input type="number" id="amount" placeholder="Например: 300">
+                <label for="amount">Amount (ml)</label>
+                <input type="number" id="amount" placeholder="For example: 300">
             </div>
             <div class="modal-actions">
-                <button class="modal-btn cancel-btn">Отмена</button>
-                <button class="modal-btn save-btn">Добавить</button>
+                <button class="modal-btn cancel-btn">Cancel</button>
+                <button class="modal-btn save-btn">Add</button>
             </div>
         </div>
     </div>
@@ -369,7 +369,7 @@
                 currentAmountEl.textContent = `${currentAmount} мл`;
                 targetAmountEl.textContent = `из ${targetAmount} мл`;
                 progressFillEl.style.width = `${percentage}%`;
-                waterGoalEl.textContent = `Ты на ${percentage}% своей дневной цели!`;
+                waterGoalEl.textContent = `You are on ${percentage}% of your daily goal!`;
                 
                 // Анимация волны
                 const waveHeight = Math.min((currentAmount / targetAmount) * 100, 100);
@@ -424,7 +424,7 @@
                     historyItem.className = 'history-item';
                     historyItem.innerHTML = `
                         <div class="history-time">${item.time}</div>
-                        <div class="history-amount">+${item.amount} мл</div>
+                        <div class="history-amount">+${item.amount} ml</div>
                     `;
                     historyListEl.appendChild(historyItem);
                 });
@@ -434,7 +434,7 @@
             function animateAdd(amount) {
                 const button = document.createElement('div');
                 button.className = 'add-animation';
-                button.textContent = `+${amount} мл`;
+                button.textContent = `+${amount} ml`;
                 button.style.position = 'absolute';
                 button.style.color = 'white';
                 button.style.fontWeight = 'bold';

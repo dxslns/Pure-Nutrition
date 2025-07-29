@@ -54,6 +54,34 @@
             cursor: pointer;
         }
 
+        /* New navigation button styles */
+        .nav-button {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.2);
+            text-align: center;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary);
+        }
+
+        .nav-button:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 6px rgba(0, 168, 255, 0.3);
+        }
+
         .water-card {
             background: var(--card);
             border-radius: 20px;
@@ -296,6 +324,10 @@
             <h1>Water tracker</h1>
             <button class="settings-btn">⚙️</button>
         </header>
+
+        <!-- New navigation buttons -->
+        <a href="WatnHydr.html" class="nav-button">About Water</a>
+        <a href="Water.html" class="nav-button">Water Page</a>
 
         <div class="water-card">
             <div class="water-wave"></div>

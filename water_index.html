@@ -1,246 +1,537 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <title>Ultra‑Realistic Water Tracker</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HydroTrack — трекер воды</title>
     <style>
-        body {
+        :root {
+            --primary: #00a8ff;
+            --secondary: #0097e6;
+            --background: #f5f6fa;
+            --card: #ffffff;
+            --text: #2f3640;
+            --text-light: #7f8fa6;
+            --progress: linear-gradient(90deg, #00a8ff, #00d2d3);
+        }
+
+        * {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #f3f4f6;
-            color: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .tab-bar {
-            display: flex;
-            background: #fff;
-            box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
-        }
-
-        .tab-button {
-            flex: 1;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-            .tab-button.active {
-                background: #e6f7fe;
-                color: #00a8cc;
-            }
-
-        .content {
-            flex: 1;
-            overflow: auto;
-            padding: 24px;
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
         }
 
         .container {
-            text-align: center;
-        }
-
-        #glassCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .glass-img {
-            width: 200px;
-            height: auto;
-            display: block;
+            max-width: 500px;
             margin: 0 auto;
-            position: relative;
+            padding: 20px;
         }
 
-        .glass-wrapper {
-            position: relative;
-            width: 200px;
-            height: 400px;
-            margin: 40px auto 20px;
-        }
-
-        .input-row {
+        header {
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text);
+        }
+
+        .water-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 168, 255, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .water-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--primary);
+            transition: height 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 0;
+        }
+
+        .water-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .current-amount {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .target-amount {
+            color: var(--text-light);
+            font-size: 16px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--progress);
+            border-radius: 6px;
+            width: 0;
+            transition: width 0.6s ease-out;
+        }
+
+        .water-goal {
+            font-size: 14px;
+            color: var(--text-light);
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        input[type="number"] {
-            width: 90px;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            font-size: 16px;
+        .quick-add {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
         }
 
-        button {
-            background: #00a8cc;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 10px;
+        .add-btn {
+            background: var(--primary);
             color: white;
-            font-weight: 500;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.2);
         }
 
-            button:hover {
-                background: #008da3;
-            }
+        .add-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 6px rgba(0, 168, 255, 0.3);
+        }
 
-        .today-log h3 {
-            margin-top: 30px;
-            margin-bottom: 10px;
+        .history-title {
             font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-time {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .history-amount {
             font-weight: 600;
         }
 
-        .log-entry {
-            font-size: 15px;
-            margin-bottom: 6px;
-            padding-left: 6px;
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .fab:active {
+            transform: scale(0.9);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            width: 85%;
+            max-width: 350px;
+            border-radius: 20px;
+            padding: 25px;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cancel-btn {
+            background: #f5f6fa;
+            color: var(--text);
+        }
+
+        .save-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Гидро Трекер</h1>
+            <button class="settings-btn">⚙️</button>
+        </header>
 
-    <div class="content" id="trackTab">
-        <h2>Track Water</h2>
-        <div class="glass-wrapper">
-            <canvas id="glassCanvas" width="200" height="400"></canvas>
-            <img class="glass-img" src="https://i.imgur.com/5oXnQxM.png" alt="Glass">
+        <div class="water-card">
+            <div class="water-wave"></div>
+            <div class="water-content">
+                <div class="progress-text">
+                    <div class="current-amount">0 мл</div>
+                    <div class="target-amount">из 2000 мл</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="water-goal">Ты на 0% своей дневной цели!</div>
+                <div class="quick-add">
+                    <button class="add-btn" data-amount="100">+100 мл</button>
+                    <button class="add-btn" data-amount="250">+250 мл</button>
+                    <button class="add-btn" data-amount="500">+500 мл</button>
+                    <button class="add-btn" data-amount="1000">+1 л</button>
+                </div>
+            </div>
         </div>
 
-        <div class="input-row">
-            <input id="waterAmountInput" type="number" placeholder="ml">
-            <button onclick="addWater()">Add</button>
-        </div>
-
-        <div class="today-log">
-            <h3>Today's Log</h3>
-            <div id="todayEntries"></div>
+        <div class="history-title">Сегодня</div>
+        <div class="history-list">
+            <!-- История будет добавляться здесь -->
         </div>
     </div>
 
-    <div class="content" id="historyTab" style="display:none">
-        <h2>History</h2>
-        <div id="historyEntries"></div>
-    </div>
+    <button class="fab">+</button>
 
-    <div class="tab-bar">
-        <div class="tab-button active" onclick="switchTab('track')">Track</div>
-        <div class="tab-button" onclick="switchTab('history')">History</div>
+    <div class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Добавить воду</div>
+            <div class="input-group">
+                <label for="amount">Количество (мл)</label>
+                <input type="number" id="amount" placeholder="Например: 300">
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel-btn">Отмена</button>
+                <button class="modal-btn save-btn">Добавить</button>
+            </div>
+        </div>
     </div>
-
-    <audio id="pourSound" src="https://assets.mixkit.co/sfx/preview/mixkit-water-pour-1215.mp3"></audio>
 
     <script>
-        const maxDaily = 3000;
-        let currentAmount = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы
+            const currentAmountEl = document.querySelector('.current-amount');
+            const targetAmountEl = document.querySelector('.target-amount');
+            const progressFillEl = document.querySelector('.progress-fill');
+            const waterGoalEl = document.querySelector('.water-goal');
+            const waterWaveEl = document.querySelector('.water-wave');
+            const historyListEl = document.querySelector('.history-list');
+            const addButtons = document.querySelectorAll('.add-btn');
+            const fab = document.querySelector('.fab');
+            const modal = document.querySelector('.modal');
+            const cancelBtn = document.querySelector('.cancel-btn');
+            const saveBtn = document.querySelector('.save-btn');
+            const amountInput = document.getElementById('amount');
 
-        const canvas = document.getElementById('glassCanvas');
-        const ctx = canvas.getContext('2d');
-        const sound = document.getElementById('pourSound');
-        const todayEntriesEl = document.getElementById('todayEntries');
-        const historyEntriesEl = document.getElementById('historyEntries');
-        const getTodayKey = () => new Date().toISOString().slice(0, 10);
+            // Настройки
+            const targetAmount = 2000; // мл
+            let currentAmount = localStorage.getItem('waterCurrentAmount') ? 
+                parseInt(localStorage.getItem('waterCurrentAmount')) : 0;
+            let history = localStorage.getItem('waterHistory') ? 
+                JSON.parse(localStorage.getItem('waterHistory')) : [];
 
-        const bubbles = [];
-        function animate() {
-            ctx.clearRect(0, 0, 200, 400);
-            const fillHeight = Math.min(currentAmount / maxDaily, 1) * 300;
-            const topY = 400 - fillHeight;
-            // draw water
-            const waveHeight = 10;
-            const waveCount = 4;
-            ctx.beginPath();
-            for (let i = 0; i <= 200; i++) {
-                const y = topY + waveHeight * Math.sin((i / 200) * waveCount * Math.PI * 2 + Date.now() / 500);
-                ctx.lineTo(i, y);
+            // Обновление интерфейса
+            function updateUI() {
+                const percentage = Math.min(Math.round((currentAmount / targetAmount) * 100), 100);
+                
+                currentAmountEl.textContent = `${currentAmount} мл`;
+                targetAmountEl.textContent = `из ${targetAmount} мл`;
+                progressFillEl.style.width = `${percentage}%`;
+                waterGoalEl.textContent = `Ты на ${percentage}% своей дневной цели!`;
+                
+                // Анимация волны
+                const waveHeight = Math.min((currentAmount / targetAmount) * 100, 100);
+                waterWaveEl.style.height = `${waveHeight}%`;
+                
+                // Если цель достигнута - празднуем!
+                if (currentAmount >= targetAmount) {
+                    celebrate();
+                }
             }
-            ctx.lineTo(200, 400);
-            ctx.lineTo(0, 400);
-            ctx.closePath();
-            ctx.fillStyle = 'rgba(0,188,212,0.6)';
-            ctx.fill();
 
-            // bubbles
-            bubbles.forEach((b, i) => {
-                b.y -= b.vy;
-                b.x += Math.sin(b.life / 10) * 0.2;
-                b.life++;
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, b.size * Math.sin(b.life / 30), 0, 2 * Math.PI);
-                ctx.fillStyle = 'rgba(255,255,255,0.7)';
-                ctx.fill();
-                if (b.y < topY) bubbles.splice(i, 1);
-            });
+            // Добавление записи
+            function addWater(amount) {
+                if (amount <= 0) return;
+                
+                currentAmount += amount;
+                if (currentAmount > targetAmount) currentAmount = targetAmount;
+                
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ru-RU', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                history.unshift({
+                    amount: amount,
+                    time: timeString
+                });
+                
+                // Сохраняем в localStorage
+                localStorage.setItem('waterCurrentAmount', currentAmount);
+                localStorage.setItem('waterHistory', JSON.stringify(history));
+                
+                updateUI();
+                updateHistory();
+                
+                // Анимация добавления
+                animateAdd(amount);
+            }
 
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        function addWater() {
-            const val = parseInt(document.getElementById('waterAmountInput').value);
-            if (isNaN(val) || val <= 0) return;
-            currentAmount += val;
-            sound.currentTime = 0;
-            sound.play();
-            for (let i = 0; i < 10; i++) {
-                bubbles.push({
-                    x: 100 + Math.random() * 60 - 30,
-                    y: 400 - (currentAmount / maxDaily) * 300 + 20,
-                    vy: Math.random() * 1 + 0.5,
-                    size: Math.random() * 3 + 2,
-                    life: 0
+            // Обновление истории
+            function updateHistory() {
+                historyListEl.innerHTML = '';
+                
+                if (history.length === 0) {
+                    historyListEl.innerHTML = '<div style="color: var(--text-light); text-align: center;">Пока нет записей</div>';
+                    return;
+                }
+                
+                history.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="history-time">${item.time}</div>
+                        <div class="history-amount">+${item.amount} мл</div>
+                    `;
+                    historyListEl.appendChild(historyItem);
                 });
             }
-            logEntry(val);
-            document.getElementById('waterAmountInput').value = '';
-        }
 
-        function logEntry(val) {
-            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const ent = `${time} - ${val} ml`;
-            const key = getTodayKey();
-            const logs = JSON.parse(localStorage.getItem('waterLogs') || '{}');
-            logs[key] = logs[key] || [];
-            logs[key].push(ent);
-            localStorage.setItem('waterLogs', JSON.stringify(logs));
-            renderToday();
-        }
-
-        function renderToday() {
-            const logs = JSON.parse(localStorage.getItem('waterLogs') || '{}');
-            const today = logs[getTodayKey()] || [];
-            todayEntriesEl.innerHTML = today.map(e => `<div class="log-entry">${e}</div>`).join('');
-        }
-
-        function renderHistory() {
-            const logs = JSON.parse(localStorage.getItem('waterLogs') || '{}');
-            historyEntriesEl.innerHTML = '';
-            for (const d in logs) {
-                historyEntriesEl.innerHTML += `<h4>${d}</h4>${logs[d].map(e => `<div class="log-entry">${e}</div>`).join('')}<hr>`;
+            // Анимация добавления
+            function animateAdd(amount) {
+                const button = document.createElement('div');
+                button.className = 'add-animation';
+                button.textContent = `+${amount} мл`;
+                button.style.position = 'absolute';
+                button.style.color = 'white';
+                button.style.fontWeight = 'bold';
+                button.style.opacity = '1';
+                button.style.transform = 'translateY(0)';
+                button.style.transition = 'all 0.8s';
+                
+                document.body.appendChild(button);
+                
+                setTimeout(() => {
+                    button.style.opacity = '0';
+                    button.style.transform = 'translateY(-100px)';
+                }, 50);
+                
+                setTimeout(() => {
+                    document.body.removeChild(button);
+                }, 1000);
             }
-        }
 
-        function switchTab(id) {
-            document.getElementById('trackTab').style.display = id === 'track' ? 'block' : 'none';
-            document.getElementById('historyTab').style.display = id === 'history' ? 'block' : 'none';
-            document.querySelectorAll('.tab-button').forEach((b, i) => b.classList.toggle('active', (i === 0 && id === 'track') || (i === 1 && id === 'history')));
-            if (id === 'history') renderHistory();
-            else renderToday();
-        }
+            // Празднование достижения цели
+            function celebrate() {
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
+                }
+            }
 
-        renderToday();
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Случайные свойства
+                const size = Math.random() * 10 + 5;
+                const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                const left = Math.random() * window.innerWidth;
+                const animationDuration = Math.random() * 3 + 2;
+                
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.left = `${left}px`;
+                confetti.style.top = '-10px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.position = 'fixed';
+                confetti.style.opacity = '1';
+                confetti.style.zIndex = '1000';
+                
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: animationDuration * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    document.body.removeChild(confetti);
+                };
+            }
+
+            // Обработчики событий
+            addButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const amount = parseInt(button.getAttribute('data-amount'));
+                    addWater(amount);
+                });
+            });
+
+            fab.addEventListener('click', () => {
+                modal.classList.add('active');
+                amountInput.focus();
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            saveBtn.addEventListener('click', () => {
+                const amount = parseInt(amountInput.value);
+                if (!isNaN(amount) && amount > 0) {
+                    addWater(amount);
+                    amountInput.value = '';
+                    modal.classList.remove('active');
+                }
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Инициализация
+            updateUI();
+            updateHistory();
+        });
     </script>
 </body>
 </html>

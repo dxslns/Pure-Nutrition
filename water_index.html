@@ -349,7 +349,6 @@
             </div>
         </div>
 
-        <div class="history-title">Today</div>
         <div class="history-list">
             <!-- История будет добавляться здесь -->
         </div>
@@ -388,166 +387,314 @@
     </div>
 
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    // Элементы
-    const currentAmountEl = document.querySelector('.current-amount');
-    const targetAmountEl = document.querySelector('.target-amount');
-    const progressFillEl = document.querySelector('.progress-fill');
-    const waterGoalEl = document.querySelector('.water-goal');
-    const waterWaveEl = document.querySelector('.water-wave');
-    const historyListEl = document.querySelector('.history-list');
-    const addButtons = document.querySelectorAll('.add-btn');
-    const fab = document.querySelector('.fab');
-    const addWaterModal = document.getElementById('addWaterModal');
-    const settingsModal = document.getElementById('settingsModal');
-    const amountInput = document.getElementById('amount');
-    const settingsBtn = document.querySelector('.settings-btn');
-    const dailyGoalInput = document.getElementById('daily-goal');
-    const cancelAddWaterBtn = document.getElementById('cancelAddWater');
-    const saveAddWaterBtn = document.getElementById('saveAddWater');
-    const cancelSettingsBtn = document.getElementById('cancelSettings');
-    const saveSettingsBtn = document.getElementById('saveSettings');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы
+            const currentAmountEl = document.querySelector('.current-amount');
+            const targetAmountEl = document.querySelector('.target-amount');
+            const progressFillEl = document.querySelector('.progress-fill');
+            const waterGoalEl = document.querySelector('.water-goal');
+            const waterWaveEl = document.querySelector('.water-wave');
+            const historyListEl = document.querySelector('.history-list');
+            const addButtons = document.querySelectorAll('.add-btn');
+            const fab = document.querySelector('.fab');
+            const addWaterModal = document.getElementById('addWaterModal');
+            const settingsModal = document.getElementById('settingsModal');
+            const amountInput = document.getElementById('amount');
+            const settingsBtn = document.querySelector('.settings-btn');
+            const dailyGoalInput = document.getElementById('daily-goal');
+            const cancelAddWaterBtn = document.getElementById('cancelAddWater');
+            const saveAddWaterBtn = document.getElementById('saveAddWater');
+            const cancelSettingsBtn = document.getElementById('cancelSettings');
+            const saveSettingsBtn = document.getElementById('saveSettings');
 
-    // Настройки
-    let targetAmount = localStorage.getItem('waterTargetAmount') ? 
-        parseInt(localStorage.getItem('waterTargetAmount')) : 5000;
-    let currentAmount = localStorage.getItem('waterCurrentAmount') ? 
-        parseInt(localStorage.getItem('waterCurrentAmount')) : 0;
-    let history = localStorage.getItem('waterHistory') ? 
-        JSON.parse(localStorage.getItem('waterHistory')) : [];
-    let lastUpdateDate = localStorage.getItem('waterLastUpdateDate');
+            // Настройки
+            let targetAmount = localStorage.getItem('waterTargetAmount') ? 
+                parseInt(localStorage.getItem('waterTargetAmount')) : 5000;
+            let currentAmount = localStorage.getItem('waterCurrentAmount') ? 
+                parseInt(localStorage.getItem('waterCurrentAmount')) : 0;
+            let history = localStorage.getItem('waterHistory') ? 
+                JSON.parse(localStorage.getItem('waterHistory')) : [];
+            let lastUpdateDate = localStorage.getItem('waterLastUpdateDate');
 
-    // Проверяем, был ли переход на новый день
-    const today = new Date().toDateString();
-    if (lastUpdateDate !== today) {
-        // Новый день - сбрасываем счётчик
-        currentAmount = 0;
-        localStorage.setItem('waterCurrentAmount', currentAmount);
-        localStorage.setItem('waterLastUpdateDate', today);
-    }
-
-    // Обновление интерфейса
-    function updateUI() {
-        const percentage = Math.min(Math.round((currentAmount / targetAmount) * 100), 100);
-        
-        currentAmountEl.textContent = `${currentAmount} мл`;
-        targetAmountEl.textContent = `из ${targetAmount} мл`;
-        progressFillEl.style.width = `${percentage}%`;
-        waterGoalEl.textContent = `You are on ${percentage}% of your daily goal!`;
-        
-        // Анимация волны
-        const waveHeight = Math.min((currentAmount / targetAmount) * 100, 100);
-        waterWaveEl.style.height = `${waveHeight}%`;
-        
-        // Если цель достигнута - празднуем!
-        if (currentAmount >= targetAmount) {
-            celebrate();
-        }
-    }
-
-    // Добавление записи
-    function addWater(amount) {
-        if (amount <= 0) return;
-        
-        currentAmount += amount;
-        const now = new Date();
-        
-        // Обновляем дату последнего изменения
-        const today = now.toDateString();
-        localStorage.setItem('waterLastUpdateDate', today);
-        
-        const timeString = now.toLocaleTimeString('ru-RU', { 
-            hour: '2-digit', 
-            minute: '2-digit' 
-        });
-        
-        history.unshift({
-            amount: amount,
-            time: timeString,
-            date: today // Сохраняем полную дату
-        });
-        
-        // Сохраняем в localStorage
-        localStorage.setItem('waterCurrentAmount', currentAmount);
-        localStorage.setItem('waterHistory', JSON.stringify(history));
-        
-        updateUI();
-        updateHistory();
-        
-        // Анимация добавления
-        animateAdd(amount);
-    }
-
-    // Обновление истории с группировкой по дням
-    function updateHistory() {
-        historyListEl.innerHTML = '';
-        
-        if (history.length === 0) {
-            historyListEl.innerHTML = '<div style="color: var(--text-light); text-align: center;">Пока нет записей</div>';
-            return;
-        }
-        
-        // Группируем записи по дням
-        const groupedHistory = {};
-        history.forEach(item => {
-            if (!groupedHistory[item.date]) {
-                groupedHistory[item.date] = [];
+            // Проверяем, был ли переход на новый день
+            const today = new Date().toLocaleDateString();
+            if (lastUpdateDate !== today) {
+                // Новый день - сбрасываем счётчик
+                currentAmount = 0;
+                localStorage.setItem('waterCurrentAmount', currentAmount);
+                localStorage.setItem('waterLastUpdateDate', today);
+                
+                // Очищаем историю старше 7 дней
+                cleanOldHistory();
             }
-            groupedHistory[item.date].push(item);
+
+            // Очистка старой истории (старше 7 дней)
+            function cleanOldHistory() {
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                
+                history = history.filter(item => {
+                    const itemDate = new Date(item.date);
+                    return itemDate >= sevenDaysAgo;
+                });
+                
+                localStorage.setItem('waterHistory', JSON.stringify(history));
+            }
+
+            // Обновление интерфейса
+            function updateUI() {
+                const percentage = Math.min(Math.round((currentAmount / targetAmount) * 100), 100);
+                
+                currentAmountEl.textContent = `${currentAmount} мл`;
+                targetAmountEl.textContent = `из ${targetAmount} мл`;
+                progressFillEl.style.width = `${percentage}%`;
+                waterGoalEl.textContent = `You are on ${percentage}% of your daily goal!`;
+                
+                // Анимация волны
+                const waveHeight = Math.min((currentAmount / targetAmount) * 100, 100);
+                waterWaveEl.style.height = `${waveHeight}%`;
+                
+                // Если цель достигнута - празднуем!
+                if (currentAmount >= targetAmount) {
+                    celebrate();
+                }
+            }
+
+            // Добавление записи
+            function addWater(amount) {
+                if (amount <= 0) return;
+                
+                currentAmount += amount;
+                const now = new Date();
+                const today = now.toLocaleDateString();
+                
+                // Обновляем дату последнего изменения
+                localStorage.setItem('waterLastUpdateDate', today);
+                
+                const timeString = now.toLocaleTimeString('ru-RU', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                history.unshift({
+                    amount: amount,
+                    time: timeString,
+                    date: today
+                });
+                
+                // Сохраняем в localStorage
+                localStorage.setItem('waterCurrentAmount', currentAmount);
+                localStorage.setItem('waterHistory', JSON.stringify(history));
+                
+                updateUI();
+                updateHistory();
+                
+                // Анимация добавления
+                animateAdd(amount);
+            }
+
+            // Обновление истории с группировкой по дням
+            function updateHistory() {
+                historyListEl.innerHTML = '';
+                
+                if (history.length === 0) {
+                    historyListEl.innerHTML = '<div style="color: var(--text-light); text-align: center;">No records yet</div>';
+                    return;
+                }
+                
+                // Группируем записи по дням
+                const groupedHistory = {};
+                history.forEach(item => {
+                    if (!groupedHistory[item.date]) {
+                        groupedHistory[item.date] = [];
+                    }
+                    groupedHistory[item.date].push(item);
+                });
+                
+                // Отображаем группы
+                for (const date in groupedHistory) {
+                    const dateHeader = document.createElement('div');
+                    dateHeader.className = 'history-title';
+                    
+                    // Форматируем дату для отображения
+                    const displayDate = formatDisplayDate(date);
+                    dateHeader.textContent = displayDate;
+                    
+                    historyListEl.appendChild(dateHeader);
+                    
+                    // Добавляем записи для этой даты
+                    groupedHistory[date].forEach(item => {
+                        const historyItem = document.createElement('div');
+                        historyItem.className = 'history-item';
+                        historyItem.innerHTML = `
+                            <div class="history-time">${item.time}</div>
+                            <div class="history-amount">+${item.amount} ml</div>
+                        `;
+                        historyListEl.appendChild(historyItem);
+                    });
+                }
+            }
+
+            // Форматирование даты для отображения
+            function formatDisplayDate(dateString) {
+                const today = new Date().toLocaleDateString();
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayString = yesterday.toLocaleDateString();
+                
+                if (dateString === today) {
+                    return 'Today';
+                } else if (dateString === yesterdayString) {
+                    return 'Yesterday';
+                } else {
+                    try {
+                        const dateParts = dateString.split('.');
+                        if (dateParts.length === 3) {
+                            const date = new Date(`${dateParts[1]}.${dateParts[0]}.${dateParts[2]}`);
+                            return date.toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+                        } else {
+                            return dateString;
+                        }
+                    } catch (e) {
+                        return dateString;
+                    }
+                }
+            }
+
+            // Анимация добавления
+            function animateAdd(amount) {
+                const button = document.createElement('div');
+                button.className = 'add-animation';
+                button.textContent = `+${amount} ml`;
+                button.style.position = 'absolute';
+                button.style.color = 'white';
+                button.style.fontWeight = 'bold';
+                button.style.opacity = '1';
+                button.style.transform = 'translateY(0)';
+                button.style.transition = 'all 0.8s';
+                
+                document.body.appendChild(button);
+                
+                setTimeout(() => {
+                    button.style.opacity = '0';
+                    button.style.transform = 'translateY(-100px)';
+                }, 50);
+                
+                setTimeout(() => {
+                    document.body.removeChild(button);
+                }, 1000);
+            }
+
+            // Празднование достижения цели
+            function celebrate() {
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
+                }
+            }
+
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Случайные свойства
+                const size = Math.random() * 10 + 5;
+                const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                const left = Math.random() * window.innerWidth;
+                const animationDuration = Math.random() * 3 + 2;
+                
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.left = `${left}px`;
+                confetti.style.top = '-10px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.position = 'fixed';
+                confetti.style.opacity = '1';
+                confetti.style.zIndex = '1000';
+                
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: animationDuration * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    document.body.removeChild(confetti);
+                };
+            }
+
+            // Обработчики событий для кнопок добавления воды
+            addButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const amount = parseInt(button.getAttribute('data-amount'));
+                    addWater(amount);
+                });
+            });
+
+            // Обработчики для модального окна добавления воды
+            fab.addEventListener('click', () => {
+                addWaterModal.classList.add('active');
+                amountInput.focus();
+            });
+
+            cancelAddWaterBtn.addEventListener('click', () => {
+                addWaterModal.classList.remove('active');
+            });
+
+            saveAddWaterBtn.addEventListener('click', () => {
+                const amount = parseInt(amountInput.value);
+                if (!isNaN(amount) {
+                    addWater(amount);
+                    amountInput.value = '';
+                    addWaterModal.classList.remove('active');
+                }
+            });
+
+            addWaterModal.addEventListener('click', (e) => {
+                if (e.target === addWaterModal) {
+                    addWaterModal.classList.remove('active');
+                }
+            });
+
+            // Обработчики для модального окна настроек
+            settingsBtn.addEventListener('click', () => {
+                dailyGoalInput.value = targetAmount;
+                settingsModal.classList.add('active');
+                dailyGoalInput.focus();
+            });
+
+            cancelSettingsBtn.addEventListener('click', () => {
+                settingsModal.classList.remove('active');
+            });
+
+            saveSettingsBtn.addEventListener('click', () => {
+                const newTarget = parseInt(dailyGoalInput.value);
+                if (!isNaN(newTarget) {
+                    targetAmount = newTarget;
+                    localStorage.setItem('waterTargetAmount', targetAmount);
+                    updateUI();
+                    settingsModal.classList.remove('active');
+                }
+            });
+
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.classList.remove('active');
+                }
+            });
+
+            // Инициализация
+            updateUI();
+            updateHistory();
         });
-        
-        // Отображаем группы
-        for (const date in groupedHistory) {
-            const dateHeader = document.createElement('div');
-            dateHeader.className = 'history-title';
-            
-            // Форматируем дату для отображения
-            const displayDate = formatDisplayDate(date);
-            dateHeader.textContent = displayDate;
-            
-            historyListEl.appendChild(dateHeader);
-            
-            // Добавляем записи для этой даты
-            groupedHistory[date].forEach(item => {
-                const historyItem = document.createElement('div');
-                historyItem.className = 'history-item';
-                historyItem.innerHTML = `
-                    <div class="history-time">${item.time}</div>
-                    <div class="history-amount">+${item.amount} ml</div>
-                `;
-                historyListEl.appendChild(historyItem);
-            });
-        }
-    }
-
-    // Форматирование даты для отображения
-    function formatDisplayDate(dateString) {
-        const today = new Date().toDateString();
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        const yesterdayString = yesterday.toDateString();
-        
-        if (dateString === today) {
-            return 'Today';
-        } else if (dateString === yesterdayString) {
-            return 'Yesterday';
-        } else {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ru-RU', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long'
-            });
-        }
-    }
-
-    // ... остальные функции (animateAdd, celebrate, createConfetti) остаются без изменений ...
-    // ... обработчики событий также остаются без изменений ...
-
-    // Инициализация
-    updateUI();
-    updateHistory();
-});
     </script>
 </body>
 </html>

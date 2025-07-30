@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -60,13 +60,14 @@
             font-weight: 700;
         }
 
+        /* Original .section styles - adjusted for collapsible structure */
         .section {
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 30px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            padding: 20px;
-            margin-bottom: 30px;
+            background-color: transparent; /* Moved to .collapsible-section */
+            border-radius: 0; /* Moved to .collapsible-section */
+            box-shadow: none; /* Moved to .collapsible-section */
+            transition: none; /* No longer needed here */
+            padding: 0; /* Moved to .section-content */
+            margin-bottom: 0; /* Moved to .collapsible-section */
         }
 
         .section-title {
@@ -76,6 +77,66 @@
             border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 10px;
         }
+
+        /* Styles for collapsible sections */
+        .collapsible-section {
+            margin-bottom: 20px; /* Отступ между сворачиваемыми секциями */
+            border-radius: 30px; /* Применяем border-radius к внешнему контейнеру */
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6); /* Применяем box-shadow к внешнему контейнеру */
+            background-color: rgba(255, 255, 255, 0.6); /* Применяем фон к внешнему контейнеру */
+            overflow: hidden; /* Важно для анимации высоты */
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.8); /* Более плотный фон для заголовка */
+            border-bottom: 2px solid var(--secondary-color); /* Линия под заголовком */
+            border-top-left-radius: 30px; /* Закругляем верхние углы заголовка */
+            border-top-right-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .collapsible-section.collapsed .section-header {
+            border-bottom: none; /* Убираем нижнюю границу, когда секция свернута */
+            border-bottom-left-radius: 30px; /* Закругляем нижние углы заголовка, когда секция свернута */
+            border-bottom-right-radius: 30px;
+        }
+
+        .section-header:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-header .section-title {
+            margin-bottom: 0; /* Убираем нижний отступ у заголовка внутри хедера */
+            border-bottom: none; /* Убираем нижнюю границу, так как она теперь у section-header */
+            padding-bottom: 0; /* Убираем padding-bottom */
+        }
+
+        .collapse-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-section.collapsed .collapse-icon {
+            transform: rotate(-90deg); /* Поворачиваем стрелку при сворачивании */
+        }
+
+        .section-content {
+            max-height: 1000px; /* Большая начальная высота для анимации */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Анимация сворачивания/разворачивания */
+            padding: 0 20px 20px 20px; /* Добавляем padding к содержимому */
+        }
+
+        .collapsible-section.collapsed .section-content {
+            max-height: 0; /* Скрываем содержимое */
+            padding: 0 20px 0 20px; /* Убираем padding, когда свернуто */
+        }
+
 
         /* Zone 1 - Height/Weight/BMI */
         .zone-1 {
@@ -653,7 +714,6 @@
             margin-top: -20px;
         }
 
-        <style >
         .history-item {
             display: flex;
             justify-content: space-between;
@@ -703,100 +763,113 @@
                 cursor: pointer;
             }
     </style>
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>My Space</h1>
 
         <!-- Zone 1: Height/Weight/BMI -->
-        <div class="section">
-            <h2 class="section-title">Body Metrics</h2>
-            <div class="zone-1">
-                <div class="input-group">
-                    <label for="height">Current Height</label>
-                    <div class="input-row">
-                        <input type="number" id="height" placeholder="Height">
-                        <select id="height-unit">
-                            <option value="cm">cm</option>
-                            <option value="ft">ft</option>
-                        </select>
-                    </div>
-                </div>
+        <div class="collapsible-section">
+            <div class="section-header collapsible-trigger">
+                <h2 class="section-title">Body Metrics</h2>
+                <span class="collapse-icon">&#9660;</span> <!-- Стрелка вниз -->
+            </div>
+            <div class="section-content">
+                <div class="section">
+                    <div class="zone-1">
+                        <div class="input-group">
+                            <label for="height">Current Height</label>
+                            <div class="input-row">
+                                <input type="number" id="height" placeholder="Height">
+                                <select id="height-unit">
+                                    <option value="cm">cm</option>
+                                    <option value="ft">ft</option>
+                                </select>
+                            </div>
+                        </div>
 
-                <div class="input-group">
-                    <label for="weight">Current Weight</label>
-                    <div class="input-row">
-                        <input type="number" id="weight" placeholder="Weight">
-                        <select id="weight-unit">
-                            <option value="kg">kg</option>
-                            <option value="lbs">lbs</option>
-                        </select>
-                    </div>
-                </div>
+                        <div class="input-group">
+                            <label for="weight">Current Weight</label>
+                            <div class="input-row">
+                                <input type="number" id="weight" placeholder="Weight">
+                                <select id="weight-unit">
+                                    <option value="kg">kg</option>
+                                    <option value="lbs">lbs</option>
+                                </select>
+                            </div>
+                        </div>
 
-                <div class="bmi-display">
-                    <div class="bmi-value" id="bmi-value">--</div>
-                    <div class="bmi-category" id="bmi-category">BMI</div>
-                </div>
+                        <div class="bmi-display">
+                            <div class="bmi-value" id="bmi-value">--</div>
+                            <div class="bmi-category" id="bmi-category">BMI</div>
+                        </div>
 
-                <div class="input-group">
-                    <label for="goal-weight">Goal Weight</label>
-                    <div class="input-row">
-                        <input type="number" id="goal-weight" placeholder="Goal weight">
-                        <select id="goal-weight-unit">
-                            <option value="kg">kg</option>
-                            <option value="lbs">lbs</option>
-                        </select>
+                        <div class="input-group">
+                            <label for="goal-weight">Goal Weight</label>
+                            <div class="input-row">
+                                <input type="number" id="goal-weight" placeholder="Goal weight">
+                                <select id="goal-weight-unit">
+                                    <option value="kg">kg</option>
+                                    <option value="lbs">lbs</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Zone 2: Goals and Calculations -->
-        <div class="section">
-            <h2 class="section-title">Goals & Nutrition</h2>
-            <div class="zone-2">
-                <div class="goal-selection">
-                    <label>Your Goal</label>
-                    <div class="goal-options">
-                        <button class="goal-btn" data-goal="gain">Gain</button>
-                        <button class="goal-btn" data-goal="loose">Lose</button>
-                        <button class="goal-btn active" data-goal="maintain">Maintain</button>
-                    </div>
-
-                    <div class="speed-options">
-                        <button class="speed-btn" data-speed="fast">Fast</button>
-                        <button class="speed-btn active" data-speed="recommended">Recommended</button>
-                        <button class="speed-btn" data-speed="slow">Slow</button>
-                    </div>
-
-                    <div class="workout-input">
-                        <label for="workouts-per-week">Workouts per Week</label>
-                        <input type="number" id="workouts-per-week" min="0" max="7" value="3">
-                    </div>
-                </div>
-
-                <div class="results">
-                    <div class="result-item">
-                        <div class="result-label">Daily Calories</div>
-                        <div class="result-value" id="daily-calories">--</div>
-                    </div>
-
-                    <div class="result-item">
-                        <div class="result-label">Macros (grams)</div>
-                        <div class="macros-grid">
-                            <div class="macro-item">
-                                <div class="macro-label">Protein</div>
-                                <div class="macro-value" id="protein-value">--</div>
+        <div class="collapsible-section">
+            <div class="section-header collapsible-trigger">
+                <h2 class="section-title">Goals & Nutrition</h2>
+                <span class="collapse-icon">&#9660;</span>
+            </div>
+            <div class="section-content">
+                <div class="section">
+                    <div class="zone-2">
+                        <div class="goal-selection">
+                            <label>Your Goal</label>
+                            <div class="goal-options">
+                                <button class="goal-btn" data-goal="gain">Gain</button>
+                                <button class="goal-btn" data-goal="loose">Lose</button>
+                                <button class="goal-btn active" data-goal="maintain">Maintain</button>
                             </div>
-                            <div class="macro-item">
-                                <div class="macro-label">Carbs</div>
-                                <div class="macro-value" id="carbs-value">--</div>
+
+                            <div class="speed-options">
+                                <button class="speed-btn" data-speed="fast">Fast</button>
+                                <button class="speed-btn active" data-speed="recommended">Recommended</button>
+                                <button class="speed-btn" data-speed="slow">Slow</button>
                             </div>
-                            <div class="macro-item">
-                                <div class="macro-label">Fats</div>
-                                <div class="macro-value" id="fats-value">--</div>
+
+                            <div class="workout-input">
+                                <label for="workouts-per-week">Workouts per Week</label>
+                                <input type="number" id="workouts-per-week" min="0" max="7" value="3">
+                            </div>
+                        </div>
+
+                        <div class="results">
+                            <div class="result-item">
+                                <div class="result-label">Daily Calories</div>
+                                <div class="result-value" id="daily-calories">--</div>
+                            </div>
+
+                            <div class="result-item">
+                                <div class="result-label">Macros (grams)</div>
+                                <div class="macros-grid">
+                                    <div class="macro-item">
+                                        <div class="macro-label">Protein</div>
+                                        <div class="macro-value" id="protein-value">--</div>
+                                    </div>
+                                    <div class="macro-item">
+                                        <div class="macro-label">Carbs</div>
+                                        <div class="macro-value" id="carbs-value">--</div>
+                                    </div>
+                                    <div class="macro-item">
+                                        <div class="macro-label">Fats</div>
+                                        <div class="macro-value" id="fats-value">--</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -805,29 +878,36 @@
         </div>
 
         <!-- Zone 3: Calendar -->
-        <div class="section">
-            <h2 class="section-title">Daily Tracking</h2>
-            <div class="calendar">
-                <div class="calendar-header">
-                    <div class="calendar-title" id="current-month-year">June 2023</div>
-                    <div class="calendar-nav">
-                        <button class="calendar-nav-btn" id="prev-month">Previous</button>
-                        <button class="calendar-nav-btn" id="next-month">Next</button>
+        <div class="collapsible-section">
+            <div class="section-header collapsible-trigger">
+                <h2 class="section-title">Daily Tracking</h2>
+                <span class="collapse-icon">&#9660;</span>
+            </div>
+            <div class="section-content">
+                <div class="section">
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <div class="calendar-title" id="current-month-year">June 2023</div>
+                            <div class="calendar-nav">
+                                <button class="calendar-nav-btn" id="prev-month">Previous</button>
+                                <button class="calendar-nav-btn" id="next-month">Next</button>
+                            </div>
+                        </div>
+
+                        <div class="calendar-grid" id="calendar-days-header">
+                            <div class="calendar-day-header">Sun</div>
+                            <div class="calendar-day-header">Mon</div>
+                            <div class="calendar-day-header">Tue</div>
+                            <div class="calendar-day-header">Wed</div>
+                            <div class="calendar-day-header">Thu</div>
+                            <div class="calendar-day-header">Fri</div>
+                            <div class="calendar-day-header">Sat</div>
+                        </div>
+
+                        <div class="calendar-grid" id="calendar-days">
+                            <!-- Calendar days will be generated by JavaScript -->
+                        </div>
                     </div>
-                </div>
-
-                <div class="calendar-grid" id="calendar-days-header">
-                    <div class="calendar-day-header">Sun</div>
-                    <div class="calendar-day-header">Mon</div>
-                    <div class="calendar-day-header">Tue</div>
-                    <div class="calendar-day-header">Wed</div>
-                    <div class="calendar-day-header">Thu</div>
-                    <div class="calendar-day-header">Fri</div>
-                    <div class="calendar-day-header">Sat</div>
-                </div>
-
-                <div class="calendar-grid" id="calendar-days">
-                    <!-- Calendar days will be generated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -1069,6 +1149,25 @@
             calculateBMI();
             calculateNutrition();
             renderCalendar();
+
+            // New JavaScript for collapsible sections
+            const collapsibleTriggers = document.querySelectorAll('.collapsible-trigger');
+
+            collapsibleTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function () {
+                    const collapsibleSection = this.closest('.collapsible-section');
+                    collapsibleSection.classList.toggle('collapsed');
+                });
+            });
+
+            // Optional: Make the first section open by default, others collapsed
+            const allCollapsibleSections = document.querySelectorAll('.collapsible-section');
+            allCollapsibleSections.forEach((section, index) => {
+                if (index > 0) { // Collapse all except the first one
+                    section.classList.add('collapsed');
+                }
+            });
+
 
             // Functions
             function calculateBMI() {

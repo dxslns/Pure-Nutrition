@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collapsible Pinterest-style Panels</title>
+    <title>Health & Fitness Tracker</title>
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Pinterest-like Styles -->
@@ -61,7 +61,7 @@
         }
         
         .panel.active .panel-content {
-            max-height: 500px;
+            max-height: 1000px;
             padding: 0 16px 16px 16px;
         }
         
@@ -69,133 +69,257 @@
             transform: rotate(180deg);
         }
         
-        .pinterest-grid {
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .btn {
+            background-color: #e60023;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #c8001f;
+        }
+        
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 12px;
             margin-top: 12px;
         }
         
-        .pin {
+        .stat-card {
+            background: #f9f9f9;
             border-radius: 12px;
-            overflow: hidden;
-            position: relative;
+            padding: 12px;
+            text-align: center;
         }
         
-        .pin img {
-            width: 100%;
-            display: block;
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #e60023;
+            margin-bottom: 4px;
         }
         
-        .pin-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.6));
-            padding: 8px;
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
+        .stat-label {
+            font-size: 12px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; margin-bottom: 24px; color: #e60023;">Pinterest UI</h1>
+    <h1 style="text-align: center; margin-bottom: 24px; color: #e60023;">Health Tracker</h1>
     
-    <!-- Panel 1 -->
+    <!-- Зона 1: Данные о теле -->
     <div class="panel" data-aos="fade-up" onclick="togglePanel(this)">
         <div class="panel-header">
-            <div class="panel-title">Творческие идеи</div>
+            <div class="panel-title">Мои данные</div>
             <svg class="panel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <div class="panel-content">
-            <div class="pinterest-grid">
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/5b/5d/3f/5b5d3f8326a1a1f4a9a5a8e5e8c5d3f6.jpg" alt="Creative idea 1">
-                    <div class="pin-overlay">DIY проекты</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/9a/8b/9d/9a8b9d9e9e5e8c5d3f6a1a1f4a9a5a8.jpg" alt="Creative idea 2">
-                    <div class="pin-overlay">Рисование</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/3f/5b/5d/3f5b5d8326a1a1f4a9a5a8e5e8c5d3f.jpg" alt="Creative idea 3">
-                    <div class="pin-overlay">Фотография</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/8b/9d/9a/8b9d9a9e9e5e8c5d3f6a1a1f4a9a5a8.jpg" alt="Creative idea 4">
-                    <div class="pin-overlay">Дизайн</div>
-                </div>
+            <div class="input-group">
+                <label for="age">Возраст</label>
+                <input type="number" id="age" placeholder="Введите ваш возраст">
             </div>
+            
+            <div class="input-group">
+                <label for="height">Рост (см)</label>
+                <input type="number" id="height" placeholder="Введите ваш рост">
+            </div>
+            
+            <div class="input-group">
+                <label for="weight">Вес (кг)</label>
+                <input type="number" id="weight" placeholder="Введите ваш вес">
+            </div>
+            
+            <div class="input-group">
+                <label for="workouts">Среднее количество тренировок в день</label>
+                <select id="workouts">
+                    <option value="0">Менее 1</option>
+                    <option value="1">1 тренировка</option>
+                    <option value="2">2 тренировки</option>
+                    <option value="3">3+ тренировки</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="activity">Уровень активности</label>
+                <select id="activity">
+                    <option value="1">Сидячий образ жизни</option>
+                    <option value="2">Легкая активность</option>
+                    <option value="3">Умеренная активность</option>
+                    <option value="4">Высокая активность</option>
+                    <option value="5">Экстремальная активность</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="saveBodyData()">Сохранить данные</button>
         </div>
     </div>
     
-    <!-- Panel 2 -->
+    <!-- Зона 2: Цели -->
     <div class="panel" data-aos="fade-up" data-aos-delay="100" onclick="togglePanel(this)">
         <div class="panel-header">
-            <div class="panel-title">Рецепты</div>
+            <div class="panel-title">Мои цели</div>
             <svg class="panel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <div class="panel-content">
-            <div class="pinterest-grid">
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/5d/3f/5b/5d3f5b8326a1a1f4a9a5a8e5e8c5d3f.jpg" alt="Recipe 1">
-                    <div class="pin-overlay">Десерты</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/9d/9a/8b/9d9a8b9e9e5e8c5d3f6a1a1f4a9a5a8.jpg" alt="Recipe 2">
-                    <div class="pin-overlay">Ужин</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/3f/5b/5d/3f5b5d8326a1a1f4a9a5a8e5e8c5d3f.jpg" alt="Recipe 3">
-                    <div class="pin-overlay">Завтрак</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/8b/9d/9a/8b9d9a9e9e5e8c5d3f6a1a1f4a9a5a8.jpg" alt="Recipe 4">
-                    <div class="pin-overlay">Напитки</div>
-                </div>
+            <div class="input-group">
+                <label for="target-weight">Целевой вес (кг)</label>
+                <input type="number" id="target-weight" placeholder="Введите желаемый вес">
             </div>
+            
+            <div class="input-group">
+                <label for="target-calories">Целевое количество калорий в день</label>
+                <input type="number" id="target-calories" placeholder="Введите количество калорий">
+            </div>
+            
+            <div class="input-group">
+                <label for="target-water">Целевое количество воды (л)</label>
+                <input type="number" step="0.1" id="target-water" placeholder="Введите количество воды">
+            </div>
+            
+            <div class="input-group">
+                <label for="target-sleep">Целевое количество сна (часов)</label>
+                <input type="number" step="0.5" id="target-sleep" placeholder="Введите количество сна">
+            </div>
+            
+            <div class="input-group">
+                <label for="target-workouts">Целевое количество тренировок в неделю</label>
+                <input type="number" id="target-workouts" placeholder="Введите количество тренировок">
+            </div>
+            
+            <button class="btn" onclick="saveGoals()">Сохранить цели</button>
         </div>
     </div>
     
-    <!-- Panel 3 -->
+    <!-- Зона 3: Дневник -->
     <div class="panel" data-aos="fade-up" data-aos-delay="200" onclick="togglePanel(this)">
         <div class="panel-header">
-            <div class="panel-title">Путешествия</div>
+            <div class="panel-title">Сегодняшний день</div>
             <svg class="panel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <div class="panel-content">
-            <div class="pinterest-grid">
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/5b/5d/3f/5b5d3f8326a1a1f4a9a5a8e5e8c5d3f6.jpg" alt="Travel 1">
-                    <div class="pin-overlay">Европа</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="today-sleep">0</div>
+                    <div class="stat-label">часов сна</div>
                 </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/9a/8b/9d/9a8b9d9e9e5e8c5d3f6a1a1f4a9a5a8.jpg" alt="Travel 2">
-                    <div class="pin-overlay">Азия</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/3f/5b/5d/3f5b5d8326a1a1f4a9a5a8e5e8c5d3f.jpg" alt="Travel 3">
-                    <div class="pin-overlay">Пляжи</div>
-                </div>
-                <div class="pin">
-                    <img src="https://i.pinimg.com/236x/8b/9d/9a/8b9d9a9e9e5e8c5d3f6a1a1f4a9a5a8.jpg" alt="Travel 4">
-                    <div class="pin-overlay">Города</div>
+                <div class="stat-card">
+                    <div class="stat-value" id="today-water">0</div>
+                    <div class="stat-label">литров воды</div>
                 </div>
             </div>
+            
+            <div class="input-group">
+                <label for="today-sleep-input">Сон сегодня (часов)</label>
+                <input type="number" step="0.5" id="today-sleep-input" placeholder="Сколько вы спали?">
+            </div>
+            
+            <div class="input-group">
+                <label for="today-water-input">Вода сегодня (л)</label>
+                <input type="number" step="0.1" id="today-water-input" placeholder="Сколько воды выпили?">
+            </div>
+            
+            <div class="input-group">
+                <label for="today-calories">Калории сегодня</label>
+                <input type="number" id="today-calories" placeholder="Сколько калорий употребили?">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="goal-achieved">
+                <label for="goal-achieved">Достиг цели по калориям</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="water-achieved">
+                <label for="water-achieved">Достиг цели по воде</label>
+            </div>
+            
+            <div class="input-group">
+                <label for="notes">Заметки</label>
+                <textarea id="notes" placeholder="Запишите свои мысли, ощущения..."></textarea>
+            </div>
+            
+            <button class="btn" onclick="saveDailyData()">Сохранить дневник</button>
         </div>
     </div>
     
     <script>
         function togglePanel(panel) {
             panel.classList.toggle('active');
+        }
+        
+        // Сохранение данных о теле
+        function saveBodyData() {
+            alert('Данные о теле сохранены!');
+            // Здесь можно добавить логику сохранения в localStorage или отправки на сервер
+        }
+        
+        // Сохранение целей
+        function saveGoals() {
+            alert('Цели сохранены!');
+            // Логика сохранения целей
+        }
+        
+        // Сохранение дневника
+        function saveDailyData() {
+            const sleep = document.getElementById('today-sleep-input').value;
+            const water = document.getElementById('today-water-input').value;
+            
+            if(sleep) document.getElementById('today-sleep').textContent = sleep;
+            if(water) document.getElementById('today-water').textContent = water;
+            
+            alert('Дневник сохранен!');
+            // Логика сохранения дневника
         }
         
         // Auto-open first panel

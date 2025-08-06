@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -40,12 +40,10 @@
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
             color: var(--dark-color);
-            background-color:;
+            background-image: linear-gradient(#808080, #424242); /* Замените на URL вашего изображения */
             padding: 20px;
-            background-image: url('\PNGs/pic2.png'); /* Замените на URL вашего изображения */
-            background-size: cover; /* Изображение будет растянуто, чтобы покрыть весь экран */
-            background-position: center; /* Центрирует изображение */
-            background-repeat: no-repeat;
+            width: 100vw;
+            overflow-x: hidden;
         }
 
         .container {
@@ -60,14 +58,19 @@
             font-weight: 700;
         }
 
-        /* Original .section styles - adjusted for collapsible structure */
+        /* Updated .section styles - now the main container for each zone */
         .section {
-            background-color: transparent; /* Moved to .collapsible-section */
-            border-radius: 0; /* Moved to .collapsible-section */
-            box-shadow: none; /* Moved to .collapsible-section */
-            transition: none; /* No longer needed here */
-            padding: 0; /* Moved to .section-content */
-            margin-bottom: 0; /* Moved to .collapsible-section */
+            .section
+
+        {
+            margin-bottom: 20px;
+            border-radius: 30px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            background-color: #242424;
+            padding: 20px;
+            width: 100%; /* Изменено с 99% на 100% */
+        }
+
         }
 
         .section-title {
@@ -76,263 +79,6 @@
             color: var(--primary-color);
             border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 10px;
-        }
-
-        /* Styles for collapsible sections */
-        .collapsible-section {
-            margin-bottom: 20px; /* Отступ между сворачиваемыми секциями */
-            border-radius: 30px; /* Применяем border-radius к внешнему контейнеру */
-            box-shadow: 0 6px 18px rgba(0,0,0,0.6); /* Применяем box-shadow к внешнему контейнеру */
-            background-color: rgba(255, 255, 255, 0.6); /* Применяем фон к внешнему контейнеру */
-            overflow: hidden; /* Важно для анимации высоты */
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.8); /* Более плотный фон для заголовка */
-            border-bottom: 2px solid var(--secondary-color); /* Линия под заголовком */
-            border-top-left-radius: 30px; /* Закругляем верхние углы заголовка */
-            border-top-right-radius: 30px;
-            transition: background-color 0.3s ease;
-        }
-
-        .collapsible-section.collapsed .section-header {
-            border-bottom: none; /* Убираем нижнюю границу, когда секция свернута */
-            border-bottom-left-radius: 30px; /* Закругляем нижние углы заголовка, когда секция свернута */
-            border-bottom-right-radius: 30px;
-        }
-
-        .section-header:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .section-header .section-title {
-            margin-bottom: 0; /* Убираем нижний отступ у заголовка внутри хедера */
-            border-bottom: none; /* Убираем нижнюю границу, так как она теперь у section-header */
-            padding-bottom: 0; /* Убираем padding-bottom */
-        }
-
-        .collapse-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .collapsible-section.collapsed .collapse-icon {
-            transform: rotate(-90deg); /* Поворачиваем стрелку при сворачивании */
-        }
-
-        .section-content {
-            max-height: 1000px; /* Большая начальная высота для анимации */
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Анимация сворачивания/разворачивания */
-            padding: 0 20px 20px 20px; /* Добавляем padding к содержимому */
-        }
-
-        .collapsible-section.collapsed .section-content {
-            max-height: 0; /* Скрываем содержимое */
-            padding: 0 20px 0 20px; /* Убираем padding, когда свернуто */
-        }
-
-
-        /* Zone 1 - Height/Weight/BMI */
-        .zone-1 {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
-
-        .input-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-            .input-group label {
-                display: block;
-                margin-bottom: 8px;
-                font-weight: 500;
-            }
-
-        .input-row {
-            display: flex;
-            align-items: center;
-        }
-
-            .input-row input {
-                flex: 1;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: var(--border-radius) 0 0 var(--border-radius);
-                font-size: 1rem;
-            }
-
-            .input-row select {
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-left: none;
-                border-radius: 0 var(--border-radius) var(--border-radius) 0;
-                background-color: #f8f9fa;
-                font-size: 1rem;
-                cursor: pointer;
-            }
-
-        .bmi-display {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-width: 120px;
-        }
-
-        .bmi-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .bmi-category {
-            font-size: 0.9rem;
-            color: var(--secondary-color);
-        }
-
-        /* Zone 2 - Goals and Calculations */
-        .zone-2 {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .goal-selection, .workout-selection, .results {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .goal-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .goal-btn {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid black;
-            border-radius: var(--border-radius);
-            background-color: #e9ecef;
-            color: var(--dark-color);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-            .goal-btn.active {
-                background-color: var(--primary-color);
-                color: white;
-            }
-
-            .goal-btn:hover {
-                background-color: #d1d7dc;
-            }
-
-            .goal-btn.active:hover {
-                background-color: var(--secondary-color);
-            }
-
-        .speed-options {
-            display: none;
-            margin-bottom: 20px;
-        }
-
-            .speed-options.active {
-                display: flex;
-                gap: 10px;
-            }
-
-        .speed-btn {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: var(--border-radius);
-            background-color: #e9ecef;
-            color: var(--dark-color);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-            .speed-btn.active {
-                background-color: var(--accent-color);
-                color: white;
-            }
-
-        .workout-input {
-            margin-top: 20px;
-        }
-
-            .workout-input label {
-                display: block;
-                margin-bottom: 8px;
-                font-weight: 500;
-            }
-
-            .workout-input input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: var(--border-radius);
-                font-size: 1rem;
-            }
-
-        .results {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: var(--border-radius);
-        }
-
-        .result-item {
-            margin-bottom: 15px;
-        }
-
-        .result-label {
-            font-weight: 500;
-            color: var(--secondary-color);
-            margin-bottom: 5px;
-        }
-
-        .result-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .macros-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .macro-item {
-            text-align: center;
-            padding: 10px;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border: 1px solid black;
-        }
-
-        .macro-label {
-            font-size: 0.8rem;
-            color: var(--secondary-color);
-        }
-
-        .macro-value {
-            font-weight: 700;
-            color: var(--dark-color);
         }
 
         /* Zone 3 - Calendar */
@@ -533,17 +279,8 @@
                 background-color: var(--secondary-color);
             }
 
-        /* Responsive */
+        /* Responsive Calendar styles (unchanged) */
         @media (max-width: 768px) {
-            .zone-1, .zone-2 {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .input-group, .bmi-display, .goal-selection, .workout-selection, .results {
-                width: 100%;
-            }
-
             .calendar-grid {
                 grid-template-columns: repeat(7, 1fr);
             }
@@ -557,7 +294,7 @@
             }
         }
 
-        @media (max-width: 4800px) {
+        @media (max-width: 4800px) { /* This media query seems to be for very large screens or a typo, consider adjusting */
             .calendar-day-header {
                 font-size: 0.7rem;
                 padding: 5px;
@@ -579,9 +316,6 @@
                 font-size: 0.6rem;
             }
         }
-
-
-
 
         .day-indicators {
             display: flex;
@@ -714,200 +448,263 @@
             margin-top: -20px;
         }
 
-        .history-item {
+        .mood-slider {
+            min-width: 100%;
+        }
+
+        #sleepRange {
+            min-width: 100%;
+        }
+
+        /* New Body State Section Styles */
+        .body-state-overview {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-            padding: 14px 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-        }
-
-        .history-text {
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .delete-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-        }
-
-        .confirm-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 99999;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .confirm-box {
-            background: #fff;
-            padding: 24px;
-            border-radius: 10px;
-            text-align: center;
+        .progress-circle-container {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 500px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 1);
+            top: 10px;
+            margin-bottom: 10px;
         }
 
-            .confirm-box button {
-                margin: 10px;
-                padding: 8px 16px;
-                font-size: 16px;
+        .progress-circle {
+            transform: rotate(-90deg); /* Start from top */
+        }
+
+        .progress-circle-background { /* Changed from progress-circle-bg to match HTML */
+            fill: none;
+            stroke: black;
+            stroke-width: 10; /* Adjusted to match HTML */
+        }
+
+        .progress-circle-progress {
+            fill: none;
+            stroke: white; /* Use primary color for progress */
+            stroke-width: 20;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease-in-out;
+            stroke-dasharray: 314.159; /* Added: Circumference for r=50 (2 * PI * 50) */
+        }
+
+        .progress-circle-text {
+            position: absolute;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Always 2x2 grid for body state items */
+        .body-state-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+            gap: 15px; /* Adjusted gap for mobile-first */
+        }
+
+        .body-state-item {
+            background-color: #3b3b3b;
+            border: 0px solid #eee;
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            aspect-ratio: 1 / 1;
+            justify-content: space-between; /* Distribute content vertically */
+        }
+
+            .body-state-item label {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: white;
+                margin-bottom: 0; /* Override default label margin */
+            }
+
+            .body-state-item input[type="range"],
+            .body-state-item textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: var(--border-radius);
+                font-size: 0.9rem;
+            }
+
+            .body-state-item textarea {
+                min-height: 50px;
+                resize: vertical;
+            }
+
+            .body-state-item .norm-indicator {
+                font-size: 0.8rem;
+                font-weight: 500;
+                text-align: right;
+                min-height: 1.2em; /* Ensure consistent height */
+            }
+
+        .norm-indicator.good {
+            color: var(--success-color);
+        }
+
+        .norm-indicator.average {
+            color: var(--warning-color);
+        }
+
+        .norm-indicator.bad {
+            color: var(--danger-color);
+        }
+
+        .full-width {
+            grid-column: 1 / -1; /* Span across all columns */
+        }
+
+        /* Adjust existing styles for better integration */
+        .section {
+            margin-bottom: 20px;
+            border-radius: 30px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            background-color: #242424;
+            padding: 20px;
+            width: 100%; /* Изменено с 99% на 100% */
+        }
+
+
+        /* Styles for range inputs */
+        .body-state-item input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none; /* Remove default styling */
+            appearance: none;
+            height: 8px;
+            background: #38960c;
+            border: none;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            border-radius: 8px;
+            margin-bottom: 0; /* Remove default margin */
+            margin-top: 10px;
+        }
+
+            .body-state-item input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: var(--primary-color);
                 cursor: pointer;
             }
+
+            .body-state-item input[type="range"]::-moz-range-thumb {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                cursor: pointer;
+            }
+
+        .range-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: right;
+            color: white;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>My Space</h1>
 
-        <!-- Zone 1: Height/Weight/BMI -->
-        <div class="collapsible-section">
-            <div class="section-header collapsible-trigger">
-                <h2 class="section-title">Body Metrics</h2>
-                <span class="collapse-icon">&#9660;</span> <!-- Стрелка вниз -->
-            </div>
-            <div class="section-content">
-                <div class="section">
-                    <div class="zone-1">
-                        <div class="input-group">
-                            <label for="height">Current Height</label>
-                            <div class="input-row">
-                                <input type="number" id="height" placeholder="Height">
-                                <select id="height-unit">
-                                    <option value="cm">cm</option>
-                                    <option value="ft">ft</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="weight">Current Weight</label>
-                            <div class="input-row">
-                                <input type="number" id="weight" placeholder="Weight">
-                                <select id="weight-unit">
-                                    <option value="kg">kg</option>
-                                    <option value="lbs">lbs</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="bmi-display">
-                            <div class="bmi-value" id="bmi-value">--</div>
-                            <div class="bmi-category" id="bmi-category">BMI</div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="goal-weight">Goal Weight</label>
-                            <div class="input-row">
-                                <input type="number" id="goal-weight" placeholder="Goal weight">
-                                <select id="goal-weight-unit">
-                                    <option value="kg">kg</option>
-                                    <option value="lbs">lbs</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+        <!-- New Body State Section -->
+        <div class="section">
+            <div class="body-state-overview">
+                <div class="progress-circle-container">
+                    <svg width="170" height="170" viewBox="0 0 120 120">
+                        <circle class="progress-circle-background" cx="60" cy="60" r="50" stroke="lightgray" stroke-width="10" fill="none" />
+                        <circle class="progress-circle-progress" cx="60" cy="60" r="50" stroke="var(--primary-color)" stroke-width="20" fill="none" />
+                    </svg>
+                    <div class="progress-circle-text" id="body-state-score">0</div>
                 </div>
             </div>
-        </div>
 
-        <!-- Zone 2: Goals and Calculations -->
-        <div class="collapsible-section">
-            <div class="section-header collapsible-trigger">
-                <h2 class="section-title">Goals & Nutrition</h2>
-                <span class="collapse-icon">&#9660;</span>
-            </div>
-            <div class="section-content">
-                <div class="section">
-                    <div class="zone-2">
-                        <div class="goal-selection">
-                            <label>Your Goal</label>
-                            <div class="goal-options">
-                                <button class="goal-btn" data-goal="gain">Gain</button>
-                                <button class="goal-btn" data-goal="loose">Lose</button>
-                                <button class="goal-btn active" data-goal="maintain">Maintain</button>
-                            </div>
-
-                            <div class="speed-options">
-                                <button class="speed-btn" data-speed="fast">Fast</button>
-                                <button class="speed-btn active" data-speed="recommended">Recommended</button>
-                                <button class="speed-btn" data-speed="slow">Slow</button>
-                            </div>
-
-                            <div class="workout-input">
-                                <label for="workouts-per-week">Workouts per Week</label>
-                                <input type="number" id="workouts-per-week" min="0" max="7" value="3">
-                            </div>
-                        </div>
-
-                        <div class="results">
-                            <div class="result-item">
-                                <div class="result-label">Daily Calories</div>
-                                <div class="result-value" id="daily-calories">--</div>
-                            </div>
-
-                            <div class="result-item">
-                                <div class="result-label">Macros (grams)</div>
-                                <div class="macros-grid">
-                                    <div class="macro-item">
-                                        <div class="macro-label">Protein</div>
-                                        <div class="macro-value" id="protein-value">--</div>
-                                    </div>
-                                    <div class="macro-item">
-                                        <div class="macro-label">Carbs</div>
-                                        <div class="macro-value" id="carbs-value">--</div>
-                                    </div>
-                                    <div class="macro-item">
-                                        <div class="macro-label">Fats</div>
-                                        <div class="macro-value" id="fats-value">--</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="body-state-grid">
+                <div class="body-state-item">
+                    <img src="PNGs/height.png" style="height: 40px; width: 40px;"/>
+                    <label style="margin-left: 50px; margin-top: -40px;" for="new-height">Height (cm)</label>
+                    <input type="range" id="new-height" min="100" max="220" value="175" step="1">
+                    <span class="range-value" id="new-height-value">175 cm</span>
+                    <div class="norm-indicator" id="height-norm"></div>
+                </div>
+                <div class="body-state-item">
+                    <img src="PNGs/weight.png" style="height: 40px; width: 40px;" alt="Insulin" />
+                    <label style="margin-left: 50px; margin-top: -40px;" for="new-weight">Weight (kg)</label>
+                    <input type="range" id="new-weight" min="30" max="150" value="70" step="0.1">
+                    <span class="range-value" id="new-weight-value">70.0 kg</span>
+                    <div class="norm-indicator" id="weight-norm"></div>
+                </div>
+                <div class="body-state-item">
+                    <img src="PNGs/age.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                    <label style="margin-left: 50px; margin-top: -40px;" for="new-age">Age</label>
+                    <input type="range" id="new-age" min="1" max="100" value="30" step="1">
+                    <span class="range-value" id="new-age-value">30 years</span>
+                    <div class="norm-indicator" id="age-norm"></div>
+                </div>
+                <div class="body-state-item">
+                    <img src="PNGs/sleep-space.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                    <label style="margin-left: 50px; margin-top: -40px;" for="new-sleep">Avg. Sleep</label>
+                    <input type="range" id="new-sleep" min="0" max="12" value="7.5" step="0.1">
+                    <span class="range-value" id="new-sleep-value">7.5 hours</span>
+                    <div class="norm-indicator" id="sleep-norm"></div>
+                </div>
+                <div class="body-state-item">
+                    <img src="PNGs/water-glass.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                    <label style="margin-left: 50px; margin-top: -40px;" for="new-water">Avg. Water</label>
+                    <input type="range" id="new-water" min="0" max="5" value="2.0" step="0.1">
+                    <span class="range-value" id="new-water-value">2.0 liters</span>
+                    <div class="norm-indicator" id="water-norm"></div>
+                </div>
+                <div class="body-state-item">
+                    <img src="PNGs/exercise.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                    <label style="margin-left: 50px; margin-top: -40px;" for="new-activity">Activity Level</label>
+                    <input type="range" id="new-activity" min="1" max="5" value="3" step="1">
+                    <span class="range-value" id="new-activity-value">3</span>
+                    <div class="norm-indicator" id="activity-norm"></div>
                 </div>
             </div>
         </div>
 
         <!-- Zone 3: Calendar -->
-        <div class="collapsible-section">
-            <div class="section-header collapsible-trigger">
-                <h2 class="section-title">Daily Tracking</h2>
-                <span class="collapse-icon">&#9660;</span>
-            </div>
-            <div class="section-content">
-                <div class="section">
-                    <div class="calendar">
-                        <div class="calendar-header">
-                            <div class="calendar-title" id="current-month-year">June 2023</div>
-                            <div class="calendar-nav">
-                                <button class="calendar-nav-btn" id="prev-month">Previous</button>
-                                <button class="calendar-nav-btn" id="next-month">Next</button>
-                            </div>
-                        </div>
-
-                        <div class="calendar-grid" id="calendar-days-header">
-                            <div class="calendar-day-header">Sun</div>
-                            <div class="calendar-day-header">Mon</div>
-                            <div class="calendar-day-header">Tue</div>
-                            <div class="calendar-day-header">Wed</div>
-                            <div class="calendar-day-header">Thu</div>
-                            <div class="calendar-day-header">Fri</div>
-                            <div class="calendar-day-header">Sat</div>
-                        </div>
-
-                        <div class="calendar-grid" id="calendar-days">
-                            <!-- Calendar days will be generated by JavaScript -->
-                        </div>
+        <div class="section">
+            <h2 class="section-title">Daily Tracking</h2>
+            <div class="calendar">
+                <div class="calendar-header">
+                    <div class="calendar-title" id="current-month-year">June 2023</div>
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-btn" id="prev-month">Previous</button>
+                        <button class="calendar-nav-btn" id="next-month">Next</button>
                     </div>
+                </div>
+
+                <div class="calendar-grid" id="calendar-days-header">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+                </div>
+
+                <div class="calendar-grid" id="calendar-days">
+                    <!-- Calendar days will be generated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -997,8 +794,6 @@
                 });
             </script>
 
-
-
             <br>
             <div class="modal-checkboxes">
                 <div class="modal-checkbox">
@@ -1010,17 +805,6 @@
                     <label for="macros-checkbox">
                         Met
                         <a href="space.html" style="font-size:1rem;font-weight:bold;text-transform:uppercase;background:linear-gradient(#3333ff,#00ffcc);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;display:inline-block;">WATER</a>
-                        <style>
-                            @keyframes yourspaceAnim {
-                                0% {
-                                    background-position: 0%
-                                }
-
-                                100% {
-                                    background-position: 400%
-                                }
-                            }
-                        </style>
                         goal
                     </label>
                 </div>
@@ -1041,23 +825,7 @@
             let currentMonth = currentDate.getMonth();
             let selectedDay = null;
 
-            // DOM Elements
-            const heightInput = document.getElementById('height');
-            const heightUnit = document.getElementById('height-unit');
-            const weightInput = document.getElementById('weight');
-            const weightUnit = document.getElementById('weight-unit');
-            const goalWeightInput = document.getElementById('goal-weight');
-            const goalWeightUnit = document.getElementById('goal-weight-unit');
-            const bmiValue = document.getElementById('bmi-value');
-            const bmiCategory = document.getElementById('bmi-category');
-            const goalButtons = document.querySelectorAll('.goal-btn');
-            const speedOptions = document.querySelector('.speed-options');
-            const speedButtons = document.querySelectorAll('.speed-btn');
-            const workoutsInput = document.getElementById('workouts-per-week');
-            const dailyCalories = document.getElementById('daily-calories');
-            const proteinValue = document.getElementById('protein-value');
-            const carbsValue = document.getElementById('carbs-value');
-            const fatsValue = document.getElementById('fats-value');
+            // DOM Elements for Calendar and Modal (unchanged)
             const currentMonthYear = document.getElementById('current-month-year');
             const calendarDays = document.getElementById('calendar-days');
             const prevMonthBtn = document.getElementById('prev-month');
@@ -1072,44 +840,63 @@
             const saveDayBtn = document.getElementById('save-day-btn');
             const closeModal = document.querySelector('.close-modal');
 
+            // New DOM Elements for Body State Section
+            const bodyStateScoreDisplay = document.getElementById('body-state-score');
+            const progressCircle = document.querySelector('.progress-circle-progress');
+            const newHeightInput = document.getElementById('new-height');
+            const newWeightInput = document.getElementById('new-weight');
+            const newAgeInput = document.getElementById('new-age');
+            const newSleepInput = document.getElementById('new-sleep');
+            const newWaterInput = document.getElementById('new-water');
+            const newActivityInput = document.getElementById('new-activity');
+
+            const heightNorm = document.getElementById('height-norm');
+            const weightNorm = document.getElementById('weight-norm');
+            const ageNorm = document.getElementById('age-norm');
+            const sleepNorm = document.getElementById('sleep-norm');
+            const waterNorm = document.getElementById('water-norm');
+            const activityNorm = document.getElementById('activity-norm');
+
+            // New elements for range value displays
+            const newHeightValue = document.getElementById('new-height-value');
+            const newWeightValue = document.getElementById('new-weight-value');
+            const newAgeValue = document.getElementById('new-age-value');
+            const newSleepValue = document.getElementById('new-sleep-value');
+            const newWaterValue = document.getElementById('new-water-value');
+            const newActivityValue = document.getElementById('new-activity-value');
+
+
             // Load saved data from localStorage
             loadData();
 
-            // Event Listeners
-            heightInput.addEventListener('input', calculateBMI);
-            heightUnit.addEventListener('change', calculateBMI);
-            weightInput.addEventListener('input', calculateBMI);
-            weightUnit.addEventListener('change', calculateBMI);
-            goalWeightInput.addEventListener('input', calculateNutrition);
-            goalWeightUnit.addEventListener('change', calculateNutrition);
-            workoutsInput.addEventListener('input', calculateNutrition);
-
-            goalButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    goalButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Show/hide speed options based on goal
-                    if (this.dataset.goal === 'gain' || this.dataset.goal === 'loose') {
-                        speedOptions.classList.add('active');
-                    } else {
-                        speedOptions.classList.remove('active');
-                    }
-
-                    calculateNutrition();
-                    saveData();
-                });
+            // Event Listeners for Body State Section
+            newHeightInput.addEventListener('input', () => {
+                newHeightValue.textContent = `${newHeightInput.value} cm`;
+                updateBodyState();
+            });
+            newWeightInput.addEventListener('input', () => {
+                newWeightValue.textContent = `${parseFloat(newWeightInput.value).toFixed(1)} kg`;
+                updateBodyState();
+            });
+            newAgeInput.addEventListener('input', () => {
+                newAgeValue.textContent = `${newAgeInput.value} years`;
+                updateBodyState();
+            });
+            newSleepInput.addEventListener('input', () => {
+                newSleepValue.textContent = `${parseFloat(newSleepInput.value).toFixed(1)} hours`;
+                updateBodyState();
+            });
+            newWaterInput.addEventListener('input', () => {
+                newWaterValue.textContent = `${parseFloat(newWaterInput.value).toFixed(1)} liters`;
+                updateBodyState();
+            });
+            newActivityInput.addEventListener('input', () => {
+                newActivityValue.textContent = newActivityInput.value;
+                updateBodyState();
             });
 
-            speedButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    speedButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    calculateNutrition();
-                    saveData();
-                });
-            });
 
+            // Event Listeners for Calendar (unchanged)
             prevMonthBtn.addEventListener('click', () => {
                 currentMonth--;
                 if (currentMonth < 0) {
@@ -1146,142 +933,171 @@
             });
 
             // Initialize
-            calculateBMI();
-            calculateNutrition();
+            updateBodyState(); // Calculate initial body state score
             renderCalendar();
 
-            // New JavaScript for collapsible sections
-            const collapsibleTriggers = document.querySelectorAll('.collapsible-trigger');
+            // Functions for Body State Section
+            function updateBodyState() {
+                const height = parseFloat(newHeightInput.value);
+                const weight = parseFloat(newWeightInput.value);
+                const age = parseFloat(newAgeInput.value);
+                const sleep = parseFloat(newSleepInput.value);
+                const water = parseFloat(newWaterInput.value);
+                const activity = parseFloat(newActivityInput.value);
 
-            collapsibleTriggers.forEach(trigger => {
-                trigger.addEventListener('click', function () {
-                    const collapsibleSection = this.closest('.collapsible-section');
-                    collapsibleSection.classList.toggle('collapsed');
-                });
-            });
+                let score = 0;
+                let criteriaMet = 0;
+                // const totalCriteria = 6; // This variable is no longer directly used for normalization denominator
 
-            // Optional: Make the first section open by default, others collapsed
-            const allCollapsibleSections = document.querySelectorAll('.collapsible-section');
-            allCollapsibleSections.forEach((section, index) => {
-                if (index > 0) { // Collapse all except the first one
-                    section.classList.add('collapsed');
-                }
-            });
-
-
-            // Functions
-            function calculateBMI() {
-                const height = parseFloat(heightInput.value);
-                const weight = parseFloat(weightInput.value);
-
-                if (!height || !weight) {
-                    bmiValue.textContent = '--';
-                    bmiCategory.textContent = 'BMI';
-                    return;
-                }
-
-                // Convert to metric if needed
-                let heightInMeters;
-                if (heightUnit.value === 'cm') {
-                    heightInMeters = height / 100;
+                // Height (example: 150-190 cm is good)
+                if (!isNaN(height)) {
+                    if (height >= 150 && height <= 190) {
+                        score += 15;
+                        heightNorm.textContent = 'Good';
+                        heightNorm.className = 'norm-indicator good';
+                    } else if (height > 190 || height < 150) {
+                        score += 5;
+                        heightNorm.textContent = 'Average';
+                        heightNorm.className = 'norm-indicator average';
+                    } else { // Bad range
+                        score += 0; // Explicitly add 0 for bad, or just don't add
+                        heightNorm.textContent = 'Bad';
+                        heightNorm.className = 'norm-indicator bad';
+                    }
+                    criteriaMet++;
                 } else {
-                    // ft to meters (assuming input is in feet)
-                    heightInMeters = height * 0.3048;
+                    heightNorm.textContent = '';
+                    heightNorm.className = 'norm-indicator';
                 }
 
-                let weightInKg;
-                if (weightUnit.value === 'kg') {
-                    weightInKg = weight;
+                // Weight (example: BMI calculation for norm)
+                if (!isNaN(height) && !isNaN(weight)) {
+                    const heightInMeters = height / 100;
+                    const bmi = weight / (heightInMeters * heightInMeters);
+                    if (bmi >= 18.5 && bmi < 25) {
+                        score += 15;
+                        weightNorm.textContent = 'Good (BMI: ' + bmi.toFixed(1) + ')';
+                        weightNorm.className = 'norm-indicator good';
+                    } else if ((bmi >= 25 && bmi < 30) || (bmi >= 17 && bmi < 18.5)) {
+                        score += 10;
+                        weightNorm.textContent = 'Average (BMI: ' + bmi.toFixed(1) + ')';
+                        weightNorm.className = 'norm-indicator average';
+                    } else {
+                        score += 0; // Explicitly add 0 for bad
+                        weightNorm.textContent = 'Bad (BMI: ' + bmi.toFixed(1) + ')';
+                        weightNorm.className = 'norm-indicator bad';
+                    }
+                    criteriaMet++;
                 } else {
-                    // lbs to kg
-                    weightInKg = weight * 0.453592;
+                    weightNorm.textContent = '';
+                    weightNorm.className = 'norm-indicator';
                 }
 
-                const bmi = weightInKg / (heightInMeters * heightInMeters);
-                bmiValue.textContent = bmi.toFixed(1);
-
-                // Determine BMI category
-                if (bmi < 18.5) {
-                    bmiCategory.textContent = 'Underweight';
-                    bmiCategory.style.color = '#ffc107'; // yellow
-                } else if (bmi >= 18.5 && bmi < 25) {
-                    bmiCategory.textContent = 'Normal';
-                    bmiCategory.style.color = '#28a745'; // green
-                } else if (bmi >= 25 && bmi < 30) {
-                    bmiCategory.textContent = 'Overweight';
-                    bmiCategory.style.color = '#fd7e14'; // orange
+                // Age (example: 20-60 is good)
+                if (!isNaN(age)) {
+                    if (age >= 20 && age <= 60) {
+                        score += 10; // Max 10 for Age
+                        ageNorm.textContent = 'Good';
+                        ageNorm.className = 'norm-indicator good';
+                    } else if (age > 60 || age < 20) {
+                        score += 5;
+                        ageNorm.textContent = 'Average';
+                        ageNorm.className = 'norm-indicator average';
+                    } else { // Bad range
+                        score += 0; // Explicitly add 0 for bad
+                        ageNorm.textContent = 'Bad';
+                        ageNorm.className = 'norm-indicator bad';
+                    }
+                    criteriaMet++;
                 } else {
-                    bmiCategory.textContent = 'Obese';
-                    bmiCategory.style.color = '#dc3545'; // red
+                    ageNorm.textContent = '';
+                    ageNorm.className = 'norm-indicator';
                 }
 
-                calculateNutrition();
+                // Sleep (example: 7-9 hours is good)
+                if (!isNaN(sleep)) {
+                    if (sleep >= 7 && sleep <= 9) {
+                        score += 15;
+                        sleepNorm.textContent = 'Good';
+                        sleepNorm.className = 'norm-indicator good';
+                    } else if ((sleep >= 6 && sleep < 7) || (sleep > 9 && sleep <= 10)) {
+                        score += 10;
+                        sleepNorm.textContent = 'Average';
+                        sleepNorm.className = 'norm-indicator average';
+                    } else {
+                        score += 0; // Explicitly add 0 for bad
+                        sleepNorm.textContent = 'Bad';
+                        sleepNorm.className = 'norm-indicator bad';
+                    }
+                    criteriaMet++;
+                } else {
+                    sleepNorm.textContent = '';
+                    sleepNorm.className = 'norm-indicator';
+                }
+
+                // Water (example: 1.5-3.0 liters is good)
+                if (!isNaN(water)) {
+                    if (water >= 1.5 && water <= 3.0) {
+                        score += 15;
+                        waterNorm.textContent = 'Good';
+                        waterNorm.className = 'norm-indicator good';
+                    } else if ((water >= 1.0 && water < 1.5) || (water > 3.0 && water <= 4.0)) {
+                        score += 10;
+                        waterNorm.textContent = 'Average';
+                        waterNorm.className = 'norm-indicator average';
+                    } else {
+                        score += 0; // Explicitly add 0 for bad
+                        waterNorm.textContent = 'Bad';
+                        waterNorm.className = 'norm-indicator bad';
+                    }
+                    criteriaMet++;
+                } else {
+                    waterNorm.textContent = '';
+                    waterNorm.className = 'norm-indicator';
+                }
+
+                // Activity Level (example: 3-5 is good)
+                if (!isNaN(activity)) {
+                    if (activity >= 3 && activity <= 5) {
+                        score += 15;
+                        activityNorm.textContent = 'Good';
+                        activityNorm.className = 'norm-indicator good';
+                    } else if (activity === 2) {
+                        score += 10;
+                        activityNorm.textContent = 'Average';
+                        activityNorm.className = 'norm-indicator average';
+                    } else {
+                        score += 0; // Explicitly add 0 for bad
+                        activityNorm.textContent = 'Bad';
+                        activityNorm.className = 'norm-indicator bad';
+                    }
+                    criteriaMet++;
+                } else {
+                    activityNorm.textContent = '';
+                    activityNorm.className = 'norm-indicator';
+                }
+
+                // Normalize score to 0-100 range based on criteria met
+                let finalScore = 0;
+                // Calculate the true maximum possible score based on individual criterion maxes
+                const maxPossibleScore = 15 + 15 + 10 + 15 + 15 + 15; // Sum of max scores for each criterion (85)
+
+                if (criteriaMet > 0) {
+                    finalScore = Math.round((score / maxPossibleScore) * 100);
+                    // Ensure score doesn't exceed 100 due to rounding or edge cases
+                    if (finalScore > 100) finalScore = 100;
+                }
+
+
+                bodyStateScoreDisplay.textContent = finalScore;
+                const radius = 50; // Match the SVG circle's radius
+                const circumference = 2 * Math.PI * radius; // Calculate based on the actual SVG radius
+                const offset = circumference - (finalScore / 100) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+
                 saveData();
             }
 
-            function calculateNutrition() {
-                const weight = parseFloat(weightInput.value);
-                const goalWeight = parseFloat(goalWeightInput.value);
-                const workouts = parseInt(workoutsInput.value) || 0;
-
-                if (!weight) return;
-
-                // Convert weight to kg if needed
-                let weightInKg;
-                if (weightUnit.value === 'kg') {
-                    weightInKg = weight;
-                } else {
-                    weightInKg = weight * 0.453592;
-                }
-
-                // Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
-                // For simplicity, we'll assume male (5), female would be -161
-                const bmr = (10 * weightInKg) + (6.25 * (parseFloat(heightInput.value) / (heightUnit.value === 'cm' ? 1 : 2.54))) - (5 * 30) + 5;
-
-                // Adjust for activity level
-                let activityFactor;
-                if (workouts === 0) {
-                    activityFactor = 1.2; // Sedentary
-                } else if (workouts <= 2) {
-                    activityFactor = 1.375; // Lightly active
-                } else if (workouts <= 5) {
-                    activityFactor = 1.55; // Moderately active
-                } else {
-                    activityFactor = 1.725; // Very active
-                }
-
-                let maintenanceCalories = bmr * activityFactor;
-
-                // Adjust calories based on goal
-                const selectedGoal = document.querySelector('.goal-btn.active').dataset.goal;
-                const selectedSpeed = document.querySelector('.speed-btn.active')?.dataset.speed || 'recommended';
-
-                let calorieAdjustment = 0;
-                if (selectedGoal === 'gain') {
-                    if (selectedSpeed === 'fast') calorieAdjustment = 500;
-                    else if (selectedSpeed === 'recommended') calorieAdjustment = 250;
-                    else calorieAdjustment = 100;
-                    maintenanceCalories += calorieAdjustment;
-                } else if (selectedGoal === 'loose') {
-                    if (selectedSpeed === 'fast') calorieAdjustment = -500;
-                    else if (selectedSpeed === 'recommended') calorieAdjustment = -250;
-                    else calorieAdjustment = -100;
-                    maintenanceCalories += calorieAdjustment;
-                }
-
-                // Calculate macros (40% carbs, 30% protein, 30% fat)
-                const proteinG = Math.round((maintenanceCalories * 0.3) / 4);
-                const carbsG = Math.round((maintenanceCalories * 0.4) / 4);
-                const fatsG = Math.round((maintenanceCalories * 0.3) / 9);
-
-                // Update UI
-                dailyCalories.textContent = Math.round(maintenanceCalories);
-                proteinValue.textContent = proteinG;
-                carbsValue.textContent = carbsG;
-                fatsValue.textContent = fatsG;
-
-                saveData();
-            }
 
             function renderCalendar() {
                 // Set month and year title
@@ -1339,7 +1155,6 @@
                             dayElement.appendChild(moodIndicator);
                         }
 
-                        // Замените код индикаторов на:
                         if (dayData.caloriesMet || dayData.macrosMet) {
                             const indicators = document.createElement('div');
                             indicators.className = 'day-indicators';
@@ -1426,21 +1241,14 @@
 
             function saveData() {
                 const data = {
-                    height: heightInput.value,
-                    heightUnit: heightUnit.value,
-                    weight: weightInput.value,
-                    weightUnit: weightUnit.value,
-                    goalWeight: goalWeightInput.value,
-                    goalWeightUnit: goalWeightUnit.value,
-                    goal: document.querySelector('.goal-btn.active').dataset.goal,
-                    speed: document.querySelector('.speed-btn.active')?.dataset.speed || 'recommended',
-                    workouts: workoutsInput.value,
-                    calories: dailyCalories.textContent,
-                    protein: proteinValue.textContent,
-                    carbs: carbsValue.textContent,
-                    fats: fatsValue.textContent,
-                    bmi: bmiValue.textContent,
-                    bmiCategory: bmiCategory.textContent
+                    // Body State Data
+                    height: newHeightInput.value,
+                    weight: newWeightInput.value,
+                    age: newAgeInput.value,
+                    sleep: newSleepInput.value,
+                    water: newWaterInput.value,
+                    activity: newActivityInput.value,
+                    bodyStateScore: bodyStateScoreDisplay.textContent
                 };
 
                 localStorage.setItem('healthData', JSON.stringify(data));
@@ -1448,46 +1256,36 @@
 
             function loadData() {
                 const savedData = JSON.parse(localStorage.getItem('healthData'));
-                if (!savedData) return;
-
-                // Load basic data
-                heightInput.value = savedData.height || '';
-                heightUnit.value = savedData.heightUnit || 'cm';
-                weightInput.value = savedData.weight || '';
-                weightUnit.value = savedData.weightUnit || 'kg';
-                goalWeightInput.value = savedData.goalWeight || '';
-                goalWeightUnit.value = savedData.goalWeightUnit || 'kg';
-                workoutsInput.value = savedData.workouts || '3';
-
-                // Load goal and speed
-                if (savedData.goal) {
-                    document.querySelectorAll('.goal-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.dataset.goal === savedData.goal) {
-                            btn.classList.add('active');
-                        }
-                    });
-
-                    if (savedData.goal === 'gain' || savedData.goal === 'loose') {
-                        speedOptions.classList.add('active');
-                        if (savedData.speed) {
-                            document.querySelectorAll('.speed-btn').forEach(btn => {
-                                btn.classList.remove('active');
-                                if (btn.dataset.speed === savedData.speed) {
-                                    btn.classList.add('active');
-                                }
-                            });
-                        }
-                    }
+                if (!savedData) {
+                    // Initialize range values if no saved data
+                    newHeightValue.textContent = `${newHeightInput.value} cm`;
+                    newWeightValue.textContent = `${parseFloat(newWeightInput.value).toFixed(1)} kg`;
+                    newAgeValue.textContent = `${newAgeInput.value} years`;
+                    newSleepValue.textContent = `${parseFloat(newSleepInput.value).toFixed(1)} hours`;
+                    newWaterValue.textContent = `${parseFloat(newWaterInput.value).toFixed(1)} liters`;
+                    newActivityValue.textContent = newActivityInput.value;
+                    updateBodyState(); // Calculate initial score
+                    return;
                 }
 
-                // Update calculated values
-                bmiValue.textContent = savedData.bmi || '--';
-                bmiCategory.textContent = savedData.bmiCategory || 'BMI';
-                dailyCalories.textContent = savedData.calories || '--';
-                proteinValue.textContent = savedData.protein || '--';
-                carbsValue.textContent = savedData.carbs || '--';
-                fatsValue.textContent = savedData.fats || '--';
+                // Load Body State Data
+                newHeightInput.value = savedData.height || newHeightInput.value;
+                newWeightInput.value = savedData.weight || newWeightInput.value;
+                newAgeInput.value = savedData.age || newAgeInput.value;
+                newSleepInput.value = savedData.sleep || newSleepInput.value;
+                newWaterInput.value = savedData.water || newWaterInput.value;
+                newActivityInput.value = savedData.activity || newActivityInput.value;
+
+                // Update display values for range inputs
+                newHeightValue.textContent = `${newHeightInput.value} cm`;
+                newWeightValue.textContent = `${parseFloat(newWeightInput.value).toFixed(1)} kg`;
+                newAgeValue.textContent = `${newAgeInput.value} years`;
+                newSleepValue.textContent = `${parseFloat(newSleepInput.value).toFixed(1)} hours`;
+                newWaterValue.textContent = `${parseFloat(newWaterInput.value).toFixed(1)} liters`;
+                newActivityValue.textContent = newActivityInput.value;
+
+                // Update Body State UI after loading
+                updateBodyState();
             }
         });
     </script>

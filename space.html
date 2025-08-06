@@ -40,8 +40,8 @@
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
             color: var(--dark-color);
-            background-image: linear-gradient(#808080, #424242); /* Замените на URL вашего изображения */
-            padding: 20px;
+            background-image: linear-gradient(#808080, #424242);
+            padding: 10px;
             width: 100vw;
             overflow-x: hidden;
         }
@@ -60,17 +60,12 @@
 
         /* Updated .section styles - now the main container for each zone */
         .section {
-            .section
-
-        {
             margin-bottom: 20px;
             border-radius: 30px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.6);
             background-color: #242424;
             padding: 20px;
             width: 100%; /* Изменено с 99% на 100% */
-        }
-
         }
 
         .section-title {
@@ -88,9 +83,17 @@
 
         .calendar-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 400px) {
+            .calendar-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
         .calendar-title {
@@ -127,8 +130,16 @@
         .calendar-day-header {
             text-align: center;
             font-weight: 500;
-            padding: 10px;
+            padding: 6px;
+            font-size: 0.7rem;
             color: var(--secondary-color);
+        }
+
+        @media (min-width: 350px) {
+            .calendar-day-header {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
         }
 
         .calendar-day {
@@ -193,13 +204,27 @@
 
         .modal-content {
             background-color: white;
-            border-radius: 30px;
+            border-radius: 20px;
             box-shadow: var(--box-shadow);
-            padding: 20px;
-            width: 90%;
+            padding: 15px;
+            width: 95%;
             max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
+        }
+
+        @media (min-width: 350px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 25px;
+                width: 90%;
+            }
+        }
+
+        @media (min-width: 450px) {
+            .modal-content {
+                border-radius: 30px;
+            }
         }
 
         .modal-header {
@@ -466,15 +491,28 @@
 
         .progress-circle-container {
             position: relative;
-            width: 170px;
-            height: 170px;
+            width: 120px;
+            height: 120px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 500px;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 1);
-            top: 10px;
-            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.8);
+            margin: 0 auto 10px;
+        }
+
+        @media (min-width: 350px) {
+            .progress-circle-container {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        @media (min-width: 450px) {
+            .progress-circle-container {
+                width: 170px;
+                height: 170px;
+            }
         }
 
         .progress-circle {
@@ -513,42 +551,95 @@
         .body-state-item {
             background-color: #3b3b3b;
             border: 0px solid #eee;
-            border-radius: 20px;
-            padding: 15px;
+            border-radius: 15px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             aspect-ratio: 1 / 1;
-            justify-content: space-between; /* Distribute content vertically */
+            justify-content: space-between;
         }
 
-            .body-state-item label {
-                font-size: 0.9rem;
-                font-weight: 500;
-                color: white;
-                margin-bottom: 0; /* Override default label margin */
+        @media (min-width: 350px) {
+            .body-state-item {
+                padding: 12px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (min-width: 400px) {
+            .body-state-item {
+                padding: 15px;
+            }
+        }
+
+        /* --- Адаптация для экранов < 430px --- */
+        @media (max-width: 429px) {
+            .body-state-item {
+                height: auto; /* Allow height to adjust based on content */
+                padding: 10px; /* Reduce padding */
             }
 
-            .body-state-item input[type="range"],
-            .body-state-item textarea {
-                width: 100%;
-                padding: 8px;
-                border: 1px solid #ddd;
-                border-radius: var(--border-radius);
-                font-size: 0.9rem;
+                .body-state-item img {
+                    height: 30px; /* Smaller icon */
+                    width: 30px; /* Smaller icon */
+                }
+
+                .body-state-item label {
+                    font-size: 0.8rem; /* Smaller font for labels */
+                    margin-left: 40px; /* Adjust margin for smaller icon */
+                    margin-top: -30px; /* Adjust margin for smaller icon */
+                    white-space: nowrap; /* Prevent label from wrapping */
+                    overflow: hidden; /* Hide overflow if it still happens */
+                    text-overflow: ellipsis; /* Add ellipsis for truncated text */
+                }
+
+                .body-state-item input[type="range"] {
+                    margin-top: 5px; /* Adjust margin */
+                }
+
+            .range-value {
+                font-size: 0.7rem; /* Smaller font for range value */
             }
 
-            .body-state-item textarea {
-                min-height: 50px;
-                resize: vertical;
+            .norm-indicator {
+                font-size: 0.7rem; /* Smaller font for norm indicator */
             }
+        }
 
-            .body-state-item .norm-indicator {
-                font-size: 0.8rem;
-                font-weight: 500;
-                text-align: right;
-                min-height: 1.2em; /* Ensure consistent height */
+        @media (max-width: 412px) {
+            .body-state-item {
+                /* No specific changes needed here if the above media query handles it */
             }
+        }
+
+        .body-state-item label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 0; /* Override default label margin */
+        }
+
+        .body-state-item input[type="range"],
+        .body-state-item textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+
+        .body-state-item textarea {
+            min-height: 50px;
+            resize: vertical;
+        }
+
+        .body-state-item .norm-indicator {
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: right;
+            min-height: 1.2em; /* Ensure consistent height */
+        }
 
         .norm-indicator.good {
             color: var(--success-color);
@@ -618,6 +709,22 @@
             color: white;
             margin-top: 5px;
         }
+
+        @media (max-width: 386px) {
+            .body-state-grid {
+                gap: 3px;
+            }
+        }
+        @media (max-width: 370px) {
+            .body-state-grid {
+                margin-left: -1%;
+            }
+        }
+        @media (max-width: 360px) {
+            .body-state-grid {
+                margin-left: -2%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -637,7 +744,7 @@
 
             <div class="body-state-grid">
                 <div class="body-state-item">
-                    <img src="PNGs/height.png" style="height: 40px; width: 40px;"/>
+                    <img src="PNGs/height.png" style="height: 40px; width: 40px;" />
                     <label style="margin-left: 50px; margin-top: -40px;" for="new-height">Height (cm)</label>
                     <input type="range" id="new-height" min="100" max="220" value="175" step="1">
                     <span class="range-value" id="new-height-value">175 cm</span>

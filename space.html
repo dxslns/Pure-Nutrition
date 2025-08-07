@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -41,15 +42,20 @@
             line-height: 1.6;
             color: var(--dark-color);
             background-image: linear-gradient(#808080, #424242);
-            padding: 10px;
+            padding: 0;
             width: 100vw;
-            overflow-x: hidden;
+            overflow: hidden;
+            display: flex;
+            height: 200vh;
+            margin: 0;
+            max-height: 200vh;
         }
 
-        .container {
+        /* Удаляем .container, так как swipe-wrapper будет управлять компоновкой */
+        /* .container {
             max-width: 1200px;
             margin: 0 auto;
-        }
+        } */
 
         h1 {
             text-align: center;
@@ -60,12 +66,17 @@
 
         /* Updated .section styles - now the main container for each zone */
         .section {
-            margin-bottom: 20px;
+            margin: 10px; /* Небольшой отступ от краев экрана */
             border-radius: 30px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.6);
             background-color: #242424;
             padding: 20px;
-            width: 100%; /* Изменено с 99% на 100% */
+            width: calc(100% - 20px); /* Учитываем margin */
+            max-width: 1200px; /* Ограничиваем ширину на больших экранах */
+            height: auto;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: y mandatory;
         }
 
         .section-title {
@@ -75,6 +86,54 @@
             border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 10px;
         }
+
+        /* Новые стили для свайп-функционала */
+        .swipe-wrapper {
+            display: flex;
+            position: relative;
+            width: 200vw;
+            height: 100%;
+            transition: transform 0.3s ease;
+            touch-action: pan-y;
+            will-change: transform;
+        }
+
+        .swipe-page {
+            width: 100vw;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Индикаторы страниц */
+        .page-indicators {
+            position: fixed;
+            bottom: 20px;
+            left: 25%;
+            top: 85vh;
+            height: 30px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1001;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+            .indicator-dot.active {
+                background-color: white;
+            }
 
         /* Zone 3 - Calendar */
         .calendar {
@@ -102,7 +161,8 @@
             color: var(--primary-color);
         }
 
-        .calendar-nav {
+        /* Удаляем стили для кнопок навигации календаря, так как их не будет */
+        /* .calendar-nav {
             display: flex;
             gap: 10px;
         }
@@ -119,7 +179,7 @@
 
             .calendar-nav-btn:hover {
                 background-color: var(--secondary-color);
-            }
+            } */
 
         .calendar-grid {
             display: grid;
@@ -536,7 +596,7 @@
 
         .progress-circle-text {
             position: absolute;
-            font-size: 3.5rem;
+            font-size: 3.1rem;
             font-weight: 700;
             color: white;
         }
@@ -658,14 +718,14 @@
         }
 
         /* Adjust existing styles for better integration */
-        .section {
+        /* .section {
             margin-bottom: 20px;
             border-radius: 30px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.6);
             background-color: #242424;
             padding: 20px;
-            width: 100%; /* Изменено с 99% на 100% */
-        }
+            width: 100%;
+        } */
 
 
         /* Styles for range inputs */
@@ -715,11 +775,13 @@
                 gap: 3px;
             }
         }
+
         @media (max-width: 370px) {
             .body-state-grid {
                 margin-left: -1%;
             }
         }
+
         @media (max-width: 360px) {
             .body-state-grid {
                 margin-left: -2%;
@@ -728,93 +790,103 @@
     </style>
 </head>
 <body>
-    <div class="container">
-
+    <div class="swipe-wrapper" id="swipe-wrapper">
         <!-- New Body State Section -->
-        <div class="section">
-            <div class="body-state-overview">
-                <div class="progress-circle-container">
-                    <svg width="170" height="170" viewBox="0 0 120 120">
-                        <circle class="progress-circle-background" cx="60" cy="60" r="50" stroke="lightgray" stroke-width="10" fill="none" />
-                        <circle class="progress-circle-progress" cx="60" cy="60" r="50" stroke="var(--primary-color)" stroke-width="20" fill="none" />
-                    </svg>
-                    <div class="progress-circle-text" id="body-state-score">0</div>
+        <div class="swipe-page" id="page-body-state">
+            <div class="section">
+                <div class="body-state-overview">
+                    <div class="progress-circle-container">
+                        <svg width="170" height="170" viewBox="0 0 120 120">
+                            <circle class="progress-circle-background" cx="60" cy="60" r="50" stroke="lightgray" stroke-width="10" fill="none" />
+                            <circle class="progress-circle-progress" cx="60" cy="60" r="50" stroke="var(--primary-color)" stroke-width="20" fill="none" />
+                        </svg>
+                        <div class="progress-circle-text" id="body-state-score">0</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="body-state-grid">
-                <div class="body-state-item">
-                    <img src="PNGs/height.png" style="height: 40px; width: 40px;" />
-                    <label style="margin-left: 50px; margin-top: -40px;" for="new-height">Height (cm)</label>
-                    <input type="range" id="new-height" min="100" max="220" value="175" step="1">
-                    <span class="range-value" id="new-height-value">175 cm</span>
-                    <div class="norm-indicator" id="height-norm"></div>
-                </div>
-                <div class="body-state-item">
-                    <img src="PNGs/weight.png" style="height: 40px; width: 40px;" alt="Insulin" />
-                    <label style="margin-left: 50px; margin-top: -40px;" for="new-weight">Weight (kg)</label>
-                    <input type="range" id="new-weight" min="30" max="150" value="70" step="0.1">
-                    <span class="range-value" id="new-weight-value">70.0 kg</span>
-                    <div class="norm-indicator" id="weight-norm"></div>
-                </div>
-                <div class="body-state-item">
-                    <img src="PNGs/age.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                    <label style="margin-left: 50px; margin-top: -40px;" for="new-age">Age</label>
-                    <input type="range" id="new-age" min="1" max="100" value="30" step="1">
-                    <span class="range-value" id="new-age-value">30 years</span>
-                    <div class="norm-indicator" id="age-norm"></div>
-                </div>
-                <div class="body-state-item">
-                    <img src="PNGs/sleep-space.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                    <label style="margin-left: 50px; margin-top: -40px;" for="new-sleep">Avg. Sleep</label>
-                    <input type="range" id="new-sleep" min="0" max="12" value="7.5" step="0.1">
-                    <span class="range-value" id="new-sleep-value">7.5 hours</span>
-                    <div class="norm-indicator" id="sleep-norm"></div>
-                </div>
-                <div class="body-state-item">
-                    <img src="PNGs/water-glass.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                    <label style="margin-left: 50px; margin-top: -40px;" for="new-water">Avg. Water</label>
-                    <input type="range" id="new-water" min="0" max="5" value="2.0" step="0.1">
-                    <span class="range-value" id="new-water-value">2.0 liters</span>
-                    <div class="norm-indicator" id="water-norm"></div>
-                </div>
-                <div class="body-state-item">
-                    <img src="PNGs/exercise.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                    <label style="margin-left: 50px; margin-top: -40px;" for="new-activity">Activity Level</label>
-                    <input type="range" id="new-activity" min="1" max="5" value="3" step="1">
-                    <span class="range-value" id="new-activity-value">3</span>
-                    <div class="norm-indicator" id="activity-norm"></div>
+                <div class="body-state-grid">
+                    <div class="body-state-item">
+                        <img src="PNGs/height.png" style="height: 40px; width: 40px;" />
+                        <label style="margin-left: 50px; margin-top: -40px;" for="new-height">Height (cm)</label>
+                        <input type="range" id="new-height" min="100" max="220" value="175" step="1">
+                        <span class="range-value" id="new-height-value">175 cm</span>
+                        <div class="norm-indicator" id="height-norm"></div>
+                    </div>
+                    <div class="body-state-item">
+                        <img src="PNGs/weight.png" style="height: 40px; width: 40px;" alt="Insulin" />
+                        <label style="margin-left: 50px; margin-top: -40px;" for="new-weight">Weight (kg)</label>
+                        <input type="range" id="new-weight" min="30" max="150" value="70" step="0.1">
+                        <span class="range-value" id="new-weight-value">70.0 kg</span>
+                        <div class="norm-indicator" id="weight-norm"></div>
+                    </div>
+                    <div class="body-state-item">
+                        <img src="PNGs/age.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                        <label style="margin-left: 50px; margin-top: -40px;" for="new-age">Age</label>
+                        <input type="range" id="new-age" min="1" max="100" value="30" step="1">
+                        <span class="range-value" id="new-age-value">30 years</span>
+                        <div class="norm-indicator" id="age-norm"></div>
+                    </div>
+                    <div class="body-state-item">
+                        <img src="PNGs/sleep-space.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                        <label style="margin-left: 50px; margin-top: -40px;" for="new-sleep">Avg. Sleep</label>
+                        <input type="range" id="new-sleep" min="0" max="12" value="7.5" step="0.1">
+                        <span class="range-value" id="new-sleep-value">7.5 hours</span>
+                        <div class="norm-indicator" id="sleep-norm"></div>
+                    </div>
+                    <div class="body-state-item">
+                        <img src="PNGs/water-glass.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                        <label style="margin-left: 50px; margin-top: -40px;" for="new-water">Avg. Water</label>
+                        <input type="range" id="new-water" min="0" max="5" value="2.0" step="0.1">
+                        <span class="range-value" id="new-water-value">2.0 liters</span>
+                        <div class="norm-indicator" id="water-norm"></div>
+                    </div>
+                    <div class="body-state-item">
+                        <img src="PNGs/exercise.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
+                        <label style="margin-left: 50px; margin-top: -40px;" for="new-activity">Activity Level</label>
+                        <input type="range" id="new-activity" min="1" max="5" value="3" step="1">
+                        <span class="range-value" id="new-activity-value">3</span>
+                        <div class="norm-indicator" id="activity-norm"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Zone 3: Calendar -->
-        <div class="section">
-            <h2 class="section-title">Daily Tracking</h2>
-            <div class="calendar">
-                <div class="calendar-header">
-                    <div class="calendar-title" id="current-month-year">June 2023</div>
-                    <div class="calendar-nav">
-                        <button class="calendar-nav-btn" id="prev-month">Previous</button>
-                        <button class="calendar-nav-btn" id="next-month">Next</button>
+        <div class="swipe-page" id="page-daily-tracking">
+            <div class="section">
+                <h2 class="section-title">Daily Tracking</h2>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-title" id="current-month-year">June 2023</div>
+                        <!-- Кнопки навигации календаря удалены, так как навигация теперь свайпами -->
+                        <!-- <div class="calendar-nav">
+                            <button class="calendar-nav-btn" id="prev-month">Previous</button>
+                            <button class="calendar-nav-btn" id="next-month">Next</button>
+                        </div> -->
                     </div>
-                </div>
 
-                <div class="calendar-grid" id="calendar-days-header">
-                    <div class="calendar-day-header">Sun</div>
-                    <div class="calendar-day-header">Mon</div>
-                    <div class="calendar-day-header">Tue</div>
-                    <div class="calendar-day-header">Wed</div>
-                    <div class="calendar-day-header">Thu</div>
-                    <div class="calendar-day-header">Fri</div>
-                    <div class="calendar-day-header">Sat</div>
-                </div>
+                    <div class="calendar-grid" id="calendar-days-header">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                    </div>
 
-                <div class="calendar-grid" id="calendar-days">
-                    <!-- Calendar days will be generated by JavaScript -->
+                    <div class="calendar-grid" id="calendar-days">
+                        <!-- Calendar days will be generated by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Индикаторы страниц -->
+    <div class="page-indicators" id="page-indicators">
+        <div class="indicator-dot active" data-page-index="0"></div>
+        <div class="indicator-dot" data-page-index="1"></div>
     </div>
 
     <!-- Day Details Modal -->
@@ -935,8 +1007,8 @@
             // DOM Elements for Calendar and Modal (unchanged)
             const currentMonthYear = document.getElementById('current-month-year');
             const calendarDays = document.getElementById('calendar-days');
-            const prevMonthBtn = document.getElementById('prev-month');
-            const nextMonthBtn = document.getElementById('next-month');
+            // const prevMonthBtn = document.getElementById('prev-month'); // Удалены
+            // const nextMonthBtn = document.getElementById('next-month'); // Удалены
             const dayModal = document.getElementById('day-modal');
             const modalDayTitle = document.getElementById('modal-day-title');
             const moodSlider = document.getElementById('mood-slider');
@@ -972,6 +1044,15 @@
             const newWaterValue = document.getElementById('new-water-value');
             const newActivityValue = document.getElementById('new-activity-value');
 
+            // Элементы для свайп-функционала
+            const swipeWrapper = document.getElementById('swipe-wrapper');
+            const pages = document.querySelectorAll('.swipe-page');
+            const pageIndicatorsContainer = document.getElementById('page-indicators');
+            const indicatorDots = document.querySelectorAll('.indicator-dot');
+            let currentPageIndex = 0;
+            let startX = 0;
+            let endX = 0;
+            const swipeThreshold = 50; // Минимальное расстояние для свайпа
 
             // Load saved data from localStorage
             loadData();
@@ -1002,25 +1083,24 @@
                 updateBodyState();
             });
 
+            // Event Listeners for Calendar (unchanged, except for removed buttons)
+            // prevMonthBtn.addEventListener('click', () => { // Удалены
+            //     currentMonth--;
+            //     if (currentMonth < 0) {
+            //         currentMonth = 11;
+            //         currentYear--;
+            //     }
+            //     renderCalendar();
+            // });
 
-            // Event Listeners for Calendar (unchanged)
-            prevMonthBtn.addEventListener('click', () => {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                renderCalendar();
-            });
-
-            nextMonthBtn.addEventListener('click', () => {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                renderCalendar();
-            });
+            // nextMonthBtn.addEventListener('click', () => { // Удалены
+            //     currentMonth++;
+            //     if (currentMonth > 11) {
+            //         currentMonth = 0;
+            //         currentYear++;
+            //     }
+            //     renderCalendar();
+            // });
 
             closeModal.addEventListener('click', () => {
                 dayModal.style.display = 'none';
@@ -1042,6 +1122,72 @@
             // Initialize
             updateBodyState(); // Calculate initial body state score
             renderCalendar();
+            updatePageIndicators(); // Обновляем индикаторы при загрузке
+
+            // Swipe functionality
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            swipeWrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            swipeWrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                const diff = touchEndX - touchStartX;
+
+                if (diff < -100 && currentPageIndex < pages.length - 1) {
+                    // Swipe left - next page
+                    currentPageIndex++;
+                } else if (diff > 100 && currentPageIndex > 0) {
+                    // Swipe right - previous page
+                    currentPageIndex--;
+                }
+
+                swipeWrapper.style.transform = `translateX(${-currentPageIndex * 100}vw)`;
+                updatePageIndicators();
+            }
+
+            // Enable horizontal scrolling for swipe-wrapper
+            swipeWrapper.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const currentX = e.touches[0].screenX;
+                const diff = currentX - touchStartX;
+
+                // Only allow horizontal scrolling
+                const maxDrag = 50;
+                const translateX = Math.max(
+                    Math.min(
+                        (-currentPageIndex * 100) + (diff / window.innerWidth) * 100,
+                        -currentPageIndex * 100 + maxDrag
+                    ),
+                    -currentPageIndex * 100 - maxDrag
+                );
+                swipeWrapper.style.transform = `translateX(${translateX}vw)`;
+            });
+
+            function goToPage(index) {
+                if (index >= 0 && index < pages.length) {
+                    currentPageIndex = index;
+                    const offset = -currentPageIndex * 100; // Смещение в процентах
+                    swipeWrapper.style.transform = `translateX(${offset}vw)`;
+                    updatePageIndicators();
+                }
+            }
+
+            function updatePageIndicators() {
+                indicatorDots.forEach((dot, index) => {
+                    if (index === currentPageIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
 
             // Functions for Body State Section
             function updateBodyState() {

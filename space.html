@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -1055,6 +1054,38 @@
             let endX = 0;
             const swipeThreshold = 20; // Минимальное расстояние для свайпа
 
+            // Флаг для управления блокировкой свайпа
+            let isSwipeLocked = false;
+
+            // Получаем все ползунки (input type="range")
+            const allRangeInputs = document.querySelectorAll('input[type="range"]');
+
+            // Добавляем обработчики событий для каждого ползунка
+            allRangeInputs.forEach(input => {
+                input.addEventListener('touchstart', (e) => {
+                    // Останавливаем распространение события, чтобы оно не дошло до swipeWrapper
+                    e.stopPropagation();
+                    // Блокируем свайп
+                    isSwipeLocked = true;
+                    swipeWrapper.style.transition = 'none'; // Отключаем анимацию свайпа, чтобы не было "дерганий"
+                });
+
+                input.addEventListener('touchend', (e) => {
+                    e.stopPropagation();
+                    // Разблокируем свайп после небольшого таймаута, чтобы избежать случайных свайпов
+                    // сразу после отпускания ползунка
+                    setTimeout(() => {
+                        isSwipeLocked = false;
+                        swipeWrapper.style.transition = 'transform 0.3s ease'; // Возвращаем анимацию
+                    }, 100); // Небольшая задержка
+                });
+
+                // Дополнительно, для предотвращения прокрутки страницы при перетаскивании ползунка
+                input.addEventListener('touchmove', (e) => {
+                    e.stopPropagation();
+                });
+            });
+
             // Load saved data from localStorage
             loadData();
 
@@ -1130,32 +1161,24 @@
             let touchEndX = 0;
 
             swipeWrapper.addEventListener('touchstart', (e) => {
+                if (isSwipeLocked) return; // Если свайп заблокирован, выходим
                 touchStartX = e.changedTouches[0].screenX;
+                swipeWrapper.style.transition = 'none'; // Отключаем анимацию для плавного перетаскивания
             });
 
             swipeWrapper.addEventListener('touchend', (e) => {
+                if (isSwipeLocked) return; // Если свайп заблокирован, выходим
                 touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
+                swipeWrapper.style.transition = 'transform 0.3s ease'; // Возвращаем анимацию
             });
 
-            function handleSwipe() {
-                const diff = touchEndX - touchStartX;
-
-                if (diff < -100 && currentPageIndex < pages.length - 1) {
-                    // Swipe left - next page
-                    currentPageIndex++;
-                } else if (diff > 100 && currentPageIndex > 0) {
-                    // Swipe right - previous page
-                    currentPageIndex--;
-                }
-
-                swipeWrapper.style.transform = `translateX(${-currentPageIndex * 100}vw)`;
-                updatePageIndicators();
-            }
-
-            // Enable horizontal scrolling for swipe-wrapper
             swipeWrapper.addEventListener('touchmove', (e) => {
-                e.preventDefault();
+                if (isSwipeLocked) {
+                    e.preventDefault(); // Предотвращаем прокрутку страницы, если свайп заблокирован
+                    return;
+                }
+                e.preventDefault(); // Предотвращаем вертикальную прокрутку страницы
                 const currentX = e.touches[0].screenX;
                 const diff = currentX - touchStartX;
 

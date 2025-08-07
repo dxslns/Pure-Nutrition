@@ -111,8 +111,7 @@
         .page-indicators {
             position: fixed;
             bottom: 20px;
-            left: 25%;
-            top: 85vh;
+            left: 50%;
             height: 30px;
             transform: translateX(-50%);
             display: flex;
@@ -558,7 +557,7 @@
             align-items: center;
             border-radius: 500px;
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.8);
-            margin: 0 auto 10px;
+            margin: 0 auto -5px;
         }
 
         @media (min-width: 350px) {
@@ -787,6 +786,15 @@
                 margin-left: -2%;
             }
         }
+
+        .page-indicators {
+            position: absolute;
+            top: 85vh;
+            left: 50%;
+            z-index: 1000;
+            will-change: transform; /* Оптимизация для браузера */
+        }
+
     </style>
 </head>
 <body>
@@ -1007,8 +1015,6 @@
             // DOM Elements for Calendar and Modal (unchanged)
             const currentMonthYear = document.getElementById('current-month-year');
             const calendarDays = document.getElementById('calendar-days');
-            // const prevMonthBtn = document.getElementById('prev-month'); // Удалены
-            // const nextMonthBtn = document.getElementById('next-month'); // Удалены
             const dayModal = document.getElementById('day-modal');
             const modalDayTitle = document.getElementById('modal-day-title');
             const moodSlider = document.getElementById('mood-slider');
@@ -1054,38 +1060,6 @@
             let endX = 0;
             const swipeThreshold = 20; // Минимальное расстояние для свайпа
 
-            // Флаг для управления блокировкой свайпа
-            let isSwipeLocked = false;
-
-            // Получаем все ползунки (input type="range")
-            const allRangeInputs = document.querySelectorAll('input[type="range"]');
-
-            // Добавляем обработчики событий для каждого ползунка
-            allRangeInputs.forEach(input => {
-                input.addEventListener('touchstart', (e) => {
-                    // Останавливаем распространение события, чтобы оно не дошло до swipeWrapper
-                    e.stopPropagation();
-                    // Блокируем свайп
-                    isSwipeLocked = true;
-                    swipeWrapper.style.transition = 'none'; // Отключаем анимацию свайпа, чтобы не было "дерганий"
-                });
-
-                input.addEventListener('touchend', (e) => {
-                    e.stopPropagation();
-                    // Разблокируем свайп после небольшого таймаута, чтобы избежать случайных свайпов
-                    // сразу после отпускания ползунка
-                    setTimeout(() => {
-                        isSwipeLocked = false;
-                        swipeWrapper.style.transition = 'transform 0.3s ease'; // Возвращаем анимацию
-                    }, 100); // Небольшая задержка
-                });
-
-                // Дополнительно, для предотвращения прокрутки страницы при перетаскивании ползунка
-                input.addEventListener('touchmove', (e) => {
-                    e.stopPropagation();
-                });
-            });
-
             // Load saved data from localStorage
             loadData();
 
@@ -1115,27 +1089,26 @@
                 updateBodyState();
             });
 
-            // Event Listeners for Calendar (unchanged, except for removed buttons)
-            // prevMonthBtn.addEventListener('click', () => { // Удалены
-            //     currentMonth--;
-            //     if (currentMonth < 0) {
-            //         currentMonth = 11;
-            //         currentYear--;
-            //     }
-            //     renderCalendar();
-            // });
+            // Add event listeners to range inputs to prevent swipe
+            const rangeInputs = document.querySelectorAll('input[type="range"]');
+            rangeInputs.forEach(input => {
+                input.addEventListener('touchstart', (e) => {
+                    e.stopPropagation(); // Prevent swipe on touch start
+                    swipeWrapper.style.touchAction = 'none'; // Disable swipe
+                });
+                input.addEventListener('touchend', (e) => {
+                    e.stopPropagation(); // Prevent swipe on touch end
+                    swipeWrapper.style.touchAction = 'pan-y'; // Re-enable swipe
+                });
+                input.addEventListener('touchmove', (e) => {
+                    e.stopPropagation(); // Prevent swipe on touch move
+                });
+            });
 
-            // nextMonthBtn.addEventListener('click', () => { // Удалены
-            //     currentMonth++;
-            //     if (currentMonth > 11) {
-            //         currentMonth = 0;
-            //         currentYear++;
-            //     }
-            //     renderCalendar();
-            // });
 
             closeModal.addEventListener('click', () => {
                 dayModal.style.display = 'none';
+                document.body.style.overflow = '';
             });
 
             moodSlider.addEventListener('input', () => {
@@ -1148,6 +1121,7 @@
             window.addEventListener('click', (e) => {
                 if (e.target === dayModal) {
                     dayModal.style.display = 'none';
+                    document.body.style.overflow = '';
                 }
             });
 
@@ -1161,24 +1135,32 @@
             let touchEndX = 0;
 
             swipeWrapper.addEventListener('touchstart', (e) => {
-                if (isSwipeLocked) return; // Если свайп заблокирован, выходим
                 touchStartX = e.changedTouches[0].screenX;
-                swipeWrapper.style.transition = 'none'; // Отключаем анимацию для плавного перетаскивания
             });
 
             swipeWrapper.addEventListener('touchend', (e) => {
-                if (isSwipeLocked) return; // Если свайп заблокирован, выходим
                 touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
-                swipeWrapper.style.transition = 'transform 0.3s ease'; // Возвращаем анимацию
             });
 
-            swipeWrapper.addEventListener('touchmove', (e) => {
-                if (isSwipeLocked) {
-                    e.preventDefault(); // Предотвращаем прокрутку страницы, если свайп заблокирован
-                    return;
+            function handleSwipe() {
+                const diff = touchEndX - touchStartX;
+
+                if (diff < -100 && currentPageIndex < pages.length - 1) {
+                    // Swipe left - next page
+                    currentPageIndex++;
+                } else if (diff > 100 && currentPageIndex > 0) {
+                    // Swipe right - previous page
+                    currentPageIndex--;
                 }
-                e.preventDefault(); // Предотвращаем вертикальную прокрутку страницы
+
+                swipeWrapper.style.transform = `translateX(${-currentPageIndex * 100}vw)`;
+                updatePageIndicators();
+            }
+
+            // Enable horizontal scrolling for swipe-wrapper
+            swipeWrapper.addEventListener('touchmove', (e) => {
+                e.preventDefault();
                 const currentX = e.touches[0].screenX;
                 const diff = currentX - touchStartX;
 
@@ -1464,6 +1446,8 @@
             }
 
             function openDayModal(day, month, year) {
+                // Prevent body scroll when modal is open
+                document.body.style.overflow = 'hidden';
                 selectedDay = { day, month, year };
                 const dateKey = `${year}-${month}-${day}`;
                 const dayData = getDayData(dateKey);

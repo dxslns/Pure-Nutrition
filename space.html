@@ -74,6 +74,7 @@
             width: calc(100% - 20px); /* Учитываем margin */
             max-width: 1200px; /* Ограничиваем ширину на больших экранах */
             height: auto;
+            height: auto;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             scroll-snap-type: y mandatory;
@@ -1052,7 +1053,7 @@
             let currentPageIndex = 0;
             let startX = 0;
             let endX = 0;
-            const swipeThreshold = 50; // Минимальное расстояние для свайпа
+            const swipeThreshold = 20; // Минимальное расстояние для свайпа
 
             // Load saved data from localStorage
             loadData();

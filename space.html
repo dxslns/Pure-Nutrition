@@ -7,14 +7,15 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-PWBVFG5DVZ');
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>My Space</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- Внешние стили -->
+    <link rel="stylesheet" href="space.css" />
     <style>
         :root {
             --primary-color: #000;
@@ -26,875 +27,637 @@
             --warning-color: #ffc107;
             --danger-color: #dc3545;
             --border-radius: 8px;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--dark-color);
-            background-image: linear-gradient(#808080, #424242);
-            padding: 0;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            height: 200vh;
-            margin: 0;
-            max-height: 200vh;
-        }
-
-        /* Удаляем .container, так как swipe-wrapper будет управлять компоновкой */
-        /* .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        } */
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        /* Updated .section styles - now the main container for each zone */
-        .section {
-            margin: 10px; /* Небольшой отступ от краев экрана */
-            border-radius: 30px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-            background-color: #242424;
-            padding: 20px;
-            width: calc(100% - 20px); /* Учитываем margin */
-            max-width: 1200px; /* Ограничиваем ширину на больших экранах */
-            height: auto;
-            height: auto;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: y mandatory;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 10px;
-        }
-
-        /* Новые стили для свайп-функционала */
-        .swipe-wrapper {
-            display: flex;
-            position: relative;
-            width: 200vw;
-            height: 100%;
-            transition: transform 0.3s ease;
-            touch-action: pan-y;
-            will-change: transform;
-        }
-
-        .swipe-page {
-            width: 100vw;
-            height: 100%;
-            flex-shrink: 0;
-            position: relative;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Индикаторы страниц */
-        .page-indicators {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            height: 30px;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 1001;
-            background: rgba(0,0,0,0.5);
-            padding: 8px 16px;
-            border-radius: 20px;
-        }
-
-        .indicator-dot {
-            width: 10px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-
-            .indicator-dot.active {
-                background-color: white;
-            }
-
-        /* Zone 3 - Calendar */
-        .calendar {
-            width: 100%;
-        }
-
-        .calendar-header {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        @media (min-width: 400px) {
-            .calendar-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-
-        .calendar-title {
-            font-size: 1.3rem;
-            font-weight: 500;
-            color: var(--primary-color);
-        }
-
-        /* Удаляем стили для кнопок навигации календаря, так как их не будет */
-        /* .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .calendar-nav-btn {
-            padding: 5px 10px;
-            border: none;
-            border-radius: var(--border-radius);
-            background-color: var(--primary-color);
-            color: white;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-            .calendar-nav-btn:hover {
-                background-color: var(--secondary-color);
-            } */
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-weight: 500;
-            padding: 6px;
-            font-size: 0.7rem;
-            color: var(--secondary-color);
-        }
-
-        @media (min-width: 350px) {
-            .calendar-day-header {
-                padding: 8px;
-                font-size: 0.8rem;
-            }
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            padding: 5px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid black;
-        }
-
-            .calendar-day:hover {
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-
-        .calendar-day-number {
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-
-        .day-mood {
-            width: 100%;
-            margin: 5px 0;
-        }
-
-        .day-checkbox {
-            display: flex;
-            align-items: center;
-            margin: 3px 0;
-            font-size: 0.8rem;
-        }
-
-            .day-checkbox input {
-                margin-right: 5px;
-            }
-
-        .day-note {
-            width: 100%;
-            font-size: 0.7rem;
-            padding: 3px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            resize: none;
-            height: 40px;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: var(--box-shadow);
-            padding: 15px;
-            width: 95%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @media (min-width: 350px) {
-            .modal-content {
-                padding: 20px;
-                border-radius: 25px;
-                width: 90%;
-            }
-        }
-
-        @media (min-width: 450px) {
-            .modal-content {
-                border-radius: 30px;
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 1.3rem;
-            color: var(--primary-color);
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--secondary-color);
-        }
-
-        .mood-slider-container {
-            margin: 20px 0;
-        }
-
-        .mood-slider {
-            width: 100%;
-        }
-
-        .mood-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-            font-size: 0.8rem;
-            color: var(--secondary-color);
-        }
-
-        .modal-checkboxes {
-            margin: 20px 0;
-        }
-
-        .modal-checkbox {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-            .modal-checkbox input {
-                margin-right: 10px;
-            }
-
-        .modal-textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            resize: vertical;
-            min-height: 100px;
-            margin-top: 10px;
-        }
-
-        .save-day-btn {
-            width: 100%;
-            padding: 25px;
-            border: none;
-            border-radius: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 20px;
-        }
-
-            .save-day-btn:hover {
-                background-color: var(--secondary-color);
-            }
-
-        /* Responsive Calendar styles (unchanged) */
-        @media (max-width: 768px) {
-            .calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
-            }
-
-            .calendar-day-number {
-                font-size: 0.8rem;
-            }
-
-            .day-note {
-                display: none;
-            }
-        }
-
-        @media (max-width: 4800px) { /* This media query seems to be for very large screens or a typo, consider adjusting */
-            .calendar-day-header {
-                font-size: 0.7rem;
-                padding: 5px;
-            }
-
-            .calendar-day {
-                padding: 2px;
-            }
-
-            .calendar-day-number {
-                font-size: 0.7rem;
-            }
-
-            .day-mood {
-                display: none;
-            }
-
-            .day-checkbox {
-                font-size: 0.6rem;
-            }
-        }
-
-        .day-indicators {
-            display: flex;
-            justify-content: center;
-            gap: -1px;
-            margin-top: -5px;
-        }
-
-            .day-indicators span {
-                font-size: 0.8em;
-                width: 16px;
-                height: 16px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                background-color: rgba(74, 111, 165, 0.1);
-            }
-
-        .indicator-calories {
-            color: var(--success-color);
-        }
-
-        .indicator-macros {
-            color: var(--success-color);
-        }
-
-        /* На десктопах можно показывать больше информации */
-        @media (min-width: 768px) {
-            .day-indicators {
-                flex-direction: column;
-                gap: 2px;
-            }
-
-                .day-indicators span {
-                    width: auto;
-                    height: auto;
-                    background: none;
-                    font-size: 0.7em;
-                    justify-content: flex-start;
-                    padding-left: 2px;
-                }
-
-            .indicator-calories::before {
-                content: 'Calories: ';
-            }
-
-            .indicator-macros::before {
-                content: 'Macros: ';
-            }
-        }
-
-        #toast-container {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 320px;
-            pointer-events: none;
-        }
-        /* Само уведомление */
-        .toast {
-            background-color: #333;
-            color: #fff;
-            padding: 16px 24px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            font-size: 16px;
-            opacity: 0;
-            animation: slideDown 0.3s forwards, fadeOut 0.3s forwards 2.7s;
-            pointer-events: auto;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        label {
-            font-size: 20px;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        input[type=range] {
-            width: 300px;
-            margin-bottom: 30px;
-        }
-
-        #valueDisplay {
-            font-weight: bold;
-            font-size: 24px;
-            margin-top: -45px;
-            width: 50%;
-        }
-
-        #saveBtn {
-            padding: 15px 25px;
-            border: none;
-            background-color: #000000;
-            color: white;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 15px;
-            margin-left: 130px;
-        }
-
-        #calories-checkbox, #macros-checkbox {
-            margin-top: -20px;
-        }
-
-        .mood-slider {
-            min-width: 100%;
-        }
-
-        #sleepRange {
-            min-width: 100%;
-        }
-
-        /* New Body State Section Styles */
-        .body-state-overview {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .progress-circle-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 500px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.8);
-            margin: 0 auto -5px;
-        }
-
-        @media (min-width: 350px) {
-            .progress-circle-container {
-                width: 140px;
-                height: 140px;
-            }
-        }
-
-        @media (min-width: 450px) {
-            .progress-circle-container {
-                width: 170px;
-                height: 170px;
-            }
-        }
-
-        .progress-circle {
-            transform: rotate(-90deg); /* Start from top */
-        }
-
-        .progress-circle-background { /* Changed from progress-circle-bg to match HTML */
-            fill: none;
-            stroke: black;
-            stroke-width: 10; /* Adjusted to match HTML */
-        }
-
-        .progress-circle-progress {
-            fill: none;
-            stroke: white; /* Use primary color for progress */
-            stroke-width: 20;
-            stroke-linecap: round;
-            transition: stroke-dashoffset 0.5s ease-in-out;
-            stroke-dasharray: 314.159; /* Added: Circumference for r=50 (2 * PI * 50) */
-        }
-
-        .progress-circle-text {
-            position: absolute;
-            font-size: 3.1rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        /* Always 2x2 grid for body state items */
-        .body-state-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
-            gap: 15px; /* Adjusted gap for mobile-first */
-        }
-
-        .body-state-item {
-            background-color: #3b3b3b;
-            border: 0px solid #eee;
-            border-radius: 15px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            aspect-ratio: 1 / 1;
-            justify-content: space-between;
-        }
-
-        @media (min-width: 350px) {
-            .body-state-item {
-                padding: 12px;
-                border-radius: 20px;
-            }
-        }
-
-        @media (min-width: 400px) {
-            .body-state-item {
-                padding: 15px;
-            }
-        }
-
-        /* --- Адаптация для экранов < 430px --- */
-        @media (max-width: 429px) {
-            .body-state-item {
-                height: auto; /* Allow height to adjust based on content */
-                padding: 10px; /* Reduce padding */
-            }
-
-                .body-state-item img {
-                    height: 30px; /* Smaller icon */
-                    width: 30px; /* Smaller icon */
-                }
-
-                .body-state-item label {
-                    font-size: 0.8rem; /* Smaller font for labels */
-                    margin-left: 40px; /* Adjust margin for smaller icon */
-                    margin-top: -30px; /* Adjust margin for smaller icon */
-                    white-space: nowrap; /* Prevent label from wrapping */
-                    overflow: hidden; /* Hide overflow if it still happens */
-                    text-overflow: ellipsis; /* Add ellipsis for truncated text */
-                }
-
-                .body-state-item input[type="range"] {
-                    margin-top: 5px; /* Adjust margin */
-                }
-
-            .range-value {
-                font-size: 0.7rem; /* Smaller font for range value */
-            }
-
-            .norm-indicator {
-                font-size: 0.7rem; /* Smaller font for norm indicator */
-            }
-        }
-
-        @media (max-width: 412px) {
-            .body-state-item {
-                /* No specific changes needed here if the above media query handles it */
-            }
-        }
-
-        .body-state-item label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: white;
-            margin-bottom: 0; /* Override default label margin */
-        }
-
-        .body-state-item input[type="range"],
-        .body-state-item textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-        }
-
-        .body-state-item textarea {
-            min-height: 50px;
-            resize: vertical;
-        }
-
-        .body-state-item .norm-indicator {
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-align: right;
-            min-height: 1.2em; /* Ensure consistent height */
-        }
-
-        .norm-indicator.good {
-            color: var(--success-color);
-        }
-
-        .norm-indicator.average {
-            color: var(--warning-color);
-        }
-
-        .norm-indicator.bad {
-            color: var(--danger-color);
-        }
-
-        .full-width {
-            grid-column: 1 / -1; /* Span across all columns */
-        }
-
-        /* Adjust existing styles for better integration */
-        /* .section {
-            margin-bottom: 20px;
-            border-radius: 30px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-            background-color: #242424;
-            padding: 20px;
-            width: 100%;
-        } */
-
-
-        /* Styles for range inputs */
-        .body-state-item input[type="range"] {
-            width: 100%;
-            -webkit-appearance: none; /* Remove default styling */
-            appearance: none;
-            height: 8px;
-            background: #38960c;
-            border: none;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity .2s;
-            border-radius: 8px;
-            margin-bottom: 0; /* Remove default margin */
-            margin-top: 10px;
-        }
-
-            .body-state-item input[type="range"]::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: var(--primary-color);
-                cursor: pointer;
-            }
-
-            .body-state-item input[type="range"]::-moz-range-thumb {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: var(--primary-color);
-                cursor: pointer;
-            }
-
-        .range-value {
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-align: right;
-            color: white;
-            margin-top: 5px;
-        }
-
-        @media (max-width: 386px) {
-            .body-state-grid {
-                gap: 3px;
-            }
-        }
-
-        @media (max-width: 370px) {
-            .body-state-grid {
-                margin-left: -1%;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .body-state-grid {
-                margin-left: -2%;
-            }
-        }
-
-        .page-indicators {
-            position: absolute;
-            top: 85vh;
-            left: 50%;
-            z-index: 1000;
-            will-change: transform; /* Оптимизация для браузера */
-        }
-
+            /* Notion-like */
+            --notion-bg: #f7f7f7;
+            --notion-text: #37352f;
+            --notion-border: #e0e0e0;
+            --notion-button-bg: #e0e0e0;
+            --notion-button-hover: #d0d0d0;
+            --notion-red: #f66;
+            --notion-green: #27ae60;
+            --notion-blue: #3082fc;
+            --notion-yellow: #ff8b47;
+            --notion-purple: #9b51e0;
+        }
+
+             * {
+                 box-sizing: border-box;
+                 margin: 0;
+                 padding: 0;
+             }
+
+             body {
+                 font-family: 'Roboto',sans-serif;
+                 line-height: 1.6;
+                 color: var(--dark-color);
+                 background-image: url('\PNGs/pic2.png');
+                 background-size: cover;
+                 background-position: center;
+                 background-repeat: no-repeat;
+                 padding: 0;
+                 width: 100vw;
+                 overflow-x: hidden;
+                 display: flex;
+                 justify-content: center;
+                 align-items: flex-start;
+                 min-height: 100vh;
+                 margin: 0;
+             }
+
+             h1 {
+                 text-align: center;
+                 margin-bottom: 30px;
+                 color: var(--primary-color);
+                 font-weight: 700;
+             }
+
+             .section {
+                 margin: 10px auto;
+                 border-radius: 30px;
+                 box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+                 background-color: rgba(0,0,0,0.7);
+                 padding: 20px;
+                 width: calc(100% - 20px);
+                 max-width: 1200px;
+                 height: auto;
+                 overflow-y: auto;
+                 -webkit-overflow-scrolling: touch;
+             }
+
+             .section-title {
+                 font-size: 1.5rem;
+                 margin-bottom: 20px;
+                 color: azure;
+                 border-bottom: 2px solid var(--secondary-color);
+                 padding-bottom: 10px;
+             }
+
+             /* Calendar */
+             .calendar {
+                 width: 100%;
+             }
+
+             .calendar-header {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 10px;
+                 margin-bottom: 15px;
+             }
+
+             @media (min-width: 400px) {
+                 .calendar-header {
+                     flex-direction: row;
+                     justify-content: space-between;
+                     align-items: center;
+                 }
+             }
+
+             .calendar-title {
+                 font-size: 1.3rem;
+                 font-weight: 500;
+                 color: azure;
+             }
+
+             .calendar-nav {
+                 display: flex;
+                 gap: 10px;
+             }
+
+             .calendar-nav-btn {
+                 padding: 5px 10px;
+                 border: none;
+                 border-radius: var(--border-radius);
+                 background-color: var(--primary-color);
+                 color: #fff;
+                 cursor: pointer;
+                 transition: var(--transition);
+             }
+
+                 .calendar-nav-btn:hover {
+                     background-color: var(--secondary-color);
+                 }
+
+             .calendar-grid {
+                 display: grid;
+                 grid-template-columns: repeat(7,1fr);
+                 gap: 5px;
+             }
+
+             .calendar-day-header {
+                 text-align: center;
+                 font-weight: 500;
+                 padding: 6px;
+                 font-size: .7rem;
+                 color: var(--secondary-color);
+             }
+
+             @media (min-width:350px) {
+                 .calendar-day-header {
+                     padding: 8px;
+                     font-size: .8rem;
+                 }
+             }
+
+             .calendar-day {
+                 aspect-ratio: 1;
+                 background-color: #fff;
+                 border-radius: var(--border-radius);
+                 box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                 padding: 5px;
+                 cursor: pointer;
+                 transition: var(--transition);
+                 border: 1px solid #000;
+             }
+
+             @media (max-width:500px) {
+                 .calendar-day {
+                     height: 100%;
+                 }
+
+                 .day-mood-indicator {
+                     visibility: hidden;
+                 }
+             }
+
+             .calendar-day:hover {
+                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+             }
+
+             .calendar-day-number {
+                 font-weight: 500;
+                 margin-bottom: 5px;
+             }
+
+             .day-mood {
+                 width: 100%;
+                 margin: 5px 0;
+             }
+
+             .day-checkbox {
+                 display: flex;
+                 align-items: center;
+                 margin: 3px 0;
+                 font-size: .8rem;
+             }
+
+                 .day-checkbox input {
+                     margin-right: 5px;
+                 }
+
+             .day-note {
+                 width: 100%;
+                 font-size: .7rem;
+                 padding: 3px;
+                 border: 1px solid #eee;
+                 border-radius: 4px;
+                 resize: none;
+                 height: 40px;
+             }
+
+             /* Modal */
+             .modal {
+                 display: none;
+                 position: fixed;
+                 top: 0;
+                 left: 0;
+                 width: 100%;
+                 height: 100%;
+                 background-color: rgba(0,0,0,0.5);
+                 z-index: 1000;
+                 justify-content: center;
+                 align-items: center;
+             }
+
+             .modal-content {
+                 background-color: var(--notion-bg);
+                 border-radius: 35px;
+                 box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                 padding: 20px;
+                 width: 95%;
+                 max-width: 600px;
+                 max-height: 80vh;
+                 overflow-y: auto;
+                 color: var(--notion-text);
+                 font-family: 'Roboto',sans-serif;
+             }
+
+             .modal-header {
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center;
+                 margin-bottom: 20px;
+                 border-bottom: 1px solid var(--notion-border);
+                 padding-bottom: 15px;
+             }
+
+             .modal-title {
+                 font-size: 1.5rem;
+                 font-weight: 700;
+                 color: var(--notion-text);
+             }
+
+             .close-modal {
+                 background: none;
+                 border: none;
+                 font-size: 1.8rem;
+                 cursor: pointer;
+                 color: var(--notion-text);
+                 opacity: .6;
+                 transition: opacity .2s ease;
+             }
+
+                 .close-modal:hover {
+                     opacity: 1;
+                 }
+
+             .modal-section {
+                 margin-bottom: 25px;
+                 opacity: 0;
+                 transform: translateY(20px);
+                 transition: opacity 0.3s ease, transform 0.3s ease;
+             }
+
+                 .modal-section.visible {
+                     opacity: 1;
+                     transform: translateY(0);
+                 }
+
+             .modal-section-title {
+                 font-size: 1.1rem;
+                 font-weight: 600;
+                 margin-bottom: 10px;
+                 color: var(--notion-text);
+             }
+
+             /* Sliders */
+             .slider-container {
+                 margin-bottom: 15px;
+             }
+
+             .slider-label {
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center;
+                 margin-bottom: 8px;
+                 font-size: .95rem;
+                 color: var(--notion-text);
+             }
+
+             input[type="range"] {
+                 width: 100%;
+                 -webkit-appearance: none;
+                 height: 6px;
+                 background: var(--notion-border);
+                 border-radius: 3px;
+                 outline: none;
+                 opacity: .7;
+                 transition: opacity .2s;
+             }
+
+                 input[type="range"]:hover {
+                     opacity: 1;
+                 }
+
+                 input[type="range"]::-webkit-slider-thumb {
+                     -webkit-appearance: none;
+                     appearance: none;
+                     width: 18px;
+                     height: 18px;
+                     border-radius: 50%;
+                     background: var(--notion-blue);
+                     cursor: pointer;
+                     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                 }
+
+                 input[type="range"]::-moz-range-thumb {
+                     width: 18px;
+                     height: 18px;
+                     border-radius: 50%;
+                     background: var(--notion-blue);
+                     cursor: pointer;
+                     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                 }
+
+             .slider-value {
+                 font-weight: 500;
+                 color: var(--notion-blue);
+             }
+
+             /* Buttons */
+             .button-group {
+                 display: flex;
+                 flex-wrap: wrap;
+                 gap: 8px;
+                 margin-top: 10px;
+             }
+
+             .notion-button {
+                 padding: 8px 15px;
+                 border: 1px solid var(--notion-border);
+                 border-radius: 5px;
+                 background-color: var(--notion-button-bg);
+                 color: var(--notion-text);
+                 font-size: .9rem;
+                 cursor: pointer;
+                 transition: background-color .2s ease, border-color .2s ease;
+                 opacity: 0;
+                 transform: scale(0.8);
+                 transition: opacity 0.3s ease, transform 0.3s ease, background-color .2s ease, border-color .2s ease;
+             }
+
+                 .notion-button.visible {
+                     opacity: 1;
+                     transform: scale(1);
+                 }
+
+                 .notion-button:hover {
+                     background-color: var(--notion-button-hover);
+                 }
+
+                 .notion-button.selected {
+                     background-color: var(--notion-blue);
+                     color: #fff;
+                     border-color: var(--notion-blue);
+                 }
+
+                 /* Semantic coloring:
+        Любая кнопка с data-negative="true" при выборе подсвечивается красным,
+        чтобы не перечислять все возможные значения. */
+                 .notion-button[data-negative="true"].selected {
+                     background-color: var(--notion-red);
+                     border-color: var(--notion-red);
+                     color: #fff;
+                 }
+
+                 /* Legacy specific color mappings for Water Intake quick glance */
+                 .notion-button[data-value="very-little"].selected {
+                     background-color: var(--notion-red);
+                     border-color: var(--notion-red);
+                     color: #fff;
+                 }
+
+                 .notion-button[data-value="little"].selected {
+                     background-color: #ff7f50;
+                     border-color: #ff7f50;
+                     color: #fff;
+                 }
+
+                 .notion-button[data-value="enough"].selected {
+                     background-color: var(--notion-green);
+                     border-color: var(--notion-green);
+                     color: #fff;
+                 }
+
+                 .notion-button[data-value="much"].selected {
+                     background-color: #4682b4;
+                     border-color: #4682b4;
+                     color: #fff;
+                 }
+
+                 .notion-button[data-value="very-much"].selected {
+                     background-color: #1e90ff;
+                     border-color: #1e90ff;
+                     color: #fff;
+                 }
+
+             /* Checkboxes (if used later) */
+             .checkbox-group {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 10px;
+                 margin-top: 10px;
+             }
+
+             .notion-checkbox {
+                 display: flex;
+                 align-items: center;
+                 font-size: .95rem;
+                 color: var(--notion-text);
+                 cursor: pointer;
+             }
+
+                 .notion-checkbox input[type="checkbox"] {
+                     -webkit-appearance: none;
+                     appearance: none;
+                     width: 18px;
+                     height: 18px;
+                     border: 1.5px solid var(--notion-border);
+                     border-radius: 4px;
+                     margin-right: 10px;
+                     cursor: pointer;
+                     position: relative;
+                     outline: none;
+                     transition: background-color .2s ease, border-color .2s ease;
+                 }
+
+                     .notion-checkbox input[type="checkbox"]:checked {
+                         background-color: var(--notion-blue);
+                         border-color: var(--notion-blue);
+                     }
+
+                         .notion-checkbox input[type="checkbox"]:checked::before {
+                             content: '✓';
+                             display: block;
+                             color: #fff;
+                             font-size: 14px;
+                             text-align: center;
+                             line-height: 16px;
+                             position: absolute;
+                             top: 0;
+                             left: 0;
+                             width: 100%;
+                             height: 100%;
+                         }
+
+             /* Textarea */
+             .notion-textarea {
+                 width: 100%;
+                 padding: 10px;
+                 border: 1px solid var(--notion-border);
+                 border-radius: 5px;
+                 resize: vertical;
+                 min-height: 80px;
+                 font-family: 'Roboto',sans-serif;
+                 font-size: .95rem;
+                 color: var(--notion-text);
+                 background-color: #fff;
+                 transition: border-color .2s ease;
+                 opacity: 0;
+                 transform: translateY(10px);
+                 transition: opacity 0.3s ease, transform 0.3s ease, border-color .2s ease;
+             }
+
+                 .notion-textarea.visible {
+                     opacity: 1;
+                     transform: translateY(0);
+                 }
+
+                 .notion-textarea:focus {
+                     border-color: var(--notion-blue);
+                     outline: none;
+                 }
+
+             /* Save Button */
+             .save-day-btn {
+                 width: 100%;
+                 padding: 12px 20px;
+                 border: none;
+                 border-radius: 15px;
+                 background-color: var(--notion-blue);
+                 color: #fff;
+                 font-weight: 600;
+                 font-size: 1rem;
+                 cursor: pointer;
+                 transition: background-color .2s ease;
+                 margin-top: 20px;
+                 opacity: 0;
+                 transform: translateY(20px);
+                 transition: opacity 0.3s ease, transform 0.3s ease, background-color .2s ease;
+             }
+
+                 .save-day-btn.visible {
+                     opacity: 1;
+                     transform: translateY(0);
+                 }
+
+                 .save-day-btn:hover {
+                     background-color: #207bb4;
+                 }
+
+             /* Calendar indicators & toasts */
+             .day-indicators {
+                 display: flex;
+                 justify-content: center;
+                 gap: -1px;
+                 margin-top: -5px;
+             }
+
+                 .day-indicators span {
+                     font-size: .8em;
+                     width: 16px;
+                     height: 16px;
+                     display: inline-flex;
+                     align-items: center;
+                     justify-content: center;
+                     border-radius: 50%;
+                     background-color: rgba(74,111,165,0.1);
+                 }
+
+             .indicator-calories {
+                 color: var(--success-color);
+             }
+
+             .indicator-macros {
+                 color: var(--success-color);
+             }
+
+             @media (min-width:768px) {
+                 .day-indicators {
+                     flex-direction: column;
+                     gap: 2px;
+                 }
+
+                     .day-indicators span {
+                         width: auto;
+                         height: auto;
+                         background: none;
+                         font-size: .7em;
+                         justify-content: flex-start;
+                         padding-left: 2px;
+                     }
+
+                 .indicator-calories::before {
+                     content: 'Calories: ';
+                 }
+
+                 .indicator-macros::before {
+                     content: 'Macros: ';
+                 }
+             }
+
+             #toast-container {
+                 position: fixed;
+                 top: 10px;
+                 left: 50%;
+                 transform: translateX(-50%);
+                 z-index: 9999;
+                 display: flex;
+                 flex-direction: column;
+                 gap: 10px;
+                 width: 320px;
+                 pointer-events: none;
+             }
+
+             .toast {
+                 background-color: #333;
+                 color: #fff;
+                 padding: 16px 24px;
+                 border-radius: 8px;
+                 box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                 font-size: 16px;
+                 opacity: 0;
+                 animation: slideDown .3s forwards, fadeOut .3s forwards 2.7s;
+                 pointer-events: auto;
+             }
+
+             @keyframes slideDown {
+                 from {
+                     opacity: 0;
+                     transform: translateY(-20px);
+                 }
+
+                 to {
+                     opacity: 1;
+                     transform: translateY(0);
+                 }
+             }
+
+             @keyframes fadeOut {
+                 from {
+                     opacity: 1;
+                 }
+
+                 to {
+                     opacity: 0;
+                 }
+             }
+
+             /* Sliders gradient baseline (hook for JS if захочешь динамику) */
+             .mood-low, .mood-medium, .mood-high,
+             .activity-low, .activity-medium, .activity-high {
+                 background: linear-gradient(to right, var(--notion-red) 0%, var(--notion-yellow) 50%, var(--notion-green) 100%);
+             }
     </style>
 </head>
 <body>
-    <div class="swipe-wrapper" id="swipe-wrapper">
-        <!-- New Body State Section -->
-        <div class="swipe-page" id="page-body-state">
-            <div class="section">
-                <div class="body-state-overview">
-                    <div class="progress-circle-container">
-                        <svg width="170" height="170" viewBox="0 0 120 120">
-                            <circle class="progress-circle-background" cx="60" cy="60" r="50" stroke="lightgray" stroke-width="10" fill="none" />
-                            <circle class="progress-circle-progress" cx="60" cy="60" r="50" stroke="var(--primary-color)" stroke-width="20" fill="none" />
-                        </svg>
-                        <div class="progress-circle-text" id="body-state-score">0</div>
-                    </div>
-                </div>
-
-                <div class="body-state-grid">
-                    <div class="body-state-item">
-                        <img src="PNGs/height.png" style="height: 40px; width: 40px;" />
-                        <label style="margin-left: 50px; margin-top: -40px;" for="new-height">Height (cm)</label>
-                        <input type="range" id="new-height" min="100" max="220" value="175" step="1">
-                        <span class="range-value" id="new-height-value">175 cm</span>
-                        <div class="norm-indicator" id="height-norm"></div>
-                    </div>
-                    <div class="body-state-item">
-                        <img src="PNGs/weight.png" style="height: 40px; width: 40px;" alt="Insulin" />
-                        <label style="margin-left: 50px; margin-top: -40px;" for="new-weight">Weight (kg)</label>
-                        <input type="range" id="new-weight" min="30" max="150" value="70" step="0.1">
-                        <span class="range-value" id="new-weight-value">70.0 kg</span>
-                        <div class="norm-indicator" id="weight-norm"></div>
-                    </div>
-                    <div class="body-state-item">
-                        <img src="PNGs/age.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                        <label style="margin-left: 50px; margin-top: -40px;" for="new-age">Age</label>
-                        <input type="range" id="new-age" min="1" max="100" value="30" step="1">
-                        <span class="range-value" id="new-age-value">30 years</span>
-                        <div class="norm-indicator" id="age-norm"></div>
-                    </div>
-                    <div class="body-state-item">
-                        <img src="PNGs/sleep-space.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                        <label style="margin-left: 50px; margin-top: -40px;" for="new-sleep">Avg. Sleep</label>
-                        <input type="range" id="new-sleep" min="0" max="12" value="7.5" step="0.1">
-                        <span class="range-value" id="new-sleep-value">7.5 hours</span>
-                        <div class="norm-indicator" id="sleep-norm"></div>
-                    </div>
-                    <div class="body-state-item">
-                        <img src="PNGs/water-glass.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                        <label style="margin-left: 50px; margin-top: -40px;" for="new-water">Avg. Water</label>
-                        <input type="range" id="new-water" min="0" max="5" value="2.0" step="0.1">
-                        <span class="range-value" id="new-water-value">2.0 liters</span>
-                        <div class="norm-indicator" id="water-norm"></div>
-                    </div>
-                    <div class="body-state-item">
-                        <img src="PNGs/exercise.png" style="height: 40px; width: 40px; border-radius: 10px;" alt="Insulin" />
-                        <label style="margin-left: 50px; margin-top: -40px;" for="new-activity">Activity Level</label>
-                        <input type="range" id="new-activity" min="1" max="5" value="3" step="1">
-                        <span class="range-value" id="new-activity-value">3</span>
-                        <div class="norm-indicator" id="activity-norm"></div>
-                    </div>
+    <!-- Zone 3: Calendar -->
+    <div class="section">
+        <h2 class="section-title">Daily Tracking</h2>
+        <div class="calendar">
+            <div class="calendar-header">
+                <div class="calendar-title" id="current-month-year">June 2023</div>
+                <div class="calendar-nav">
+                    <button class="calendar-nav-btn" id="prev-month">Previous</button>
+                    <button class="calendar-nav-btn" id="next-month">Next</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Zone 3: Calendar -->
-        <div class="swipe-page" id="page-daily-tracking">
-            <div class="section">
-                <h2 class="section-title">Daily Tracking</h2>
-                <div class="calendar">
-                    <div class="calendar-header">
-                        <div class="calendar-title" id="current-month-year">June 2023</div>
-                        <!-- Кнопки навигации календаря удалены, так как навигация теперь свайпами -->
-                        <!-- <div class="calendar-nav">
-                            <button class="calendar-nav-btn" id="prev-month">Previous</button>
-                            <button class="calendar-nav-btn" id="next-month">Next</button>
-                        </div> -->
-                    </div>
+            <div class="calendar-grid" id="calendar-days-header">
+                <div class="calendar-day-header">Sun</div>
+                <div class="calendar-day-header">Mon</div>
+                <div class="calendar-day-header">Tue</div>
+                <div class="calendar-day-header">Wed</div>
+                <div class="calendar-day-header">Thu</div>
+                <div class="calendar-day-header">Fri</div>
+                <div class="calendar-day-header">Sat</div>
+            </div>
 
-                    <div class="calendar-grid" id="calendar-days-header">
-                        <div class="calendar-day-header">Sun</div>
-                        <div class="calendar-day-header">Mon</div>
-                        <div class="calendar-day-header">Tue</div>
-                        <div class="calendar-day-header">Wed</div>
-                        <div class="calendar-day-header">Thu</div>
-                        <div class="calendar-day-header">Fri</div>
-                        <div class="calendar-day-header">Sat</div>
-                    </div>
-
-                    <div class="calendar-grid" id="calendar-days">
-                        <!-- Calendar days will be generated by JavaScript -->
-                    </div>
-                </div>
+            <div class="calendar-grid" id="calendar-days">
+                <!-- Calendar days will be generated by JavaScript -->
             </div>
         </div>
-    </div>
-
-    <!-- Индикаторы страниц -->
-    <div class="page-indicators" id="page-indicators">
-        <div class="indicator-dot active" data-page-index="0"></div>
-        <div class="indicator-dot" data-page-index="1"></div>
     </div>
 
     <!-- Day Details Modal -->
@@ -904,105 +667,173 @@
                 <h3 class="modal-title" id="modal-day-title">Day Details</h3>
                 <button class="close-modal">&times;</button>
             </div>
-            <div class="mood-slider-container">
-                <label>How did you feel today? (1-10)</label>
-                <input type="range" min="1" max="10" value="5" class="mood-slider" id="mood-slider">
-                <div class="mood-labels">
-                    <span>1 (Bad)</span>
-                    <div id="mood-value-display"></div>
-                    <span>10 (Great)</span>
-                </div>
-            </div>
 
-            <label for="sleepRange">How much sleep did you get today?</label>
-            <input type="range" id="sleepRange" min="0" max="14" step="0.1" value="7" />
-            <div><button id="saveBtn">Save</button><div id="valueDisplay">7.0 hrs</div></div>
-            <div id="toast-container"></div>
-
-            <script>
-                const sleepRange = document.getElementById('sleepRange');
-                const valueDisplay = document.getElementById('valueDisplay');
-                const saveBtn = document.getElementById('saveBtn');
-                const container = document.getElementById('toast-container');
-
-                // Показываем значение при загрузке
-                window.addEventListener('DOMContentLoaded', () => {
-                    const savedValue = localStorage.getItem('sleepHours');
-                    if (savedValue !== null) {
-                        sleepRange.value = savedValue;
-                        valueDisplay.textContent = parseFloat(savedValue).toFixed(1) + ' hours';
-                    } else {
-                        valueDisplay.textContent = sleepRange.value + ' hours';
-                    }
-                });
-
-                // Обновляем значение при изменении
-                sleepRange.addEventListener('input', () => {
-                    const val = parseFloat(sleepRange.value);
-                    valueDisplay.textContent = val.toFixed(1) + ' hours';
-                });
-
-                // Сохраняем уведомление в истории
-                function saveNotification(message) {
-                    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
-                    notifications.push({
-                        text: message,
-                        timestamp: new Date().toISOString()
-                    });
-                    localStorage.setItem('notifications', JSON.stringify(notifications));
-                }
-
-                // Показываем тост и сохраняем в историю
-                function showToast(message) {
-                    saveNotification(message);
-
-                    const toast = document.createElement('div');
-                    toast.classList.add('toast');
-                    toast.textContent = message;
-                    container.appendChild(toast);
-
-                    setTimeout(() => {
-                        toast.remove();
-                    }, 3000);
-                }
-
-                // Кнопка сохранить
-                saveBtn.addEventListener('click', () => {
-                    const val = parseFloat(sleepRange.value);
-                    localStorage.setItem('sleepHours', val.toFixed(1));
-
-                    if (val < 7) {
-                        showToast('⚠️ Less than 7 hours – try to sleep more!');
-                    } else if (val <= 9) {
-                        showToast('✅ Great! You slept enough.');
-                    } else {
-                        showToast('⚠️ Over 9 hours – maybe too much rest.');
-                    }
-                });
-            </script>
-
-            <br>
-            <div class="modal-checkboxes">
-                <div class="modal-checkbox">
-                    <input type="checkbox" id="calories-checkbox">
-                    <label for="calories-checkbox">Met calories & macros goal</label>
-                </div>
-                <div class="modal-checkbox">
-                    <input type="checkbox" id="macros-checkbox">
-                    <label for="macros-checkbox">
-                        Met
-                        <a href="space.html" style="font-size:1rem;font-weight:bold;text-transform:uppercase;background:linear-gradient(#3333ff,#00ffcc);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;display:inline-block;">WATER</a>
-                        goal
+            <!-- Sleep Hours -->
+            <div class="modal-section" id="sleep-hours-section">
+                <div class="modal-section-title">Sleep Hours</div>
+                <div class="slider-container">
+                    <label class="slider-label" for="sleep-slider">
+                        <span>How much sleep did you get today?</span>
+                        <span id="sleep-value" class="slider-value">7.0 hrs</span>
                     </label>
+                    <input type="range" id="sleep-slider" min="0" max="14" step="0.1" value="7">
                 </div>
             </div>
-            <div>
-                <label for="day-notes">Notes</label>
-                <textarea class="modal-textarea" id="day-notes" placeholder="Write your notes for the day..."></textarea>
+
+            <!-- Sleep Quality (new) -->
+            <div class="modal-section" id="sleep-quality-section">
+                <div class="modal-section-title">Sleep Quality</div>
+                <div class="button-group" id="sleep-quality-buttons">
+                    <button class="notion-button" data-value="fragmented-sleep" data-negative="true">Fragmented Sleep</button>
+                    <button class="notion-button" data-value="went-to-bed-late" data-negative="true">Went to Bed Late</button>
+                    <button class="notion-button" data-value="early-wakeup" data-negative="true">Early Wakeup</button>
+                </div>
             </div>
+
+            <!-- Water Intake -->
+            <div class="modal-section" id="water-intake-section">
+                <div class="modal-section-title">Water Intake</div>
+                <div class="button-group" id="water-intake-buttons">
+                    <button class="notion-button" data-value="very-little" data-negative="true">Very Little</button>
+                    <button class="notion-button" data-value="little" data-negative="true">Little</button>
+                    <button class="notion-button" data-value="enough">Enough</button>
+                    <button class="notion-button" data-value="much">Much</button>
+                    <button class="notion-button" data-value="very-much">Very Much</button>
+                </div>
+            </div>
+
+            <!-- Nutrition (split by subcategories) -->
+            <div class="modal-section" id="nutrition-macros-section">
+                <div class="modal-section-title">Nutrition — Macros</div>
+                <div class="button-group" id="nutrition-macros-buttons">
+                    <button class="notion-button" data-value="protein-not-met" data-negative="true">Protein Not Met</button>
+                    <button class="notion-button" data-value="calories-not-met" data-negative="true">Calories Not Met</button>
+                    <button class="notion-button" data-value="high-carbs" data-negative="true">High Fast Carbs</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="nutrition-quality-section">
+                <div class="modal-section-title">Nutrition — Quality</div>
+                <div class="button-group" id="nutrition-quality-buttons">
+                    <button class="notion-button" data-value="unhealthy-food" data-negative="true">Unhealthy Food</button>
+                    <button class="notion-button" data-value="late-night-snacking" data-negative="true">Late-Night Snacking</button>
+                    <button class="notion-button" data-value="low-fiber" data-negative="true">Low Fiber</button>
+                    <button class="notion-button" data-value="low-micronutrients" data-negative="true">Low Micronutrients</button>
+                    <button class="notion-button" data-value="low-fruit-veg" data-negative="true">Low Fruit & Veg</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="nutrition-stimulants-section">
+                <div class="modal-section-title">Nutrition — Stimulants</div>
+                <div class="button-group" id="nutrition-stimulants-buttons">
+                    <button class="notion-button" data-value="high-caffeine" data-negative="true">High Caffeine</button>
+                    <button class="notion-button" data-value="alcohol" data-negative="true">Alcohol</button>
+                </div>
+            </div>
+
+            <!-- Mood -->
+            <div class="modal-section" id="mood-section">
+                <div class="modal-section-title">Mood</div>
+                <div class="slider-container">
+                    <label class="slider-label" for="mood-slider">
+                        <span>How did you feel today? (1-10)</span>
+                        <span id="mood-value" class="slider-value">5</span>
+                    </label>
+                    <input type="range" id="mood-slider" min="1" max="10" value="5">
+                </div>
+            </div>
+
+            <!-- Symptoms (split by categories) -->
+            <div class="modal-section" id="symptoms-core-section">
+                <div class="modal-section-title">Symptoms — Core</div>
+                <div class="button-group" id="symptoms-core-buttons">
+                    <button class="notion-button" data-value="stress" data-negative="true">Stress</button>
+                    <button class="notion-button" data-value="headache" data-negative="true">Headache</button>
+                    <button class="notion-button" data-value="fatigue" data-negative="true">Fatigue</button>
+                    <button class="notion-button" data-value="insomnia" data-negative="true">Insomnia</button>
+                    <button class="notion-button" data-value="muscle-pain" data-negative="true">Muscle Pain</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="symptoms-gi-section">
+                <div class="modal-section-title">Symptoms — GI</div>
+                <div class="button-group" id="symptoms-gi-buttons">
+                    <button class="notion-button" data-value="bloating" data-negative="true">Bloating</button>
+                    <button class="notion-button" data-value="heaviness" data-negative="true">Heaviness</button>
+                    <button class="notion-button" data-value="constipation" data-negative="true">Constipation</button>
+                    <button class="notion-button" data-value="diarrhea" data-negative="true">Diarrhea</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="symptoms-immunity-section">
+                <div class="modal-section-title">Symptoms — Immunity</div>
+                <div class="button-group" id="symptoms-immunity-buttons">
+                    <button class="notion-button" data-value="cold" data-negative="true">Cold/Flu</button>
+                    <button class="notion-button" data-value="inflammation" data-negative="true">Inflammation</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="symptoms-skinhair-section">
+                <div class="modal-section-title">Symptoms — Skin & Hair</div>
+                <div class="button-group" id="symptoms-skinhair-buttons">
+                    <button class="notion-button" data-value="dry-skin" data-negative="true">Dry Skin</button>
+                    <button class="notion-button" data-value="acne" data-negative="true">Acne</button>
+                    <button class="notion-button" data-value="hair-loss" data-negative="true">Hair Loss</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="symptoms-energy-section">
+                <div class="modal-section-title">Symptoms — Energy</div>
+                <div class="button-group" id="symptoms-energy-buttons">
+                    <button class="notion-button" data-value="post-meal-sleepiness" data-negative="true">Post-Meal Sleepiness</button>
+                    <button class="notion-button" data-value="morning-grogginess" data-negative="true">Morning Grogginess</button>
+                </div>
+            </div>
+
+            <div class="modal-section" id="symptoms-mental-section">
+                <div class="modal-section-title">Symptoms — Mental/Hormonal</div>
+                <div class="button-group" id="symptoms-mental-buttons">
+                    <button class="notion-button" data-value="mood-swings" data-negative="true">Mood Swings</button>
+                    <button class="notion-button" data-value="irritability" data-negative="true">Irritability</button>
+                    <button class="notion-button" data-value="low-libido" data-negative="true">Low Libido</button>
+                    <button class="notion-button" data-value="anxiety" data-negative="true">Anxiety</button>
+                    <button class="notion-button" data-value="apathy" data-negative="true">Apathy</button>
+                </div>
+            </div>
+
+            <!-- Activity Level -->
+            <div class="modal-section" id="activity-level-section">
+                <div class="modal-section-title">Activity Level</div>
+                <div class="slider-container">
+                    <label class="slider-label" for="activity-slider">
+                        <span>How active were you today? (1-10)</span>
+                        <span id="activity-value" class="slider-value">5</span>
+                    </label>
+                    <input type="range" id="activity-slider" min="1" max="10" value="5">
+                </div>
+            </div>
+
+            <!-- Activity Issues (new) -->
+            <div class="modal-section" id="activity-issues-section">
+                <div class="modal-section-title">Activity — Issues</div>
+                <div class="button-group" id="activity-issues-buttons">
+                    <button class="notion-button" data-value="sedentary-day" data-negative="true">Sedentary Day</button>
+                    <button class="notion-button" data-value="overtraining" data-negative="true">Overtraining</button>
+                    <button class="notion-button" data-value="poor-recovery" data-negative="true">Poor Recovery</button>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="modal-section" id="notes-section">
+                <div class="modal-section-title">Notes</div>
+                <textarea class="notion-textarea" id="day-notes" placeholder="Write your notes for the day..."></textarea>
+            </div>
+
             <button class="save-day-btn" id="save-day-btn">Save Day</button>
         </div>
     </div>
+
+    <div id="toast-container"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1012,108 +843,75 @@
             let currentMonth = currentDate.getMonth();
             let selectedDay = null;
 
-            // DOM Elements for Calendar and Modal (unchanged)
+            // DOM Elements for Calendar and Modal
             const currentMonthYear = document.getElementById('current-month-year');
             const calendarDays = document.getElementById('calendar-days');
             const dayModal = document.getElementById('day-modal');
             const modalDayTitle = document.getElementById('modal-day-title');
-            const moodSlider = document.getElementById('mood-slider');
-            const moodValueDisplay = document.getElementById('mood-value-display');
-            const caloriesCheckbox = document.getElementById('calories-checkbox');
-            const macrosCheckbox = document.getElementById('macros-checkbox');
-            const dayNotes = document.getElementById('day-notes');
-            const saveDayBtn = document.getElementById('save-day-btn');
             const closeModal = document.querySelector('.close-modal');
 
-            // New DOM Elements for Body State Section
-            const bodyStateScoreDisplay = document.getElementById('body-state-score');
-            const progressCircle = document.querySelector('.progress-circle-progress');
-            const newHeightInput = document.getElementById('new-height');
-            const newWeightInput = document.getElementById('new-weight');
-            const newAgeInput = document.getElementById('new-age');
-            const newSleepInput = document.getElementById('new-sleep');
-            const newWaterInput = document.getElementById('new-water');
-            const newActivityInput = document.getElementById('new-activity');
+            // Modal Elements
+            const sleepSlider = document.getElementById('sleep-slider');
+            const sleepValueDisplay = document.getElementById('sleep-value');
 
-            const heightNorm = document.getElementById('height-norm');
-            const weightNorm = document.getElementById('weight-norm');
-            const ageNorm = document.getElementById('age-norm');
-            const sleepNorm = document.getElementById('sleep-norm');
-            const waterNorm = document.getElementById('water-norm');
-            const activityNorm = document.getElementById('activity-norm');
+            const waterIntakeButtons = document.getElementById('water-intake-buttons');
 
-            // New elements for range value displays
-            const newHeightValue = document.getElementById('new-height-value');
-            const newWeightValue = document.getElementById('new-weight-value');
-            const newAgeValue = document.getElementById('new-age-value');
-            const newSleepValue = document.getElementById('new-sleep-value');
-            const newWaterValue = document.getElementById('new-water-value');
-            const newActivityValue = document.getElementById('new-activity-value');
+            const nutritionMacrosButtons = document.getElementById('nutrition-macros-buttons');
+            const nutritionQualityButtons = document.getElementById('nutrition-quality-buttons');
+            const nutritionStimulantsButtons = document.getElementById('nutrition-stimulants-buttons');
 
-            // Элементы для свайп-функционала
-            const swipeWrapper = document.getElementById('swipe-wrapper');
-            const pages = document.querySelectorAll('.swipe-page');
-            const pageIndicatorsContainer = document.getElementById('page-indicators');
-            const indicatorDots = document.querySelectorAll('.indicator-dot');
-            let currentPageIndex = 0;
-            let startX = 0;
-            let endX = 0;
-            const swipeThreshold = 20; // Минимальное расстояние для свайпа
+            const moodSlider = document.getElementById('mood-slider');
+            const moodValueDisplay = document.getElementById('mood-value');
 
-            // Load saved data from localStorage
-            loadData();
+            const symptomsCoreButtons = document.getElementById('symptoms-core-buttons');
+            const symptomsGIButtons = document.getElementById('symptoms-gi-buttons');
+            const symptomsImmunityButtons = document.getElementById('symptoms-immunity-buttons');
+            const symptomsSkinHairButtons = document.getElementById('symptoms-skinhair-buttons');
+            const symptomsEnergyButtons = document.getElementById('symptoms-energy-buttons');
+            const symptomsMentalButtons = document.getElementById('symptoms-mental-buttons');
 
-            // Event Listeners for Body State Section
-            newHeightInput.addEventListener('input', () => {
-                newHeightValue.textContent = `${newHeightInput.value} cm`;
-                updateBodyState();
-            });
-            newWeightInput.addEventListener('input', () => {
-                newWeightValue.textContent = `${parseFloat(newWeightInput.value).toFixed(1)} kg`;
-                updateBodyState();
-            });
-            newAgeInput.addEventListener('input', () => {
-                newAgeValue.textContent = `${newAgeInput.value} years`;
-                updateBodyState();
-            });
-            newSleepInput.addEventListener('input', () => {
-                newSleepValue.textContent = `${parseFloat(newSleepInput.value).toFixed(1)} hours`;
-                updateBodyState();
-            });
-            newWaterInput.addEventListener('input', () => {
-                newWaterValue.textContent = `${parseFloat(newWaterInput.value).toFixed(1)} liters`;
-                updateBodyState();
-            });
-            newActivityInput.addEventListener('input', () => {
-                newActivityValue.textContent = newActivityInput.value;
-                updateBodyState();
-            });
+            const sleepQualityButtons = document.getElementById('sleep-quality-buttons');
 
-            // Add event listeners to range inputs to prevent swipe
-            const rangeInputs = document.querySelectorAll('input[type="range"]');
-            rangeInputs.forEach(input => {
-                input.addEventListener('touchstart', (e) => {
-                    e.stopPropagation(); // Prevent swipe on touch start
-                    swipeWrapper.style.touchAction = 'none'; // Disable swipe
-                });
-                input.addEventListener('touchend', (e) => {
-                    e.stopPropagation(); // Prevent swipe on touch end
-                    swipeWrapper.style.touchAction = 'pan-y'; // Re-enable swipe
-                });
-                input.addEventListener('touchmove', (e) => {
-                    e.stopPropagation(); // Prevent swipe on touch move
-                });
-            });
+            const activitySlider = document.getElementById('activity-slider');
+            const activityValueDisplay = document.getElementById('activity-value');
+            const activityIssuesButtons = document.getElementById('activity-issues-buttons');
 
+            const dayNotes = document.getElementById('day-notes');
+            const saveDayBtn = document.getElementById('save-day-btn');
 
+            // Calendar navigation buttons
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+
+            // Toast container
+            const toastContainer = document.getElementById('toast-container');
+
+            // Event Listeners
             closeModal.addEventListener('click', () => {
                 dayModal.style.display = 'none';
                 document.body.style.overflow = '';
             });
 
+            sleepSlider.addEventListener('input', () => {
+                sleepValueDisplay.textContent = parseFloat(sleepSlider.value).toFixed(1) + ' hrs';
+            });
+
             moodSlider.addEventListener('input', () => {
                 moodValueDisplay.textContent = moodSlider.value;
             });
+
+            activitySlider.addEventListener('input', () => {
+                activityValueDisplay.textContent = activitySlider.value;
+            });
+
+            // Button groups: water (single), остальные — multi
+            waterIntakeButtons.addEventListener('click', (e) => handleButtonClick(e, false));
+            [
+                nutritionMacrosButtons, nutritionQualityButtons, nutritionStimulantsButtons,
+                symptomsCoreButtons, symptomsGIButtons, symptomsImmunityButtons,
+                symptomsSkinHairButtons, symptomsEnergyButtons, symptomsMentalButtons,
+                sleepQualityButtons, activityIssuesButtons
+            ].forEach(group => group.addEventListener('click', (e) => handleButtonClick(e, true)));
 
             saveDayBtn.addEventListener('click', saveDayData);
 
@@ -1125,259 +923,51 @@
                 }
             });
 
+            // Calendar navigation event listeners
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+                renderCalendar();
+            });
+
             // Initialize
-            updateBodyState(); // Calculate initial body state score
             renderCalendar();
-            updatePageIndicators(); // Обновляем индикаторы при загрузке
 
-            // Swipe functionality
-            let touchStartX = 0;
-            let touchEndX = 0;
+            function handleButtonClick(event, isMultiSelect) {
+                const clickedButton = event.target.closest('.notion-button');
+                if (!clickedButton) return;
+                const group = clickedButton.parentElement;
+                const buttons = Array.from(group.children);
 
-            swipeWrapper.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
-
-            swipeWrapper.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-
-            function handleSwipe() {
-                const diff = touchEndX - touchStartX;
-
-                if (diff < -100 && currentPageIndex < pages.length - 1) {
-                    // Swipe left - next page
-                    currentPageIndex++;
-                } else if (diff > 100 && currentPageIndex > 0) {
-                    // Swipe right - previous page
-                    currentPageIndex--;
-                }
-
-                swipeWrapper.style.transform = `translateX(${-currentPageIndex * 100}vw)`;
-                updatePageIndicators();
-            }
-
-            // Enable horizontal scrolling for swipe-wrapper
-            swipeWrapper.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                const currentX = e.touches[0].screenX;
-                const diff = currentX - touchStartX;
-
-                // Only allow horizontal scrolling
-                const maxDrag = 50;
-                const translateX = Math.max(
-                    Math.min(
-                        (-currentPageIndex * 100) + (diff / window.innerWidth) * 100,
-                        -currentPageIndex * 100 + maxDrag
-                    ),
-                    -currentPageIndex * 100 - maxDrag
-                );
-                swipeWrapper.style.transform = `translateX(${translateX}vw)`;
-            });
-
-            function goToPage(index) {
-                if (index >= 0 && index < pages.length) {
-                    currentPageIndex = index;
-                    const offset = -currentPageIndex * 100; // Смещение в процентах
-                    swipeWrapper.style.transform = `translateX(${offset}vw)`;
-                    updatePageIndicators();
+                if (isMultiSelect) {
+                    clickedButton.classList.toggle('selected');
+                } else {
+                    buttons.forEach(btn => btn.classList.remove('selected'));
+                    clickedButton.classList.add('selected');
                 }
             }
-
-            function updatePageIndicators() {
-                indicatorDots.forEach((dot, index) => {
-                    if (index === currentPageIndex) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
-
-            // Functions for Body State Section
-            function updateBodyState() {
-                const height = parseFloat(newHeightInput.value);
-                const weight = parseFloat(newWeightInput.value);
-                const age = parseFloat(newAgeInput.value);
-                const sleep = parseFloat(newSleepInput.value);
-                const water = parseFloat(newWaterInput.value);
-                const activity = parseFloat(newActivityInput.value);
-
-                let score = 0;
-                let criteriaMet = 0;
-                // const totalCriteria = 6; // This variable is no longer directly used for normalization denominator
-
-                // Height (example: 150-190 cm is good)
-                if (!isNaN(height)) {
-                    if (height >= 150 && height <= 190) {
-                        score += 15;
-                        heightNorm.textContent = 'Good';
-                        heightNorm.className = 'norm-indicator good';
-                    } else if (height > 190 || height < 150) {
-                        score += 5;
-                        heightNorm.textContent = 'Average';
-                        heightNorm.className = 'norm-indicator average';
-                    } else { // Bad range
-                        score += 0; // Explicitly add 0 for bad, or just don't add
-                        heightNorm.textContent = 'Bad';
-                        heightNorm.className = 'norm-indicator bad';
-                    }
-                    criteriaMet++;
-                } else {
-                    heightNorm.textContent = '';
-                    heightNorm.className = 'norm-indicator';
-                }
-
-                // Weight (example: BMI calculation for norm)
-                if (!isNaN(height) && !isNaN(weight)) {
-                    const heightInMeters = height / 100;
-                    const bmi = weight / (heightInMeters * heightInMeters);
-                    if (bmi >= 18.5 && bmi < 25) {
-                        score += 15;
-                        weightNorm.textContent = 'Good (BMI: ' + bmi.toFixed(1) + ')';
-                        weightNorm.className = 'norm-indicator good';
-                    } else if ((bmi >= 25 && bmi < 30) || (bmi >= 17 && bmi < 18.5)) {
-                        score += 10;
-                        weightNorm.textContent = 'Average (BMI: ' + bmi.toFixed(1) + ')';
-                        weightNorm.className = 'norm-indicator average';
-                    } else {
-                        score += 0; // Explicitly add 0 for bad
-                        weightNorm.textContent = 'Bad (BMI: ' + bmi.toFixed(1) + ')';
-                        weightNorm.className = 'norm-indicator bad';
-                    }
-                    criteriaMet++;
-                } else {
-                    weightNorm.textContent = '';
-                    weightNorm.className = 'norm-indicator';
-                }
-
-                // Age (example: 20-60 is good)
-                if (!isNaN(age)) {
-                    if (age >= 20 && age <= 60) {
-                        score += 10; // Max 10 for Age
-                        ageNorm.textContent = 'Good';
-                        ageNorm.className = 'norm-indicator good';
-                    } else if (age > 60 || age < 20) {
-                        score += 5;
-                        ageNorm.textContent = 'Average';
-                        ageNorm.className = 'norm-indicator average';
-                    } else { // Bad range
-                        score += 0; // Explicitly add 0 for bad
-                        ageNorm.textContent = 'Bad';
-                        ageNorm.className = 'norm-indicator bad';
-                    }
-                    criteriaMet++;
-                } else {
-                    ageNorm.textContent = '';
-                    ageNorm.className = 'norm-indicator';
-                }
-
-                // Sleep (example: 7-9 hours is good)
-                if (!isNaN(sleep)) {
-                    if (sleep >= 7 && sleep <= 9) {
-                        score += 15;
-                        sleepNorm.textContent = 'Good';
-                        sleepNorm.className = 'norm-indicator good';
-                    } else if ((sleep >= 6 && sleep < 7) || (sleep > 9 && sleep <= 10)) {
-                        score += 10;
-                        sleepNorm.textContent = 'Average';
-                        sleepNorm.className = 'norm-indicator average';
-                    } else {
-                        score += 0; // Explicitly add 0 for bad
-                        sleepNorm.textContent = 'Bad';
-                        sleepNorm.className = 'norm-indicator bad';
-                    }
-                    criteriaMet++;
-                } else {
-                    sleepNorm.textContent = '';
-                    sleepNorm.className = 'norm-indicator';
-                }
-
-                // Water (example: 1.5-3.0 liters is good)
-                if (!isNaN(water)) {
-                    if (water >= 1.5 && water <= 3.0) {
-                        score += 15;
-                        waterNorm.textContent = 'Good';
-                        waterNorm.className = 'norm-indicator good';
-                    } else if ((water >= 1.0 && water < 1.5) || (water > 3.0 && water <= 4.0)) {
-                        score += 10;
-                        waterNorm.textContent = 'Average';
-                        waterNorm.className = 'norm-indicator average';
-                    } else {
-                        score += 0; // Explicitly add 0 for bad
-                        waterNorm.textContent = 'Bad';
-                        waterNorm.className = 'norm-indicator bad';
-                    }
-                    criteriaMet++;
-                } else {
-                    waterNorm.textContent = '';
-                    waterNorm.className = 'norm-indicator';
-                }
-
-                // Activity Level (example: 3-5 is good)
-                if (!isNaN(activity)) {
-                    if (activity >= 3 && activity <= 5) {
-                        score += 15;
-                        activityNorm.textContent = 'Good';
-                        activityNorm.className = 'norm-indicator good';
-                    } else if (activity === 2) {
-                        score += 10;
-                        activityNorm.textContent = 'Average';
-                        activityNorm.className = 'norm-indicator average';
-                    } else {
-                        score += 0; // Explicitly add 0 for bad
-                        activityNorm.textContent = 'Bad';
-                        activityNorm.className = 'norm-indicator bad';
-                    }
-                    criteriaMet++;
-                } else {
-                    activityNorm.textContent = '';
-                    activityNorm.className = 'norm-indicator';
-                }
-
-                // Normalize score to 0-100 range based on criteria met
-                let finalScore = 0;
-                // Calculate the true maximum possible score based on individual criterion maxes
-                const maxPossibleScore = 15 + 15 + 10 + 15 + 15 + 15; // Sum of max scores for each criterion (85)
-
-                if (criteriaMet > 0) {
-                    finalScore = Math.round((score / maxPossibleScore) * 100);
-                    // Ensure score doesn't exceed 100 due to rounding or edge cases
-                    if (finalScore > 100) finalScore = 100;
-                }
-
-
-                bodyStateScoreDisplay.textContent = finalScore;
-                const radius = 50; // Match the SVG circle's radius
-                const circumference = 2 * Math.PI * radius; // Calculate based on the actual SVG radius
-                const offset = circumference - (finalScore / 100) * circumference;
-                progressCircle.style.strokeDashoffset = offset;
-
-                saveData();
-            }
-
 
             function renderCalendar() {
-                // Set month and year title
                 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 currentMonthYear.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-                // Get first day of month and total days in month
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
                 const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-                // Clear previous calendar days
                 calendarDays.innerHTML = '';
 
-                // Add empty cells for days before the first day of the month
                 for (let i = 0; i < firstDay; i++) {
                     const emptyDay = document.createElement('div');
                     emptyDay.className = 'calendar-day empty';
                     calendarDays.appendChild(emptyDay);
                 }
 
-                // Add cells for each day of the month
                 for (let day = 1; day <= daysInMonth; day++) {
                     const dayElement = document.createElement('div');
                     dayElement.className = 'calendar-day';
@@ -1385,173 +975,257 @@
                     dayElement.dataset.month = currentMonth;
                     dayElement.dataset.year = currentYear;
 
-                    // Check if this is today
                     const today = new Date();
                     if (currentYear === today.getFullYear() && currentMonth === today.getMonth() && day === today.getDate()) {
                         dayElement.classList.add('today');
                     }
 
-                    // Add day number
                     const dayNumber = document.createElement('div');
                     dayNumber.className = 'calendar-day-number';
                     dayNumber.textContent = day;
                     dayElement.appendChild(dayNumber);
 
-                    // Load saved data for this day if exists
                     const dateKey = `${currentYear}-${currentMonth}-${day}`;
                     const dayData = getDayData(dateKey);
 
                     if (dayData) {
-                        // Add mood indicator
                         if (dayData.mood) {
-                            const moodIndicator = document.createElement('input');
-                            moodIndicator.type = 'range';
-                            moodIndicator.className = 'day-mood';
-                            moodIndicator.min = '1';
-                            moodIndicator.max = '10';
-                            moodIndicator.value = dayData.mood;
-                            moodIndicator.disabled = true;
+                            const moodIndicator = document.createElement('div');
+                            moodIndicator.className = 'day-mood-indicator';
+                            moodIndicator.textContent = `Mood: ${dayData.mood}`;
+                            moodIndicator.style.fontSize = '0.7em';
+                            moodIndicator.style.color = 'gray';
                             dayElement.appendChild(moodIndicator);
                         }
 
-                        if (dayData.caloriesMet || dayData.macrosMet) {
-                            const indicators = document.createElement('div');
-                            indicators.className = 'day-indicators';
-
-                            if (dayData.caloriesMet) {
-                                indicators.innerHTML += '<span class="indicator-calories" title="Calories goal met">✓</span>';
-                            }
-                            if (dayData.macrosMet) {
-                                indicators.innerHTML += '<span class="indicator-macros" title="Macros goal met">✓</span>';
-                            }
-
-                            dayElement.appendChild(indicators);
+                        if (dayData.sleep) {
+                            const sleepIndicator = document.createElement('div');
+                            sleepIndicator.className = 'day-sleep-indicator';
+                            sleepIndicator.textContent = `Sleep: ${dayData.sleep} hrs`;
+                            sleepIndicator.style.fontSize = '0.7em';
+                            sleepIndicator.style.color = 'gray';
+                            dayElement.appendChild(sleepIndicator);
                         }
 
-                        // Add note preview if exists
+                        if (dayData.water) {
+                            const waterIndicator = document.createElement('div');
+                            waterIndicator.className = 'day-water-indicator';
+                            waterIndicator.textContent = `Water: ${dayData.water}`;
+                            waterIndicator.style.fontSize = '0.7em';
+                            waterIndicator.style.color = 'gray';
+                            dayElement.appendChild(waterIndicator);
+                        }
+
+                        if (dayData.activity) {
+                            const activityIndicator = document.createElement('div');
+                            activityIndicator.className = 'day-activity-indicator';
+                            activityIndicator.textContent = `Activity: ${dayData.activity}`;
+                            activityIndicator.style.fontSize = '0.7em';
+                            activityIndicator.style.color = 'gray';
+                            dayElement.appendChild(activityIndicator);
+                        }
+
                         if (dayData.notes) {
-                            const notePreview = document.createElement('textarea');
-                            notePreview.className = 'day-note';
-                            notePreview.value = dayData.notes;
-                            notePreview.disabled = true;
-                            dayElement.appendChild(notePreview);
+                            const notesIndicator = document.createElement('div');
+                            notesIndicator.className = 'day-notes-indicator';
+                            notesIndicator.textContent = '📝';
+                            notesIndicator.style.fontSize = '0.7em';
+                            dayElement.appendChild(notesIndicator);
+                        }
+
+                        // Indicators for negative symptoms
+                        const negativeSymptoms = [
+                            ...(dayData.symptomsCore || []),
+                            ...(dayData.symptomsGI || []),
+                            ...(dayData.symptomsImmunity || []),
+                            ...(dayData.symptomsSkinHair || []),
+                            ...(dayData.symptomsEnergy || []),
+                            ...(dayData.symptomsMental || []),
+                            ...(dayData.nutritionMacros || []),
+                            ...(dayData.nutritionQuality || []),
+                            ...(dayData.nutritionStimulants || []),
+                            ...(dayData.sleepQuality || []),
+                            ...(dayData.activityIssues || [])
+                        ];
+
+                        if (negativeSymptoms.length > 0) {
+                            const negativeIndicator = document.createElement('div');
+                            negativeIndicator.className = 'day-negative-indicator';
+                            negativeIndicator.textContent = '⚠️';
+                            negativeIndicator.style.fontSize = '0.7em';
+                            dayElement.appendChild(negativeIndicator);
                         }
                     }
 
-                    // Add click event
                     dayElement.addEventListener('click', () => openDayModal(day, currentMonth, currentYear));
-
                     calendarDays.appendChild(dayElement);
                 }
             }
 
             function openDayModal(day, month, year) {
-                // Prevent body scroll when modal is open
-                document.body.style.overflow = 'hidden';
                 selectedDay = { day, month, year };
                 const dateKey = `${year}-${month}-${day}`;
-                const dayData = getDayData(dateKey);
+                const dayData = getDayData(dateKey) || {};
 
-                // Set modal title
-                const date = new Date(year, month, day);
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                modalDayTitle.textContent = date.toLocaleDateString('en-US', options);
+                modalDayTitle.textContent = `Day Details: ${day} ${getMonthName(month)} ${year}`;
 
-                // Set values from saved data or defaults
-                if (dayData) {
-                    moodSlider.value = dayData.mood || 5;
-                    caloriesCheckbox.checked = dayData.caloriesMet || false;
-                    macrosCheckbox.checked = dayData.macrosMet || false;
-                    dayNotes.value = dayData.notes || '';
-                } else {
-                    moodSlider.value = 5;
-                    caloriesCheckbox.checked = false;
-                    macrosCheckbox.checked = false;
-                    dayNotes.value = '';
+                // Reset all inputs
+                sleepSlider.value = dayData.sleep || 7;
+                sleepValueDisplay.textContent = parseFloat(sleepSlider.value).toFixed(1) + ' hrs';
+
+                moodSlider.value = dayData.mood || 5;
+                moodValueDisplay.textContent = moodSlider.value;
+
+                activitySlider.value = dayData.activity || 5;
+                activityValueDisplay.textContent = activitySlider.value;
+
+                dayNotes.value = dayData.notes || '';
+
+                // Reset all buttons
+                document.querySelectorAll('.notion-button').forEach(btn => btn.classList.remove('selected'));
+
+                // Select water intake button
+                if (dayData.water) {
+                    const waterButton = waterIntakeButtons.querySelector(`[data-value="${dayData.water}"]`);
+                    if (waterButton) waterButton.classList.add('selected');
                 }
 
-                moodValueDisplay.textContent = moodSlider.value;
+                // Select nutrition buttons
+                selectButtonsInGroup(nutritionMacrosButtons, dayData.nutritionMacros);
+                selectButtonsInGroup(nutritionQualityButtons, dayData.nutritionQuality);
+                selectButtonsInGroup(nutritionStimulantsButtons, dayData.nutritionStimulants);
+
+                // Select symptoms buttons
+                selectButtonsInGroup(symptomsCoreButtons, dayData.symptomsCore);
+                selectButtonsInGroup(symptomsGIButtons, dayData.symptomsGI);
+                selectButtonsInGroup(symptomsImmunityButtons, dayData.symptomsImmunity);
+                selectButtonsInGroup(symptomsSkinHairButtons, dayData.symptomsSkinHair);
+                selectButtonsInGroup(symptomsEnergyButtons, dayData.symptomsEnergy);
+                selectButtonsInGroup(symptomsMentalButtons, dayData.symptomsMental);
+
+                // Select sleep quality buttons
+                selectButtonsInGroup(sleepQualityButtons, dayData.sleepQuality);
+
+                // Select activity issues buttons
+                selectButtonsInGroup(activityIssuesButtons, dayData.activityIssues);
+
+                // Show modal
                 dayModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+
+                // Анимация появления элементов
+                animateModalElements();
+            }
+
+            function animateModalElements() {
+                const sections = document.querySelectorAll('.modal-section');
+                const buttons = document.querySelectorAll('.notion-button');
+                const textarea = document.querySelector('.notion-textarea');
+                const saveBtn = document.querySelector('.save-day-btn');
+
+                // Сначала скрываем все элементы
+                sections.forEach(section => section.classList.remove('visible'));
+                buttons.forEach(btn => btn.classList.remove('visible'));
+                textarea.classList.remove('visible');
+                saveBtn.classList.remove('visible');
+
+                // Анимируем появление секций с задержкой
+                sections.forEach((section, index) => {
+                    setTimeout(() => {
+                        section.classList.add('visible');
+                    }, 100 + index * 50);
+                });
+
+                // Анимируем появление кнопок с задержкой
+                buttons.forEach((button, index) => {
+                    setTimeout(() => {
+                        button.classList.add('visible');
+                    }, 300 + index * 20);
+                });
+
+                // Анимируем появление textarea
+                setTimeout(() => {
+                    textarea.classList.add('visible');
+                }, 500);
+
+                // Анимируем появление кнопки сохранения
+                setTimeout(() => {
+                    saveBtn.classList.add('visible');
+                }, 600);
+            }
+
+            function selectButtonsInGroup(buttonGroup, values) {
+                if (!values || !Array.isArray(values)) return;
+                const buttons = buttonGroup.querySelectorAll('.notion-button');
+                buttons.forEach(button => {
+                    if (values.includes(button.dataset.value)) {
+                        button.classList.add('selected');
+                    }
+                });
             }
 
             function saveDayData() {
                 if (!selectedDay) return;
 
                 const dateKey = `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`;
+
                 const dayData = {
+                    sleep: parseFloat(sleepSlider.value),
+                    water: getSelectedButtonValue(waterIntakeButtons),
+                    nutritionMacros: getSelectedButtonValues(nutritionMacrosButtons),
+                    nutritionQuality: getSelectedButtonValues(nutritionQualityButtons),
+                    nutritionStimulants: getSelectedButtonValues(nutritionStimulantsButtons),
                     mood: parseInt(moodSlider.value),
-                    caloriesMet: caloriesCheckbox.checked,
-                    macrosMet: macrosCheckbox.checked,
+                    symptomsCore: getSelectedButtonValues(symptomsCoreButtons),
+                    symptomsGI: getSelectedButtonValues(symptomsGIButtons),
+                    symptomsImmunity: getSelectedButtonValues(symptomsImmunityButtons),
+                    symptomsSkinHair: getSelectedButtonValues(symptomsSkinHairButtons),
+                    symptomsEnergy: getSelectedButtonValues(symptomsEnergyButtons),
+                    symptomsMental: getSelectedButtonValues(symptomsMentalButtons),
+                    sleepQuality: getSelectedButtonValues(sleepQualityButtons),
+                    activity: parseInt(activitySlider.value),
+                    activityIssues: getSelectedButtonValues(activityIssuesButtons),
                     notes: dayNotes.value
                 };
 
-                // Save to localStorage
-                const allDaysData = JSON.parse(localStorage.getItem('daysData')) || {};
-                allDaysData[dateKey] = dayData;
-                localStorage.setItem('daysData', JSON.stringify(allDaysData));
-
-                // Close modal and refresh calendar
-                dayModal.style.display = 'none';
+                localStorage.setItem(dateKey, JSON.stringify(dayData));
+                showToast('Day data saved successfully!');
                 renderCalendar();
+                dayModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+
+            function getSelectedButtonValue(buttonGroup) {
+                const selectedButton = buttonGroup.querySelector('.notion-button.selected');
+                return selectedButton ? selectedButton.dataset.value : null;
+            }
+
+            function getSelectedButtonValues(buttonGroup) {
+                const selectedButtons = buttonGroup.querySelectorAll('.notion-button.selected');
+                return Array.from(selectedButtons).map(btn => btn.dataset.value);
             }
 
             function getDayData(dateKey) {
-                const allDaysData = JSON.parse(localStorage.getItem('daysData')) || {};
-                return allDaysData[dateKey];
+                const data = localStorage.getItem(dateKey);
+                return data ? JSON.parse(data) : null;
             }
 
-            function saveData() {
-                const data = {
-                    // Body State Data
-                    height: newHeightInput.value,
-                    weight: newWeightInput.value,
-                    age: newAgeInput.value,
-                    sleep: newSleepInput.value,
-                    water: newWaterInput.value,
-                    activity: newActivityInput.value,
-                    bodyStateScore: bodyStateScoreDisplay.textContent
-                };
-
-                localStorage.setItem('healthData', JSON.stringify(data));
+            function getMonthName(monthIndex) {
+                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                return months[monthIndex];
             }
 
-            function loadData() {
-                const savedData = JSON.parse(localStorage.getItem('healthData'));
-                if (!savedData) {
-                    // Initialize range values if no saved data
-                    newHeightValue.textContent = `${newHeightInput.value} cm`;
-                    newWeightValue.textContent = `${parseFloat(newWeightInput.value).toFixed(1)} kg`;
-                    newAgeValue.textContent = `${newAgeInput.value} years`;
-                    newSleepValue.textContent = `${parseFloat(newSleepInput.value).toFixed(1)} hours`;
-                    newWaterValue.textContent = `${parseFloat(newWaterInput.value).toFixed(1)} liters`;
-                    newActivityValue.textContent = newActivityInput.value;
-                    updateBodyState(); // Calculate initial score
-                    return;
-                }
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
 
-                // Load Body State Data
-                newHeightInput.value = savedData.height || newHeightInput.value;
-                newWeightInput.value = savedData.weight || newWeightInput.value;
-                newAgeInput.value = savedData.age || newAgeInput.value;
-                newSleepInput.value = savedData.sleep || newSleepInput.value;
-                newWaterInput.value = savedData.water || newWaterInput.value;
-                newActivityInput.value = savedData.activity || newActivityInput.value;
-
-                // Update display values for range inputs
-                newHeightValue.textContent = `${newHeightInput.value} cm`;
-                newWeightValue.textContent = `${parseFloat(newWeightInput.value).toFixed(1)} kg`;
-                newAgeValue.textContent = `${newAgeInput.value} years`;
-                newSleepValue.textContent = `${parseFloat(newSleepInput.value).toFixed(1)} hours`;
-                newWaterValue.textContent = `${parseFloat(newWaterInput.value).toFixed(1)} liters`;
-                newActivityValue.textContent = newActivityInput.value;
-
-                // Update Body State UI after loading
-                updateBodyState();
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
             }
         });
     </script>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
 </body>
 </html>

@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWBVFG5DVZ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -10,10 +9,10 @@
         gtag('config', 'G-PWBVFG5DVZ');
     </script>
 
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <link rel="icon" href="PNGs/favicon3.svg">
     <title>Pure Nutrition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -49,7 +48,6 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            color: var(--dark-text);
             position: relative;
             -webkit-text-size-adjust: 100%;
             touch-action: manipulation;
@@ -93,12 +91,13 @@
             cursor: pointer;
             color: var(--dark-text);
             border-radius: 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.7);
-            background-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0px 5px 9px rgba(0,0,0,1);
+            background-color: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(10px);
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            min-height: 44px; /* Минимальный размер для сенсорных целей */
+            min-height: 44px;
         }
 
             .grid-button:hover {
@@ -116,7 +115,7 @@
             font-weight: 700;
             line-height: 1.1;
             aspect-ratio: 1/1;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0);
         }
 
         .water-btn {
@@ -155,10 +154,14 @@
 
         .explore-btn {
             grid-column: span 2;
-            height: 90px;
+            height: 180px;
             font-size: clamp(28px, 9vw, 42px);
             font-weight: 800;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0);
+            background-image: url('PNGs/explore.png');
+            background-size: cover;
+            background-position-y: 24px;
+            background-repeat: no-repeat;
             position: relative;
             z-index: 1;
             border-radius: 30px;
@@ -195,28 +198,31 @@
                 margin-top: -124px;
             }
         }
+
         @media (max-width: 415px) {
             .space-btn {
                 margin-top: -117px;
             }
         }
+
         @media (max-width: 413px) {
             .space-btn {
                 margin-top: -115px;
             }
         }
+
         @media (max-width: 391px) {
             .space-btn {
                 margin-top: -104px;
             }
         }
+
         @media (max-width: 377px) {
             .space-btn {
                 margin-top: -97px;
             }
         }
 
-        /* Контейнер звёзд */
         .space-btn .stars {
             position: absolute;
             inset: 0;
@@ -224,7 +230,6 @@
             pointer-events: none;
         }
 
-        /* Звезда */
         .space-btn .star {
             position: absolute;
             width: 6px;
@@ -237,7 +242,6 @@
             transition: transform 1s ease;
         }
 
-        /* Анимация мерцания */
         @keyframes twinkleStar {
             0%, 100% {
                 opacity: 0.3;
@@ -267,7 +271,7 @@
             padding: 8px 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.7);
             transition: var(--transition);
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0);
             margin-top: -15px;
             color: black;
         }
@@ -362,7 +366,6 @@
             transition: height 0.6s ease;
         }
 
-        /* Анимации появления */
         [data-aos] {
             opacity: 0;
             transition: opacity 0.6s ease, transform 0.6s ease;
@@ -372,7 +375,6 @@
                 opacity: 1;
             }
 
-        /* Улучшения для очень маленьких экранов */
         @media (max-width: 340px) {
             body {
                 padding: 10px;
@@ -395,7 +397,6 @@
             }
         }
 
-        /* Портретная ориентация */
         @media (max-height: 700px) and (orientation: portrait) {
             .container {
                 gap: 12px;
@@ -414,7 +415,6 @@
             }
         }
 
-        /* Ландшафтная ориентация */
         @media (orientation: landscape) and (max-height: 500px) {
             .container {
                 max-width: 100%;
@@ -439,7 +439,6 @@
             }
         }
 
-        /* Улучшения для iOS */
         @supports (-webkit-touch-callout: none) {
             .grid-button {
                 border-radius: 24px;
@@ -498,8 +497,7 @@
 
         <div class="search-container">
             <input type="text" id="search" placeholder="Search... beef, asparagus, pasta, zucchini" onkeyup="searchFunction()">
-            <button class="account-button" onclick="window.location.href='account.html'">
-            </button>
+            <button class="account-button" onclick="window.location.href='account.html'"></button>
         </div>
 
         <div id="content">
@@ -605,14 +603,10 @@
             const filter = input.value.toLowerCase();
             const articles = document.getElementsByClassName('article');
 
-            // Скроллим вниз при первом вводе символа
             if (!hasScrolled && filter.length === 1) {
                 hasScrolled = true;
-
-                // Добавляем фиктивный отступ снизу
                 document.body.classList.add('scroll-padding');
 
-                // Скроллим через 50мс, чтобы отступ применился
                 setTimeout(() => {
                     window.scrollBy({
                         top: window.innerHeight * 0.6,
@@ -621,26 +615,21 @@
                 }, 50);
             }
 
-            // При очистке инпута
             if (filter === "") {
                 hasScrolled = false;
-
-                // Плавно убираем отступ
                 const styleEl = document.createElement('style');
                 styleEl.innerHTML = `
-                            body.scroll-padding::after {
-                                height: 0 !important;
-                            }
-                        `;
+                        body.scroll-padding::after {
+                            height: 0 !important;
+                        }
+                    `;
                 document.head.appendChild(styleEl);
 
-                // Удаляем класс после завершения перехода
                 setTimeout(() => {
                     document.body.classList.remove('scroll-padding');
                     document.head.removeChild(styleEl);
                 }, 600);
 
-                // Скрываем статьи
                 for (let i = 0; i < articles.length; i++) {
                     articles[i].classList.remove('visible');
                 }
@@ -648,7 +637,6 @@
                 return;
             }
 
-            // Фильтруем статьи
             for (let i = 0; i < articles.length; i++) {
                 const article = articles[i];
                 if (article.innerText.toLowerCase().includes(filter)) {
@@ -659,7 +647,6 @@
             }
         }
 
-        // Закрытие клавиатуры при клике вне поля поиска
         document.addEventListener('click', function (event) {
             const searchContainer = document.querySelector('.search-container');
             const isClickInside = searchContainer.contains(event.target);
@@ -669,7 +656,6 @@
             }
         });
 
-        // Обработка отправки формы (предотвращение перезагрузки страницы)
         document.querySelector('.search-container').addEventListener('submit', function (e) {
             e.preventDefault();
         });
@@ -681,7 +667,7 @@
             duration: 800,
             once: true,
             easing: 'ease-out-quad',
-            disable: window.innerWidth < 768 ? true : false // Отключаем анимации на маленьких экранах для производительности
+            disable: window.innerWidth < 768
         });
     </script>
 
@@ -699,31 +685,28 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Волна
         let waveOffset = 0;
         let tiltXTarget = 0;
         let tiltX = 0;
 
-        // Сглаживание
         function lerp(start, end, factor) {
             return start + (end - start) * factor;
         }
 
-        // Только наклон влево/вправо
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', (event) => {
-                tiltXTarget = -(event.gamma || 0) / 40; // ←→
+                tiltXTarget = -(event.gamma || 0) / 40;
             });
         }
 
         function drawWater() {
-            tiltX = lerp(tiltX, tiltXTarget, 0.05); // плавность
+            tiltX = lerp(tiltX, tiltXTarget, 0.05);
 
             ctx.clearRect(0, 0, width, height);
 
             const waveHeight = 12 + Math.abs(tiltX * 5);
             const waveLength = 40;
-            const waterLevel = height * 0.6; // фиксируем уровень
+            const waterLevel = height * 0.6;
             const waveSpeed = 0.8;
 
             ctx.beginPath();
@@ -733,14 +716,13 @@
             for (let x = 0; x <= width; x++) {
                 const y = waterLevel +
                     Math.sin((x + waveOffset) / waveLength) * waveHeight +
-                    tiltX * (x - width / 2) / 4; // наклон всей волны
+                    tiltX * (x - width / 2) / 4;
                 ctx.lineTo(x, y);
             }
 
             ctx.lineTo(width, height);
             ctx.closePath();
 
-            // Градиент для воды
             const gradient = ctx.createLinearGradient(0, waterLevel, 0, height);
             gradient.addColorStop(0, 'rgba(0, 149, 255, 0.5)');
             gradient.addColorStop(1, 'rgba(0, 100, 200, 0.3)');
@@ -753,7 +735,6 @@
             requestAnimationFrame(drawWater);
         }
 
-        // Запускаем анимацию только если элемент виден
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {

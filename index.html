@@ -82,7 +82,6 @@
         }
 
         .grid-button {
-            border: none;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -99,16 +98,6 @@
             overflow: hidden;
             min-height: 44px;
         }
-
-            .grid-button:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .grid-button:active {
-                transform: translateY(1px);
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            }
 
         .catalog-btn {
             font-size: clamp(20px, 6vw, 28px);
@@ -459,7 +448,13 @@
     <div class="container">
         <div class="button-grid">
             <div class="grid-button catalog-btn" data-aos="fade-right" data-aos-delay="50" onclick="window.location.href='catalog.html'">
-                Cata<br>log
+                <svg width="42" height="42" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" fill="rgba(255, 255, 255, 0)" stroke="black" stroke-width="1.5" />
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" fill="rgba(255, 255, 255, 0)" stroke="black" stroke-width="1.5" />
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" fill="rgba(255, 255, 255, 0)" stroke="black" stroke-width="1.5" />
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" fill="rgba(255, 255, 255, 0)" stroke="black" stroke-width="1.5" />
+                </svg>
+                Catalog
             </div>
 
             <div class="grid-button water-btn" data-aos="fade-left" data-aos-delay="100" onclick="window.location.href='water_index.html'">

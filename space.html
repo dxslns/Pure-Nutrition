@@ -383,9 +383,9 @@
             font-size: .9rem;
             cursor: pointer;
             transition: background-color .2s ease, border-color .2s ease;
-            opacity: 1 !important; /* FIXED: Force visibility */
-            transform: scale(1) !important; /* FIXED: Force visibility */
-            visibility: visible !important; /* FIXED: Force visibility */
+            opacity: 1 !important;
+            transform: scale(1) !important;
+            visibility: visible !important;
         }
 
             .notion-button.visible {
@@ -502,8 +502,8 @@
             color: var(--notion-text);
             background-color: #fff;
             transition: border-color .2s ease;
-            opacity: 1; /* FIXED: Force visibility */
-            transform: translateY(0); /* FIXED: Force visibility */
+            opacity: 1;
+            transform: translateY(0);
         }
 
             .notion-textarea.visible {
@@ -529,8 +529,8 @@
             cursor: pointer;
             transition: background-color .2s ease;
             margin-top: 20px;
-            opacity: 1; /* FIXED: Force visibility */
-            transform: translateY(0); /* FIXED: Force visibility */
+            opacity: 1;
+            transform: translateY(0);
         }
 
             .save-day-btn.visible {
@@ -852,6 +852,9 @@
                     <button class="notion-button" data-value="insomnia" data-negative="true">Insomnia</button>
                     <button class="notion-button" data-value="early-wakeup" data-negative="true">Early Wakeup</button>
                     <button class="notion-button" data-value="fragmented-sleep" data-negative="true">Fragmented Sleep</button>
+                    <button class="notion-button" data-value="difficulty-falling-asleep" data-negative="true">Difficulty Falling Asleep</button>
+                    <button class="notion-button" data-value="non-restorative-sleep" data-negative="true">Non-Restorative Sleep</button>
+                    <button class="notion-button" data-value="daytime-sleepiness" data-negative="true">Daytime Sleepiness</button>
                 </div>
             </div>
 
@@ -870,6 +873,8 @@
                 <div class="button-group" id="dehydration-buttons">
                     <button class="notion-button" data-value="headache" data-negative="true">Headache</button>
                     <button class="notion-button" data-value="fatigue" data-negative="true">Fatigue</button>
+                    <button class="notion-button" data-value="dry-skin-mucous" data-negative="true">Dry Skin & Mucous</button>
+                    <button class="notion-button" data-value="poor-concentration" data-negative="true">Poor Concentration</button>
                 </div>
             </div>
 
@@ -892,6 +897,10 @@
                     <button class="notion-button" data-value="stress" data-negative="true">Stress</button>
                     <button class="notion-button" data-value="anxiety" data-negative="true">Anxiety</button>
                     <button class="notion-button" data-value="apathy" data-negative="true">Apathy</button>
+                    <button class="notion-button" data-value="depressive-episode" data-negative="true">Depressive Episode</button>
+                    <button class="notion-button" data-value="irritability" data-negative="true">Irritability</button>
+                    <button class="notion-button" data-value="social-isolation" data-negative="true">Social Isolation</button>
+                    <button class="notion-button" data-value="mood-swings" data-negative="true">Mood Swings</button>
                 </div>
             </div>
 
@@ -913,6 +922,11 @@
                 <div class="button-group" id="activity-issues-buttons">
                     <button class="notion-button" data-value="sedentary-day" data-negative="true">Sedentary Day</button>
                     <button class="notion-button" data-value="overtraining" data-negative="true">Overtraining</button>
+                    <button class="notion-button" data-value="bad-mood" data-negative="true">Bad Mood</button>
+                    <button class="notion-button" data-value="reduced-metabolism" data-negative="true">Reduced Metabolism</button>
+                    <button class="notion-button" data-value="muscle-weakness" data-negative="true">Muscle Weakness</button>
+                    <button class="notion-button" data-value="increased-stress" data-negative="true">Increased Stress</button>
+                    <button class="notion-button" data-value="chronic-fatigue" data-negative="true">Chronic Fatigue</button>
                 </div>
             </div>
 
@@ -929,9 +943,9 @@
     <!-- Multiple Notifications Modal -->
     <div class="multiple-notifications-modal" id="multiple-notifications-modal">
         <div class="multiple-notifications-content">
-            <h3 class="multiple-notifications-title">Рекомендации</h3>
-            <p class="multiple-notifications-message" id="multiple-notifications-text">У нас есть несколько рекомендаций для вас - загляните в Inbox!</p>
-            <button class="multiple-notifications-button" id="close-multiple-notifications">Понятно</button>
+            <h3 class="multiple-notifications-title">Recommendations</h3>
+            <p class="multiple-notifications-message" id="multiple-notifications-text">We have several recommendations for you - check your Inbox!</p>
+            <button class="multiple-notifications-button" id="close-multiple-notifications">Got it</button>
         </div>
     </div>
 
@@ -940,34 +954,48 @@
     <div id="notification-container"></div>
 
     <script>
-        // Mapping of notification types to messages
+        // Mapping of notification types to messages - UPDATED TO ENGLISH
         const notificationMessages = {
-            'insomnia': 'Бессонница: обратите внимание на гигиену сна и вечерний режим.',
-            'early-wakeup': 'Ранние пробуждения: возможно, влияет стресс или график сна.',
-            'fragmented-sleep': 'Фрагментированный сон: сон прерывался, стоит проанализировать причины.',
-            'headache': 'Обезвоживание может вызывать головные боли. Попробуйте увеличить потребление воды.',
-            'fatigue': 'Недостаток жидкости может вызывать усталость.',
-            'stress': 'Вы отметили стресс. Рассмотрите техники релаксации или отдых.',
-            'anxiety': 'Отмечена тревожность. Попробуйте дыхательные практики или прогулку.',
-            'apathy': 'Апатия: возможно, стоит снизить нагрузку или сменить фокус деятельности.',
-            'sedentary-day': 'Сидячий день: добавьте немного движения в рутину.',
-            'overtraining': 'Перетрен: дайте телу время на восстановление.'
+            'insomnia': 'Insomnia: pay attention to sleep hygiene and evening routine.',
+            'early-wakeup': 'Early awakenings: stress or sleep schedule may be affecting you.',
+            'fragmented-sleep': 'Fragmented sleep: sleep was interrupted, worth analyzing the causes.',
+            'difficulty-falling-asleep': 'Difficulty falling asleep: consider relaxing practices before bed.',
+            'non-restorative-sleep': 'Non-restorative sleep: sleep does not bring rest, may need specialist consultation.',
+            'daytime-sleepiness': 'Daytime sleepiness: check the quality and duration of night sleep.',
+            'headache': 'Headache: may be related to lack of water.',
+            'fatigue': 'Lack of fluids can cause fatigue.',
+            'dry-skin-mucous': 'Dry skin and mucous membranes: sign of dehydration, increase water intake.',
+            'poor-concentration': 'Poor concentration: may be related to lack of water.',
+            'stress': 'You noted stress. Consider relaxation techniques or rest.',
+            'anxiety': 'Anxiety noted. Try breathing practices or a walk.',
+            'apathy': 'Apathy: may need to reduce workload or change focus of activity.',
+            'depressive-episode': 'Depressive episode: important to seek professional help.',
+            'irritability': 'Irritability: may be related to various factors including stress and fatigue.',
+            'social-isolation': 'Social isolation: try gradually resuming social contacts.',
+            'mood-swings': 'Mood swings: may be related to hormonal changes or stress.',
+            'sedentary-day': 'Sedentary day: add some movement to your routine.',
+            'overtraining': 'Overtraining: give your body time to recover.',
+            'bad-mood': 'Bad mood from activity: may need to change the type or intensity of exercise.',
+            'reduced-metabolism': 'Reduced metabolism: regular physical activity can help improve metabolism.',
+            'muscle-weakness': 'Muscle weakness: make sure you get enough rest and nutrients.',
+            'increased-stress': 'Increased stress from activity: consider gentler types of exercise.',
+            'chronic-fatigue': 'Chronic fatigue: important to balance activity and rest.'
         };
 
-        // Function to save single notification with all recommendations to localStorage
+        // Function to save single notification with all recommendations to localStorage - UPDATED TO ENGLISH
         function saveCombinedNotification(recommendations) {
             if (recommendations.length === 0) return;
 
             const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
 
-            // Создаем одно уведомление со всеми рекомендациями
-            let notificationText = "Рекомендации по вашему дню:\n\n";
+            // Create one notification with all recommendations
+            let notificationText = "Recommendations for your day:\n\n";
 
             recommendations.forEach((rec, index) => {
                 notificationText += `${index + 1}. ${rec}\n\n`;
             });
 
-            notificationText += "Дата: " + new Date().toLocaleDateString();
+            notificationText += "Date: " + new Date().toLocaleDateString();
 
             notifications.push({
                 text: notificationText,
@@ -977,7 +1005,7 @@
             localStorage.setItem('notifications', JSON.stringify(notifications));
         }
 
-        // Function to show notification toast
+        // Function to show notification toast - UPDATED TO ENGLISH
         function showNotificationToast(message, isCombined = false) {
             const container = document.getElementById('notification-container');
             const toast = document.createElement('div');
@@ -985,22 +1013,22 @@
 
             if (isCombined) {
                 toast.innerHTML = `
-                        <div class="notification-icon">📋</div>
-                        <div class="notification-content">
-                            <div class="notification-title">Рекомендации по дню</div>
-                            <div class="notification-message">${message}</div>
-                        </div>
-                        <button class="notification-close">&times;</button>
-                    `;
+                    <div class="notification-icon">📋</div>
+                    <div class="notification-content">
+                        <div class="notification-title">Daily Recommendations</div>
+                        <div class="notification-message">${message}</div>
+                    </div>
+                    <button class="notification-close">&times;</button>
+                `;
             } else {
                 toast.innerHTML = `
-                        <div class="notification-icon">💡</div>
-                        <div class="notification-content">
-                            <div class="notification-title">Рекомендация</div>
-                            <div class="notification-message">${message}</div>
-                        </div>
-                        <button class="notification-close">&times;</button>
-                    `;
+                    <div class="notification-icon">💡</div>
+                    <div class="notification-content">
+                        <div class="notification-title">Recommendation</div>
+                        <div class="notification-message">${message}</div>
+                    </div>
+                    <button class="notification-close">&times;</button>
+                `;
             }
 
             container.appendChild(toast);
@@ -1027,30 +1055,9 @@
             }, 5000);
         }
 
-        // Function to show multiple notifications modal
-        function showMultipleNotificationsModal(count) {
-            const modal = document.getElementById('multiple-notifications-modal');
-            const messageElement = document.getElementById('multiple-notifications-text');
-
-            messageElement.textContent = `У нас есть ${count} рекомендаций для вас - загляните в Inbox!`;
-            modal.style.display = 'flex';
-
-            const closeButton = document.getElementById('close-multiple-notifications');
-            closeButton.onclick = function () {
-                modal.style.display = 'none';
-            };
-
-            // Close modal when clicking outside
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            };
-        }
-
         // Function to check for notifications and create combined notification
         function checkForNotifications(negativeFactors) {
-            if (negativeFactors.length === 0) return;
+            if (negativeFactors.length === 0) return false;
 
             // Collect all recommendations
             let recommendations = [];
@@ -1065,18 +1072,18 @@
                 // Save combined notification
                 saveCombinedNotification(recommendations);
 
-                // Show appropriate toast
+                // Show appropriate toast - ONLY ONE NOTIFICATION
                 if (recommendations.length === 1) {
                     showNotificationToast(recommendations[0]);
                 } else {
-                    showNotificationToast(`У вас ${recommendations.length} рекомендаций по сегодняшнему дню. Проверьте Inbox!`, true);
+                    showNotificationToast(`You have ${recommendations.length} recommendations for today. Check your Inbox!`, true);
                 }
 
-                // Show modal if more than 2 recommendations
-                if (recommendations.length > 2) {
-                    showMultipleNotificationsModal(recommendations.length);
-                }
+                // REMOVED MODAL WINDOW CALL - this removes duplicate notification
+                return true;
             }
+
+            return false;
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -1128,7 +1135,15 @@
             // Toast container
             const toastContainer = document.getElementById('toast-container');
 
-            // Event Listeners
+            // Multiple notifications modal elements
+            const multipleNotificationsModal = document.getElementById('multiple-notifications-modal');
+            const closeMultipleNotifications = document.getElementById('close-multiple-notifications');
+
+            // Event Listeners for multiple notifications modal
+            closeMultipleNotifications.addEventListener('click', () => {
+                multipleNotificationsModal.style.display = 'none';
+            });
+
             closeModal.addEventListener('click', () => {
                 dayModal.style.display = 'none';
                 document.body.style.overflow = '';
@@ -1170,6 +1185,9 @@
                 if (e.target === dayModal) {
                     dayModal.style.display = 'none';
                     document.body.style.overflow = '';
+                }
+                if (e.target === multipleNotificationsModal) {
+                    multipleNotificationsModal.style.display = 'none';
                 }
             });
 
@@ -1451,9 +1469,6 @@
                 const storageKey = `day-${currentYear}-${currentMonth}-${selectedDay}`;
                 localStorage.setItem(storageKey, JSON.stringify(dayData));
 
-                // Show save confirmation
-                showToast('Day data saved successfully!');
-
                 // Close modal
                 dayModal.style.display = 'none';
                 document.body.style.overflow = '';
@@ -1462,7 +1477,12 @@
                 renderCalendar();
 
                 // Check for notifications based on negative factors
-                checkForNotifications(dayData.negativeFactors);
+                const hasNotifications = checkForNotifications(dayData.negativeFactors);
+
+                // Show success toast only if there are no notification toasts
+                if (!hasNotifications) {
+                    showToast('Day data saved successfully!');
+                }
             }
 
             function getSelectedValue(buttonGroup) {
@@ -1483,7 +1503,9 @@
 
                 // Remove toast after animation completes
                 setTimeout(() => {
-                    toastContainer.removeChild(toast);
+                    if (toast.parentNode === toastContainer) {
+                        toastContainer.removeChild(toast);
+                    }
                 }, 3000);
             }
         });

@@ -1,13 +1,20 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWBVFG5DVZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-PWBVFG5DVZ');
+    </script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" href="PNGs/favicon3.svg">
     <title>Notification History</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- AOS CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -15,16 +22,19 @@
             margin: 0;
             background: #f0f2f5;
             color: #333;
-            background-image: url('\PNGs/pic2.png');
+            background-image: url('PNGs/pic2.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            min-height: 100vh;
         }
 
         h1 {
             text-align: center;
             font-size: 24px;
             margin-bottom: 24px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .header-controls {
@@ -40,6 +50,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: #fff;
         }
 
         .delete-selected-btn {
@@ -51,7 +62,12 @@
             cursor: pointer;
             font-size: 14px;
             display: none;
+            transition: background-color 0.2s ease;
         }
+
+            .delete-selected-btn:hover {
+                background: #c0392b;
+            }
 
             .delete-selected-btn.visible {
                 display: block;
@@ -62,11 +78,17 @@
             padding: 16px 20px;
             margin-bottom: 16px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
+
+            .notification:hover {
+                box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+                transform: translateY(-2px);
+            }
 
             .notification.selected {
                 background-color: #e3f2fd;
@@ -92,6 +114,7 @@
         .notification-checkbox {
             margin-right: 12px;
             margin-top: 2px;
+            transform: scale(1.2);
         }
 
         .notification-text {
@@ -100,11 +123,14 @@
             word-break: break-word;
             margin-bottom: 8px;
             white-space: pre-line;
+            font-weight: 500;
+            color: #2c3e50;
         }
 
         .notification-time {
             font-size: 13px;
-            color: #888;
+            color: #7f8c8d;
+            font-weight: 500;
         }
 
         .notification-footer {
@@ -113,7 +139,7 @@
             align-items: center;
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 1px solid #f0f0f0;
+            border-top: 1px solid #ecf0f1;
         }
 
         .notification-actions {
@@ -128,12 +154,18 @@
             border: none;
             cursor: pointer;
             padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
         }
+
+            .delete-btn:hover {
+                background: rgba(231, 76, 60, 0.1);
+            }
 
             .delete-btn svg {
                 width: 22px;
                 height: 22px;
-                fill: #999;
+                fill: #95a5a6;
                 transition: fill 0.2s ease;
             }
 
@@ -149,16 +181,18 @@
             border-radius: 6px;
             font-size: 14px;
             white-space: nowrap;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
             margin: 4px;
             text-decoration: none;
             display: inline-block;
             color: #2196f3;
             border: 1px solid #2196f3;
+            font-weight: 500;
         }
 
             .link-btn:hover {
-                background: #e3f2fd;
+                background: #2196f3;
+                color: white;
             }
 
         .modal-overlay {
@@ -187,11 +221,14 @@
 
             .modal p {
                 margin-bottom: 20px;
+                font-size: 16px;
+                line-height: 1.5;
             }
 
         .modal-buttons {
             display: flex;
             justify-content: space-between;
+            gap: 10px;
         }
 
         .modal button {
@@ -200,22 +237,35 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+            transition: all 0.2s ease;
         }
 
         .modal .cancel-btn {
-            background: #ccc;
-            color: #333;
+            background: #ecf0f1;
+            color: #2c3e50;
         }
+
+            .modal .cancel-btn:hover {
+                background: #bdc3c7;
+            }
 
         .modal .confirm-btn {
             background: #e74c3c;
             color: white;
         }
 
+            .modal .confirm-btn:hover {
+                background: #c0392b;
+            }
+
         .empty-state {
             text-align: center;
-            color: #777;
+            color: #fff;
             padding: 40px 0;
+            font-size: 18px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .action-buttons-container {
@@ -234,7 +284,13 @@
             font-size: 14px;
             line-height: 1.4;
             width: 100%;
+            transition: all 0.2s ease;
         }
+
+            .recommendation-item:hover {
+                background: #e9ecef;
+                transform: translateY(-1px);
+            }
 
             .recommendation-item:last-child {
                 margin-bottom: 0;
@@ -244,12 +300,14 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: #2c3e50;
+            font-size: 15px;
         }
 
         .recommendation-content {
             color: #6c757d;
             font-size: 13px;
             margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         .recommendation-link {
@@ -262,6 +320,7 @@
             border: 1px solid #2196f3;
             border-radius: 4px;
             transition: all 0.2s ease;
+            font-size: 13px;
         }
 
             .recommendation-link:hover {
@@ -357,7 +416,10 @@
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
-        AOS.init();
+        AOS.init({
+            duration: 600,
+            once: true
+        });
 
         const list = document.getElementById('history-list');
         const deleteSelectedBtn = document.getElementById('delete-selected-btn');
@@ -365,97 +427,92 @@
         let deleteIndex = null;
         let selectedNotifications = new Set();
 
-        // Mapping of notification types to titles
-        const notificationTitles = {
-            'insomnia': 'Insomnia',
-            'early-wakeup': 'Early Wake-ups',
-            'fragmented-sleep': 'Fragmented Sleep',
-            'difficulty-falling-asleep': 'Difficulty Falling Asleep',
-            'non-restorative-sleep': 'Non-restorative Sleep',
-            'daytime-sleepiness': 'Daytime Sleepiness',
-            'headache': 'Headaches',
-            'fatigue': 'Fatigue',
-            'dry-skin-mucous': 'Dry Skin and Mucous Membranes',
-            'poor-concentration': 'Poor Concentration',
-            'stress': 'Stress',
-            'anxiety': 'Anxiety',
-            'apathy': 'Apathy',
-            'depressive-episode': 'Depressive Episode',
-            'irritability': 'Irritability',
-            'social-isolation': 'Social Isolation',
-            'mood-swings': 'Mood Swings',
-            'sedentary-day': 'Sedentary Day',
-            'overtraining': 'Overtraining',
-            'bad-mood': 'Bad Mood',
-            'reduced-metabolism': 'Reduced Metabolism',
-            'muscle-weakness': 'Muscle Weakness',
-            'increased-stress': 'Increased Stress Levels',
-            'chronic-fatigue': 'Chronic Fatigue'
-        };
-
-        // Mapping of recommendation types to pages
-        const recommendationPages = {
+        // ПОЛНАЯ КАРТА СОПОСТАВЛЕНИЙ - КЛЮЧЕВОЕ СЛОВО -> СТРАНИЦА
+        const recommendationMap = {
+            // Sleep issues
             'insomnia': 'insomnia.html',
-            'early-wakeup': 'early.html',
-            'fragmented-sleep': 'frag.html',
-            'difficulty-falling-asleep': 'diffic.html',
-            'non-restorative-sleep': 'nonrest.html',
-            'daytime-sleepiness': 'daytimesl.html',
+            'early-wakeup': 'early-awakenings.html',
+            'early wakeup': 'early-awakenings.html',
+            'early awakening': 'early-awakenings.html',
+            'early awakenings': 'early-awakenings.html',
+            'fragmented-sleep': 'fragmented-sleep.html',
+            'fragmented sleep': 'fragmented-sleep.html',
+            'difficulty-falling-asleep': 'difficulty-falling-asleep.html',
+            'difficulty falling asleep': 'difficulty-falling-asleep.html',
+            'non-restorative-sleep': 'non-restorative-sleep.html',
+            'non restorative sleep': 'non-restorative-sleep.html',
+            'daytime-sleepiness': 'daytime-sleepiness.html',
+            'daytime sleepiness': 'daytime-sleepiness.html',
+
+            // Water/dehydration issues
             'headache': 'headache.html',
             'fatigue': 'fatigue.html',
-            'dry-skin-mucous': 'dry.html',
-            'poor-concentration': 'poorcon.html',
-            'stress': 'moodsw.html',
-            'anxiety': 'anxiety.html',
-            'apathy': 'apathy.html',
-            'depressive-episode': 'depression.html',
-            'irritability': 'irritability.html',
-            'social-isolation': 'socialiso.html',
-            'mood-swings': 'moodsw.html',
-            'sedentary-day': 'sedentary.html',
-            'overtraining': 'overtraining.html',
-            'bad-mood': 'badmoodfrom.html',
-            'reduced-metabolism': 'activity-guide.html',
-            'muscle-weakness': 'activity-guide.html',
-            'increased-stress': 'activity-guide.html',
-            'chronic-fatigue': 'chronicfa.html'
-        };
+            'dry-skin-mucous': 'dry-skin-mucous.html',
+            'dry skin mucous': 'dry-skin-mucous.html',
+            'dry skin': 'dry-skin-mucous.html',
+            'poor-concentration': 'poor-concentration.html',
+            'poor concentration': 'poor-concentration.html',
 
-        // Enhanced mapping with keyword matching
-        const recommendationKeywords = {
-            'sleep': '.html',
-            'insomnia': 'insomnia.html',
-            'wakeup': 'early.html',
-            'fragmented': 'frag.html',
-            'restorative': 'nonrest.html',
-            'daytime': 'daytimesl.html',
-            'water': '.html',
-            'hydration': '.html',
-            'dehydration': '.html',
-            'headache': 'headaches.html',
-            'fatigue': 'fatigue.html',
-            'dry': 'dry.html',
-            'concentration': 'poorcon.html',
+            // Mood issues
             'stress': 'stress.html',
             'anxiety': 'anxiety.html',
             'apathy': 'apathy.html',
-            'depressive': 'depression.html',
+            'depressive-episode': 'depressive-episodes.html',
+            'depressive episode': 'depressive-episodes.html',
             'irritability': 'irritability.html',
-            'isolation': 'socialiso.html',
-            'mood': 'moodsw.html',
-            'sedentary': 'sedentary.html',
+            'social-isolation': 'social-isolation.html',
+            'social isolation': 'social-isolation.html',
+            'mood-swings': 'mood-swings.html',
+            'mood swings': 'mood-swings.html',
+
+            // Activity issues
+            'sedentary-day': 'sedentary-day.html',
+            'sedentary day': 'sedentary-day.html',
             'overtraining': 'overtraining.html',
-            'metabolism': '.html',
-            'muscle': '.html',
-            'activity': 'badmoodfrom.html',
-            'chronic': 'chronicfa.html'
+            'bad-mood': 'bad-mood-activity.html',
+            'bad mood': 'bad-mood-activity.html',
+            'reduced-metabolism': 'reduced-metabolism.html',
+            'reduced metabolism': 'reduced-metabolism.html',
+            'muscle-weakness': 'muscle-weakness.html',
+            'muscle weakness': 'muscle-weakness.html',
+            'increased-stress': 'increased-stress-activity.html',
+            'increased stress': 'increased-stress-activity.html',
+            'chronic-fatigue': 'chronic-fatigue.html',
+            'chronic fatigue': 'chronic-fatigue.html'
+        };
+
+        // ДОПОЛНИТЕЛЬНЫЕ КЛЮЧЕВЫЕ СЛОВА ДЛЯ БОЛЕЕ ТОЧНОГО СОПОСТАВЛЕНИЯ
+        const keywordFallbacks = {
+            'sleep': 'insomnia.html',
+            'wakeup': 'early-awakenings.html',
+            'awakening': 'early-awakenings.html',
+            'fragmented': 'fragmented-sleep.html',
+            'difficulty': 'difficulty-falling-asleep.html',
+            'restorative': 'non-restorative-sleep.html',
+            'daytime': 'daytime-sleepiness.html',
+            'headache': 'headache.html',
+            'fatigue': 'fatigue.html',
+            'dry': 'dry-skin-mucous.html',
+            'concentration': 'poor-concentration.html',
+            'stress': 'stress.html',
+            'anxiety': 'anxiety.html',
+            'apathy': 'apathy.html',
+            'depressive': 'depressive-episodes.html',
+            'irritability': 'irritability.html',
+            'isolation': 'social-isolation.html',
+            'mood': 'mood-swings.html',
+            'sedentary': 'sedentary-day.html',
+            'overtraining': 'overtraining.html',
+            'metabolism': 'reduced-metabolism.html',
+            'muscle': 'muscle-weakness.html',
+            'chronic': 'chronic-fatigue.html'
         };
 
         function renderNotifications() {
             list.innerHTML = '';
 
             if (notifications.length === 0) {
-                list.innerHTML = '<div class="empty-state">No saved notifications.</div>';
+                list.innerHTML = '<div class="empty-state">No saved notifications yet. <br>Notifications will appear here when you track symptoms in your daily journal.</div>';
                 document.getElementById('select-all-checkbox').style.display = 'none';
                 deleteSelectedBtn.classList.remove('visible');
                 return;
@@ -480,6 +537,7 @@
                             <input type="checkbox" class="notification-checkbox" ${isSelected ? 'checked' : ''}
                                    onchange="toggleNotificationSelection(${originalIndex}, this.checked)">
                             <div class="notification-content">
+                                <div class="notification-text">Daily Recommendations</div>
                                 <div class="notification-time">${new Date(note.timestamp).toLocaleString()}</div>
                             </div>
                             <div class="notification-actions">
@@ -513,7 +571,7 @@
 
             for (const line of lines) {
                 // Skip date line and header lines
-                if (line.startsWith('Date:') || line.includes('Recommendations for your day')) {
+                if (line.startsWith('Date:') || line.includes('Recommendations for your day') || line.includes('Daily Recommendations')) {
                     continue;
                 }
 
@@ -522,13 +580,8 @@
                     const content = line.replace(/^\d+\.\s/, '');
                     const title = content.split(':')[0].trim();
 
-                    // Find matching page using multiple strategies
-                    let page = findMatchingPage(content.toLowerCase());
-
-                    // If no page found by content, try by title
-                    if (!page) {
-                        page = findMatchingPage(title.toLowerCase());
-                    }
+                    // Find matching page using improved strategy
+                    let page = findMatchingPage(content, title);
 
                     recommendations.push({
                         title: title,
@@ -541,8 +594,8 @@
             // If no specific recommendations found, create a general one
             if (recommendations.length === 0) {
                 const firstLine = notificationText.split('\n').find(line => line.trim() && !line.startsWith('Date:'));
-                const generalContent = firstLine || 'General recommendations';
-                const generalPage = findMatchingPage(notificationText.toLowerCase());
+                const generalContent = firstLine || 'General recommendations based on your tracked symptoms';
+                const generalPage = findMatchingPage(notificationText, 'General Recommendations');
 
                 recommendations.push({
                     title: 'General Recommendations',
@@ -554,28 +607,75 @@
             return recommendations;
         }
 
-        function findMatchingPage(text) {
-            // First try exact key matching
-            for (const [key, page] of Object.entries(recommendationPages)) {
-                if (text.includes(key.toLowerCase())) {
+        // НОВАЯ УЛУЧШЕННАЯ ФУНКЦИЯ ПОИСКА СТРАНИЦ
+        function findMatchingPage(content, title) {
+            const searchText = (content + ' ' + title).toLowerCase();
+
+            console.log('Searching page for:', title, '| Content:', content);
+
+            // 1. Прямое сопоставление по точным ключевым фразам (высший приоритет)
+            for (const [phrase, page] of Object.entries(recommendationMap)) {
+                const phraseLower = phrase.toLowerCase();
+
+                // Проверяем точное совпадение в заголовке
+                if (title.toLowerCase().includes(phraseLower)) {
+                    console.log('✅ Exact title match:', phrase, '->', page);
+                    return page;
+                }
+
+                // Проверяем точное совпадение в начале контента
+                if (content.toLowerCase().startsWith(phraseLower)) {
+                    console.log('✅ Exact content match:', phrase, '->', page);
                     return page;
                 }
             }
 
-            // Then try keyword matching
-            for (const [keyword, page] of Object.entries(recommendationKeywords)) {
-                if (text.includes(keyword.toLowerCase())) {
-                    return page;
+            // 2. Поиск по отдельным ключевым словам с проверкой контекста
+            const wordScores = {};
+
+            // Разбиваем на слова и считаем score для каждой страницы
+            const words = searchText.split(/\s+/).filter(word => word.length > 3);
+
+            words.forEach(word => {
+                for (const [phrase, page] of Object.entries(recommendationMap)) {
+                    const phraseWords = phrase.toLowerCase().split(/\s+/);
+                    if (phraseWords.includes(word)) {
+                        wordScores[page] = (wordScores[page] || 0) + 1;
+                    }
+                }
+
+                // Проверяем fallback ключи
+                if (keywordFallbacks[word]) {
+                    const page = keywordFallbacks[word];
+                    wordScores[page] = (wordScores[page] || 0) + 0.5;
+                }
+            });
+
+            // Находим страницу с наибольшим score
+            let bestPage = null;
+            let bestScore = 0;
+
+            for (const [page, score] of Object.entries(wordScores)) {
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestPage = page;
                 }
             }
 
-            // Then try title matching
-            for (const [key, title] of Object.entries(notificationTitles)) {
-                if (text.includes(title.toLowerCase())) {
-                    return recommendationPages[key];
+            if (bestPage && bestScore >= 1) {
+                console.log('✅ Best match by score:', bestPage, 'score:', bestScore);
+                return bestPage;
+            }
+
+            // 3. Fallback: поиск по отдельным ключевым словам
+            for (const word of words) {
+                if (keywordFallbacks[word]) {
+                    console.log('✅ Fallback match:', word, '->', keywordFallbacks[word]);
+                    return keywordFallbacks[word];
                 }
             }
 
+            console.log('❌ No match found for:', title);
             return null;
         }
 
@@ -682,6 +782,7 @@
             }
         }
 
+        // Initialize the page
         renderNotifications();
     </script>
 

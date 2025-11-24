@@ -50,7 +50,7 @@
             font-family: 'Roboto',sans-serif;
             line-height: 1.6;
             color: var(--dark-color);
-            background-image: url('\PNGs/pic2.png');
+            background-image: url('PNGs/pic2.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -148,7 +148,7 @@
             font-weight: 500;
             padding: 6px;
             font-size: .7rem;
-            color: var(--secondary-color);
+            color: azure;
         }
 
         @media (min-width:350px) {
@@ -167,6 +167,9 @@
             cursor: pointer;
             transition: var(--transition);
             border: 1px solid #000;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
         @media (max-width:500px) {
@@ -186,11 +189,13 @@
 
         .calendar-day:hover {
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
         }
 
         .calendar-day-number {
             font-weight: 500;
             margin-bottom: 5px;
+            font-size: 0.9rem;
         }
 
         .day-mood {
@@ -546,12 +551,13 @@
         .day-indicators {
             display: flex;
             justify-content: center;
-            gap: -1px;
-            margin-top: -5px;
+            flex-wrap: wrap;
+            gap: 2px;
+            margin-top: auto;
         }
 
             .day-indicators span {
-                font-size: .8em;
+                font-size: .7em;
                 width: 16px;
                 height: 16px;
                 display: inline-flex;
@@ -790,6 +796,12 @@
             .multiple-notifications-button:hover {
                 background-color: #207bb4;
             }
+
+        /* Today highlight */
+        .calendar-day.today {
+            border: 2px solid #ff6b6b;
+            background-color: #fff5f5;
+        }
     </style>
 </head>
 <body>
@@ -982,14 +994,14 @@
             'chronic-fatigue': 'Chronic fatigue: important to balance activity and rest.'
         };
 
-        // Function to save single notification with all recommendations to localStorage - UPDATED TO ENGLISH
+        // Function to save single notification with all recommendations to localStorage
         function saveCombinedNotification(recommendations) {
             if (recommendations.length === 0) return;
 
             const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
 
             // Create one notification with all recommendations
-            let notificationText = "Recommendations for your day:\n\n";
+            let notificationText = "Daily Recommendations:\n\n";
 
             recommendations.forEach((rec, index) => {
                 notificationText += `${index + 1}. ${rec}\n\n`;
@@ -1005,7 +1017,7 @@
             localStorage.setItem('notifications', JSON.stringify(notifications));
         }
 
-        // Function to show notification toast - UPDATED TO ENGLISH
+        // Function to show notification toast
         function showNotificationToast(message, isCombined = false) {
             const container = document.getElementById('notification-container');
             const toast = document.createElement('div');
@@ -1013,22 +1025,22 @@
 
             if (isCombined) {
                 toast.innerHTML = `
-                    <div class="notification-icon">📋</div>
-                    <div class="notification-content">
-                        <div class="notification-title">Daily Recommendations</div>
-                        <div class="notification-message">${message}</div>
-                    </div>
-                    <button class="notification-close">&times;</button>
-                `;
+                        <div class="notification-icon">📋</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Daily Recommendations</div>
+                            <div class="notification-message">${message}</div>
+                        </div>
+                        <button class="notification-close">&times;</button>
+                    `;
             } else {
                 toast.innerHTML = `
-                    <div class="notification-icon">💡</div>
-                    <div class="notification-content">
-                        <div class="notification-title">Recommendation</div>
-                        <div class="notification-message">${message}</div>
-                    </div>
-                    <button class="notification-close">&times;</button>
-                `;
+                        <div class="notification-icon">💡</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Recommendation</div>
+                            <div class="notification-message">${message}</div>
+                        </div>
+                        <button class="notification-close">&times;</button>
+                    `;
             }
 
             container.appendChild(toast);
@@ -1072,14 +1084,13 @@
                 // Save combined notification
                 saveCombinedNotification(recommendations);
 
-                // Show appropriate toast - ONLY ONE NOTIFICATION
+                // Show appropriate toast
                 if (recommendations.length === 1) {
                     showNotificationToast(recommendations[0]);
                 } else {
                     showNotificationToast(`You have ${recommendations.length} recommendations for today. Check your Inbox!`, true);
                 }
 
-                // REMOVED MODAL WINDOW CALL - this removes duplicate notification
                 return true;
             }
 
@@ -1346,7 +1357,7 @@
                     // Highlight current day
                     const today = new Date();
                     if (currentYear === today.getFullYear() && currentMonth === today.getMonth() && day === today.getDate()) {
-                        dayElement.style.border = '2px solid var(--primary-color)';
+                        dayElement.classList.add('today');
                     }
 
                     calendarDays.appendChild(dayElement);

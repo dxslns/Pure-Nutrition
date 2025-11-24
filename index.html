@@ -44,13 +44,14 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background-image: url('PNGs/pic2.png');
+            background-image: url('PNGs/pic5.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
+            background-repeat: revert-layer;
             position: relative;
             -webkit-text-size-adjust: 100%;
             touch-action: manipulation;
+            background-position-y: -300px;
            
         }
 
@@ -80,7 +81,7 @@
             cursor: pointer;
             color: var(--dark-text);
             border-radius: 40px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4), 0 1px 1px rgba(0,0,0,0.3);
             background-color: rgba(255, 255, 255, 0);
             backdrop-filter: blur(10px);
             transition: var(--transition);
@@ -703,8 +704,8 @@
             ctx.closePath();
 
             const gradient = ctx.createLinearGradient(0, waterLevel, 0, height);
-            gradient.addColorStop(0, 'rgba(0, 149, 255, 0.5)');
-            gradient.addColorStop(1, 'rgba(0, 100, 200, 0.3)');
+            gradient.addColorStop(0, 'rgba(0, 149, 255, 0.25)');
+            gradient.addColorStop(1, 'rgba(0, 100, 200, 0.1)');
 
             ctx.fillStyle = gradient;
             ctx.fill();
